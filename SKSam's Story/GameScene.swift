@@ -124,7 +124,8 @@ class GameScene: SKScene {
 //        bear.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
 //        addChild(bear)
 //        
-//        walkingBear()
+//        walkingBear() 
+        //
     }
     
     func walkingBear() {
