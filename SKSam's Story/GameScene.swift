@@ -10,12 +10,14 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    var gameModel:GameModel?
+    var gameModel:GameModel!
+    
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     var images = [String:SKSpriteNode]()
     var coordinates = [String:(CGFloat,CGFloat)]()
+    var rect:SKShapeNode?
     
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
     var x:CGFloat?
     var y:CGFloat?
     
@@ -38,11 +40,9 @@ class GameScene: SKScene {
         x = screenSize.width/40
         y = screenSize.height/40
         
-        createNode("btn_info_normal", x:screenSize.width/20, y:screenSize.height/20)
-        createNode("btn_info_pressed", x:screenSize.width/20, y:screenSize.height/20)
-        createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height/20)
-        createNode("btn_page_pressed", x:screenSize.width/2, y:screenSize.height/20)
-        createNode("btn_close", x:screenSize.width/2, y:screenSize.height*0.19)
+        createNode("btn_info_normal", x:screenSize.width/20, y:screenSize.height*19/20)
+        createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height*19/20)
+        createNode("btn_close", x:screenSize.width/2, y:screenSize.height*(1-0.19))
         
         createNode("btn_next_normal", x:screenSize.width*9/10, y:screenSize.height/2)
         createNode("btn_next_pressed", x:screenSize.width*9/10, y:screenSize.height/2)
@@ -77,13 +77,13 @@ class GameScene: SKScene {
         createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
         createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
         
-        createNode("btn_music", x:screenSize.width*10/12, y:screenSize.height/20)
+        createNode("btn_music", x:screenSize.width*10/12, y:screenSize.height*19/20)
         createNode("btn_music_off", x:screenSize.width*10/12, y:screenSize.height/20)
-        createNode("btn_sound", x:screenSize.width*11/12, y:screenSize.height/20)
+        createNode("btn_sound", x:screenSize.width*11/12, y:screenSize.height*19/20)
         createNode("btn_sound_off", x:screenSize.width*11/12, y:screenSize.height/20)
         
-        createNode("btn_chn", x:screenSize.width*10.5/12, y:screenSize.height*1.3/10)
-        createNode("btn_eng", x:screenSize.width*11.5/12, y:screenSize.height*1.3/10)
+        createNode("btn_chn", x:screenSize.width*10.5/12, y:screenSize.height*8.7/10)
+        createNode("btn_eng", x:screenSize.width*11.5/12, y:screenSize.height*8.7/10)
         
         createNode("s0")
         createNode("s1")
@@ -97,16 +97,17 @@ class GameScene: SKScene {
         createNode("1-bg")
         createNode("2-bg")
         
-        createNode("bar", x:screenSize.width*2.3/6, y:screenSize.height*1.7/20)
+        createNode("bar", x:screenSize.width*2.3/6, y:screenSize.height*(1-1.7/20))
         
         self.addChild(images["0-bg"]!)
+        self.addChild(images["btn_info_normal"]!)
+        self.addChild(images["btn_page_normal"]!)
         
-        var rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width/10, screenSize.height/10))
-        rect.fillColor = UIColor.redColor()
-        rect.strokeColor = UIColor.redColor()
-        rect.alpha = 1
-        rect.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-        self.addChild(rect)
+        rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width, screenSize.height*0.175))
+        rect!.fillColor = UIColor(red: 197/255.0, green: 61/255.0, blue: 25/255.0, alpha: 1.0)
+        rect!.strokeColor = rect!.fillColor
+        rect!.position = CGPointMake(0, screenSize.height*(1-0.175))
+        rect!.zPosition = 1
         
 //        let bearAnimatedAtlas = SKTextureAtlas(named: "BearImages")
 //        var walkFrames = [SKTexture]()
@@ -125,7 +126,6 @@ class GameScene: SKScene {
 //        addChild(bear)
 //        
 //        walkingBear() 
-        //
     }
     
     func walkingBear() {
@@ -137,18 +137,24 @@ class GameScene: SKScene {
                 restore: true)),
             withKey:"walkingInPlaceBear")
         
+        
     }
+    
+//    func createNode(name:String, x:CGFloat, y:CGFloat){
+//        coordinates[name] = (x,y)
+//        self.createNode(name)
+//    }
     
     func createNode(name:String, x:CGFloat, y:CGFloat){
-        coordinates[name] = (x,y)
-        self.createNode(name)
+        var node = self.createNode(name)
+        node.position = CGPointMake(x,y)
     }
     
-    func createNode(name:String){
+    func createNode(name:String) -> SKSpriteNode{
         var node = SKSpriteNode(imageNamed:name)
         node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         images[name] = node
-        
+        return node
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -157,9 +163,9 @@ class GameScene: SKScene {
         for touch in (touches as! Set<UITouch>) {
             let location = touch.locationInNode(self)
             
-            if(images["0-bg"]!.containsPoint(location)){
-                
-//                images["0-bg"]!.alpha = 0.5
+            if(images["btn_info_normal"]!.containsPoint(location)){
+                images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_pressed")
+               
             }
             
 //            let sprite = SKSpriteNode(imageNamed:"Spaceship")
@@ -173,6 +179,33 @@ class GameScene: SKScene {
 //            sprite.runAction(SKAction.repeatActionForever(action))
 //            
 //            self.addChild(sprite)
+        }
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        for touch in (touches as! Set<UITouch>) {
+            let location = touch.locationInNode(self)
+            
+            if(images["btn_info_normal"]!.containsPoint(location)  && self.gameModel.information == 0){
+                images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_normal")
+                self.gameModel.information = 1
+                self.removeChildrenInArray([images["btn_info_normal"]!])
+                self.addChild(rect!)
+                
+                images["bar"]!.zPosition = 2
+                self.addChild(images["bar"]!)
+                images["btn_close"]!.zPosition = 2
+                self.addChild(images["btn_close"]!)
+                images["btn_music"]!.zPosition = 2
+                self.addChild(images["btn_music"]!)
+                images["btn_sound"]!.zPosition = 2
+                self.addChild(images["btn_sound"]!)
+                images["btn_chn"]!.zPosition = 2
+                self.addChild(images["btn_chn"]!)
+                images["btn_eng"]!.zPosition = 2
+                self.addChild(images["btn_eng"]!)
+            }
+            
         }
     }
    
