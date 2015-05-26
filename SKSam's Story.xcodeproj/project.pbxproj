@@ -361,7 +361,7 @@
 				INFOPLIST_FILE = "SKSam's Story/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -372,7 +372,7 @@
 				INFOPLIST_FILE = "SKSam's Story/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -429,6 +429,7 @@
 				A8E407641B1347BF005DA379 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A8E407651B1347BF005DA379 /* Build configuration list for PBXNativeTarget "SKSam's StoryTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +438,7 @@
 				A8E407671B1347BF005DA379 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

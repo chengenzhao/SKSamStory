@@ -78,9 +78,7 @@ class GameScene: SKScene {
         createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
         
         createNode("btn_music", x:screenSize.width*10/12, y:screenSize.height*19/20)
-        createNode("btn_music_off", x:screenSize.width*10/12, y:screenSize.height/20)
         createNode("btn_sound", x:screenSize.width*11/12, y:screenSize.height*19/20)
-        createNode("btn_sound_off", x:screenSize.width*11/12, y:screenSize.height/20)
         
         createNode("btn_chn", x:screenSize.width*10.5/12, y:screenSize.height*8.7/10)
         createNode("btn_eng", x:screenSize.width*11.5/12, y:screenSize.height*8.7/10)
@@ -165,7 +163,10 @@ class GameScene: SKScene {
             
             if(images["btn_info_normal"]!.containsPoint(location)){
                 images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_pressed")
-               
+            }
+            
+            if(images["btn_page_normal"]!.containsPoint(location)){
+                images["btn_page_normal"]!.texture = SKTexture(imageNamed:"btn_page_pressed")
             }
             
 //            let sprite = SKSpriteNode(imageNamed:"Spaceship")
@@ -189,7 +190,7 @@ class GameScene: SKScene {
             if(images["btn_info_normal"]!.containsPoint(location)  && self.gameModel.information == 0){
                 images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_normal")
                 self.gameModel.information = 1
-                self.removeChildrenInArray([images["btn_info_normal"]!])
+                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!])
                 self.addChild(rect!)
                 
                 images["bar"]!.zPosition = 2
@@ -204,6 +205,32 @@ class GameScene: SKScene {
                 self.addChild(images["btn_chn"]!)
                 images["btn_eng"]!.zPosition = 2
                 self.addChild(images["btn_eng"]!)
+            }
+            
+            if images["btn_music"]!.containsPoint(location) && self.gameModel!.information == 1{
+                self.gameModel.music = self.gameModel.music == 0 ? 1:0
+                if self.gameModel.music == 0{
+                    images["btn_music"]!.texture = SKTexture(imageNamed: "btn_music_off")
+                }else{
+                    images["btn_music"]!.texture = SKTexture(imageNamed: "btn_music")
+                }
+            }
+            
+            if images["btn_sound"]!.containsPoint(location) && self.gameModel!.information == 1{
+                self.gameModel.sound = self.gameModel.sound == 0 ? 1:0
+                if self.gameModel.sound == 0{
+                    images["btn_sound"]!.texture = SKTexture(imageNamed: "btn_sound_off")
+                }else{
+                    images["btn_sound"]!.texture = SKTexture(imageNamed: "btn_sound")
+                }
+            }
+            
+            if(images["btn_close"]!.containsPoint(location) && self.gameModel.information == 1){
+                self.gameModel.information = 0
+                self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music"]!,images["btn_sound"]!,images["btn_chn"]!,images["btn_eng"]!])
+                
+                self.addChild(images["btn_info_normal"]!)
+                self.addChild(images["btn_page_normal"]!)
             }
             
         }
