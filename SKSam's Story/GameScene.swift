@@ -17,7 +17,9 @@ class GameScene: SKScene {
     var images = [String:SKSpriteNode]()
     var coordinates = [String:(CGFloat,CGFloat)]()
     var rect:SKShapeNode?
-    
+    var moveLeft = false
+    var moveRight = false
+    var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
     
@@ -37,6 +39,9 @@ class GameScene: SKScene {
 //        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
 //        
 //        self.addChild(myLabel)
+        
+
+        
         x = screenSize.width/40
         y = screenSize.height*39/40
         
@@ -158,6 +163,15 @@ class GameScene: SKScene {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
+        if let model = gameModel{
+            
+        }else{
+            return
+        }
+        
+        self.moveLeft = false
+        self.moveRight = false
+        
         for touch in (touches as! Set<UITouch>) {
             let location = touch.locationInNode(self)
             
@@ -183,7 +197,27 @@ class GameScene: SKScene {
         }
     }
     
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if let model = gameModel{
+            
+        }else{
+            return
+        }
+        
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            
+        }
+    }
+    
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        if let model = gameModel{
+            
+        }else{
+            return
+        }
+        
         for touch in (touches as! Set<UITouch>) {
             let location = touch.locationInNode(self)
             
@@ -210,6 +244,7 @@ class GameScene: SKScene {
             if(images["btn_page_normal"]!.containsPoint(location)  && self.gameModel.page == 0){
                 images["btn_page_normal"]!.texture = SKTexture(imageNamed:"btn_page_normal")
                 self.gameModel.page = 1
+                
                 self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!])
                 self.addChild(rect!)
                 
@@ -217,6 +252,7 @@ class GameScene: SKScene {
                 self.addChild(images["btn_close"]!)
                 for i in 0...MAX_SMALL_PAGES-1{
                     images["s"+String(i)]!.zPosition = 2
+                    
                     images["s"+String(i)]!.position = CGPointMake(x! + images["s"+String(i)]!.size.width/2 + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
                     self.addChild(images["s"+String(i)]!)
                 }
@@ -260,9 +296,33 @@ class GameScene: SKScene {
             
         }
     }
-   
+    
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         gameModel!.update()
+        
+        if self.moveRight || self.moveLeft{
+            
+            var barWidth:CGFloat = (images["s0"]!.size.width + screenSize.width/40) * CGFloat(MAX_SMALL_PAGES)
+            
+            var x = images["s0"]!.position.x
+            
+            
+            if(x + velocity <= screenSize.width - barWidth + images["s0"]!.size.width/2){
+                x = screenSize.width - barWidth + images["s0"]!.size.width/2
+            }else if x + velocity >= screenSize.width/40 + images["s0"]!.size.width/2{
+                x = screenSize.width/40 + images["s0"]!.size.width/2
+            }else{
+                x = x + velocity
+            }
+            
+            for i in 0...MAX_SMALL_PAGES-1{
+                images["s"+String(i)]!.position = CGPointMake(x + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
+            }
+        }
+        
     }
+    
+
 }

@@ -28,11 +28,20 @@ extension SKNode {
 class GameViewController: UIViewController {
 
     var gameModel:GameModel?
+    var gameScene:GameScene?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         gameModel = GameModel()
+        
+        var recognizerRight = UISwipeGestureRecognizer(target: self, action:"respondToSwipeGesture:")
+        recognizerRight.direction = UISwipeGestureRecognizerDirection.Right
+        view.addGestureRecognizer(recognizerRight)
+        
+        var recognizerLeft = UISwipeGestureRecognizer(target: self, action:"respondToSwipeGesture:")
+        recognizerLeft.direction = UISwipeGestureRecognizerDirection.Left
+        view.addGestureRecognizer(recognizerLeft)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -51,6 +60,8 @@ class GameViewController: UIViewController {
             skView.presentScene(scene)
             
             scene.initialize(gameModel!)
+            
+            self.gameScene = scene
         }
     }
 
@@ -74,4 +85,47 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer){
+        
+        if let scene = gameScene{
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer{
+            
+            switch swipeGesture.direction{
+            case UISwipeGestureRecognizerDirection.Right:
+                scene.moveRight = true
+                println("right:"+String(stringInterpolationSegment: gameScene!.velocity))
+                
+                break
+            case UISwipeGestureRecognizerDirection.Left:
+                scene.moveLeft = true
+                println("left:"+String(stringInterpolationSegment: gameScene!.velocity))
+                break
+            default:
+                break
+                
+            }
+        }
+            
+        }
+    }
+    
+    var startPoint:CGPoint!
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent: UIEvent){
+        for touch in (touches as! Set<UITouch>) {
+            let location = touch.locationInNode(gameScene)
+            startPoint = location
+        }
+    }
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent: UIEvent){
+        for touch in (touches as! Set<UITouch>) {
+            let location = touch.locationInNode(gameScene)
+            
+            gameScene!.velocity = location.x - startPoint.x
+        }
+    }
+    
 }
