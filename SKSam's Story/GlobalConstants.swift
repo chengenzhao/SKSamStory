@@ -8,5 +8,5 @@
 
 import Foundation
 
-let MAX_PAGES = 2
+let MAX_PAGES = 3
 let MAX_SMALL_PAGES = 7

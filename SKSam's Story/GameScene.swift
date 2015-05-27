@@ -50,12 +50,14 @@ class GameScene: SKScene {
         createNode("btn_close", x:screenSize.width/2, y:screenSize.height*(1-0.19))
         
         createNode("btn_next_normal", x:screenSize.width*9/10, y:screenSize.height/2)
-        createNode("btn_next_pressed", x:screenSize.width*9/10, y:screenSize.height/2)
         createNode("btn_prev_normal", x:screenSize.width/10, y:screenSize.height/2)
-        createNode("btn_prev_pressed", x:screenSize.width/10, y:screenSize.height/2)
         
-        createNode("accomplish1", x:screenSize.width*9/10, y:screenSize.height/20)
-        createNode("accomplish2", x:screenSize.width*9/10, y:screenSize.height/20)
+        createNode("accomplish0", x:screenSize.width*9/10, y:screenSize.height/20)
+        for i in 1...4{
+            var x = screenSize.width*9/10 - images["accomplish0"]!.size.width*CGFloat(i)
+            createNode("accomplish"+String(i), x:x, y:screenSize.height/20)
+        }
+        
 //        //0
 //        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
 //        //1
@@ -104,6 +106,9 @@ class GameScene: SKScene {
         self.addChild(bg)
         self.addChild(images["btn_info_normal"]!)
         self.addChild(images["btn_page_normal"]!)
+        
+        self.addChild(images["btn_next_normal"]!)
+        self.addChild(images["btn_prev_normal"]!)
         
         rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width, screenSize.height*0.175))
         rect!.fillColor = UIColor(red: 197/255.0, green: 61/255.0, blue: 25/255.0, alpha: 1.0)
@@ -179,6 +184,14 @@ class GameScene: SKScene {
             
             if(images["btn_page_normal"]!.containsPoint(location)){
                 images["btn_page_normal"]!.texture = SKTexture(imageNamed:"btn_page_pressed")
+            }
+            
+            if(images["btn_next_normal"]!.containsPoint(location)){
+                images["btn_next_normal"]!.texture = SKTexture(imageNamed:"btn_next_pressed")
+            }
+            
+            if(images["btn_prev_normal"]!.containsPoint(location)){
+                images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_pressed")
             }
             
 //            let sprite = SKSpriteNode(imageNamed:"Spaceship")
@@ -301,7 +314,17 @@ class GameScene: SKScene {
                 self.addChild(images["btn_page_normal"]!)
             }
             
-
+            if(images["btn_next_normal"]!.containsPoint(location)){
+                images["btn_next_normal"]!.texture = SKTexture(imageNamed:"btn_next_normal")
+                var stage = self.gameModel.getCurrentStage()
+                self.gameModel.setStage(self.setStage(stage+1))
+            }
+            
+            if(images["btn_prev_normal"]!.containsPoint(location)){
+                images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_normal")
+                var stage = self.gameModel.getCurrentStage()
+                self.gameModel.setStage(self.setStage(stage-1))
+            }
             
         }
     }
@@ -331,7 +354,10 @@ class GameScene: SKScene {
         
     }
     
-    func setStage(stage:Int){
+    func setStage(stage:Int) -> Int{
+        var s = stage < 0 ? 0 : stage
+        s = s >= MAX_PAGES ? MAX_PAGES-1 : s
+        
 //        switch(stage){
 //        case 0:
 //            createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
@@ -365,7 +391,11 @@ class GameScene: SKScene {
 //            break
 //        }
         
-        bg.texture = SKTexture(imageNamed:String(stage)+"-bg")
+        
+        
+        bg.texture = SKTexture(imageNamed:String(s)+"-bg")
+        
+        return s
     }
 
 }
