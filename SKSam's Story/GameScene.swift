@@ -38,7 +38,7 @@ class GameScene: SKScene {
 //        
 //        self.addChild(myLabel)
         x = screenSize.width/40
-        y = screenSize.height/40
+        y = screenSize.height*39/40
         
         createNode("btn_info_normal", x:screenSize.width/20, y:screenSize.height*19/20)
         createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height*19/20)
@@ -207,6 +207,22 @@ class GameScene: SKScene {
                 self.addChild(images["btn_eng"]!)
             }
             
+            if(images["btn_page_normal"]!.containsPoint(location)  && self.gameModel.page == 0){
+                images["btn_page_normal"]!.texture = SKTexture(imageNamed:"btn_page_normal")
+                self.gameModel.page = 1
+                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!])
+                self.addChild(rect!)
+                
+                images["btn_close"]!.zPosition = 2
+                self.addChild(images["btn_close"]!)
+                for i in 0...MAX_SMALL_PAGES-1{
+                    images["s"+String(i)]!.zPosition = 2
+                    images["s"+String(i)]!.position = CGPointMake(x! + images["s"+String(i)]!.size.width/2 + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
+                    self.addChild(images["s"+String(i)]!)
+                }
+                
+            }
+            
             if images["btn_music"]!.containsPoint(location) && self.gameModel!.information == 1{
                 self.gameModel.music = self.gameModel.music == 0 ? 1:0
                 if self.gameModel.music == 0{
@@ -225,10 +241,19 @@ class GameScene: SKScene {
                 }
             }
             
-            if(images["btn_close"]!.containsPoint(location) && self.gameModel.information == 1){
-                self.gameModel.information = 0
-                self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music"]!,images["btn_sound"]!,images["btn_chn"]!,images["btn_eng"]!])
-                
+            if(images["btn_close"]!.containsPoint(location) && (self.gameModel!.information == 1||self.gameModel!.page == 1)){
+                if(self.gameModel.information == 1){
+                    self.gameModel.information = 0
+                    self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music"]!,images["btn_sound"]!,images["btn_chn"]!,images["btn_eng"]!])
+                }
+                if(self.gameModel.page == 1){
+                    self.gameModel.page = 0
+                    self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!])
+                    for i in 0...MAX_SMALL_PAGES-1{
+                        images["s"+String(i)]!.zPosition = 2
+                        self.removeChildrenInArray([images["s"+String(i)]!])
+                    }
+                }
                 self.addChild(images["btn_info_normal"]!)
                 self.addChild(images["btn_page_normal"]!)
             }

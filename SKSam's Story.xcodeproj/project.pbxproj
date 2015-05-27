@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A87E58D31B15B110008B3254 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87E58D21B15B110008B3254 /* Main.storyboard */; };
+		A87E58D51B15B609008B3254 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87E58D41B15B609008B3254 /* GlobalConstants.swift */; };
 		A8E407451B1347BF005DA379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E407441B1347BF005DA379 /* AppDelegate.swift */; };
 		A8E407471B1347BF005DA379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8E407461B1347BF005DA379 /* GameScene.sks */; };
 		A8E407491B1347BF005DA379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E407481B1347BF005DA379 /* GameScene.swift */; };
 		A8E4074B1B1347BF005DA379 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4074A1B1347BF005DA379 /* GameViewController.swift */; };
-		A8E4074E1B1347BF005DA379 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8E4074C1B1347BF005DA379 /* Main.storyboard */; };
 		A8E407501B1347BF005DA379 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8E4074F1B1347BF005DA379 /* Images.xcassets */; };
 		A8E407531B1347BF005DA379 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8E407511B1347BF005DA379 /* LaunchScreen.xib */; };
 		A8E4075F1B1347BF005DA379 /* SKSam_s_StoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E4075E1B1347BF005DA379 /* SKSam_s_StoryTests.swift */; };
@@ -30,13 +31,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A87E58D21B15B110008B3254 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		A87E58D41B15B609008B3254 /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		A8E4073F1B1347BF005DA379 /* SKSam's Story.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKSam's Story.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E407431B1347BF005DA379 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8E407441B1347BF005DA379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A8E407461B1347BF005DA379 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		A8E407481B1347BF005DA379 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		A8E4074A1B1347BF005DA379 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		A8E4074D1B1347BF005DA379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A8E4074F1B1347BF005DA379 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		A8E407521B1347BF005DA379 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		A8E407581B1347BF005DA379 /* SKSam's StoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SKSam's StoryTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,16 +87,17 @@
 		A8E407411B1347BF005DA379 /* SKSam's Story */ = {
 			isa = PBXGroup;
 			children = (
+				A87E58D21B15B110008B3254 /* Main.storyboard */,
 				A8E407741B136C36005DA379 /* BearImages.atlas */,
 				A8E407441B1347BF005DA379 /* AppDelegate.swift */,
 				A8E407461B1347BF005DA379 /* GameScene.sks */,
 				A8E407481B1347BF005DA379 /* GameScene.swift */,
 				A8E4074A1B1347BF005DA379 /* GameViewController.swift */,
-				A8E4074C1B1347BF005DA379 /* Main.storyboard */,
 				A8E4074F1B1347BF005DA379 /* Images.xcassets */,
 				A8E407511B1347BF005DA379 /* LaunchScreen.xib */,
 				A8E407421B1347BF005DA379 /* Supporting Files */,
 				A8E407681B134BC3005DA379 /* GameModel.swift */,
+				A87E58D41B15B609008B3254 /* GlobalConstants.swift */,
 			);
 			path = "SKSam's Story";
 			sourceTree = "<group>";
@@ -205,10 +208,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8E407531B1347BF005DA379 /* LaunchScreen.xib in Resources */,
+				A87E58D31B15B110008B3254 /* Main.storyboard in Resources */,
 				A8E407501B1347BF005DA379 /* Images.xcassets in Resources */,
 				A8E407751B136C36005DA379 /* BearImages.atlas in Resources */,
 				A8E407471B1347BF005DA379 /* GameScene.sks in Resources */,
-				A8E4074E1B1347BF005DA379 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +231,7 @@
 			files = (
 				A8E407491B1347BF005DA379 /* GameScene.swift in Sources */,
 				A8E407691B134BC3005DA379 /* GameModel.swift in Sources */,
+				A87E58D51B15B609008B3254 /* GlobalConstants.swift in Sources */,
 				A8E4074B1B1347BF005DA379 /* GameViewController.swift in Sources */,
 				A8E407451B1347BF005DA379 /* AppDelegate.swift in Sources */,
 			);
@@ -252,14 +256,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A8E4074C1B1347BF005DA379 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8E4074D1B1347BF005DA379 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A8E407511B1347BF005DA379 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
