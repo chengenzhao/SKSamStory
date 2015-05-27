@@ -13,7 +13,7 @@ class GameModel{
     private var currentStage:Int?
     
     var information:Int = 0
-    var page:Int = 0
+//    var page:Int = 0
     var next:Int = 0
     var prev:Int = 0
     
@@ -31,9 +31,9 @@ class GameModel{
     var temp3:Int = 0
     var temp4:Int = 0
     
-    func getBarIconsMaxInt() -> Int{
-        return max(page, information)
-    }
+//    func getBarIconsMaxInt() -> Int{
+//        return max(page, information)
+//    }
     
     func update(){
         

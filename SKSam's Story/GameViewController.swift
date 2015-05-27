@@ -95,12 +95,9 @@ class GameViewController: UIViewController {
             switch swipeGesture.direction{
             case UISwipeGestureRecognizerDirection.Right:
                 scene.moveRight = true
-                println("right:"+String(stringInterpolationSegment: gameScene!.velocity))
-                
                 break
             case UISwipeGestureRecognizerDirection.Left:
                 scene.moveLeft = true
-                println("left:"+String(stringInterpolationSegment: gameScene!.velocity))
                 break
             default:
                 break

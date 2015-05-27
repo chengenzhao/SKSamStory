@@ -22,6 +22,7 @@ class GameScene: SKScene {
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
+    var bg:SKSpriteNode!
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -41,7 +42,6 @@ class GameScene: SKScene {
 //        self.addChild(myLabel)
         
 
-        
         x = screenSize.width/40
         y = screenSize.height*39/40
         
@@ -56,31 +56,31 @@ class GameScene: SKScene {
         
         createNode("accomplish1", x:screenSize.width*9/10, y:screenSize.height/20)
         createNode("accomplish2", x:screenSize.width*9/10, y:screenSize.height/20)
-        //0
-        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
-        //1
-        createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
-        createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
-        createNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*815.5/1536)
-        createNode("light", x:screenSize.width*163.5/2048, y:screenSize.height*674.5/1536)
-        createNode("toy", x:screenSize.width*113/2048, y:screenSize.height*1256/1536)
-        createNode("cat1", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-        createNode("cat2", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-        createNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*915.5/1536)
-        createNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*1032.5/1536)
-        createNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*846.5/1536)
-        createNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*847/1536)
-        createNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*444.5/1536)
-        createNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*1032/1536)
-        createNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*928/1536)
-        createNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*1084/1536)
-        //2
-        createNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*931/1536)
-        createNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*875.5/1536)
-        createNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*971.5/1536)
-        createNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*768/1536)
-        createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
-        createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
+//        //0
+//        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
+//        //1
+//        createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
+//        createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
+//        createNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*815.5/1536)
+//        createNode("light", x:screenSize.width*163.5/2048, y:screenSize.height*674.5/1536)
+//        createNode("toy", x:screenSize.width*113/2048, y:screenSize.height*1256/1536)
+//        createNode("cat1", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
+//        createNode("cat2", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
+//        createNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*915.5/1536)
+//        createNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*1032.5/1536)
+//        createNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*846.5/1536)
+//        createNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*847/1536)
+//        createNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*444.5/1536)
+//        createNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*1032/1536)
+//        createNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*928/1536)
+//        createNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*1084/1536)
+//        //2
+//        createNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*931/1536)
+//        createNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*875.5/1536)
+//        createNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*971.5/1536)
+//        createNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*768/1536)
+//        createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
+//        createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
         
         createNode("btn_music", x:screenSize.width*10/12, y:screenSize.height*19/20)
         createNode("btn_sound", x:screenSize.width*11/12, y:screenSize.height*19/20)
@@ -96,13 +96,12 @@ class GameScene: SKScene {
         createNode("s5")
         createNode("s6")
         
-        createNode("0-bg")
-        createNode("1-bg")
-        createNode("2-bg")
-        
         createNode("bar", x:screenSize.width*2.3/6, y:screenSize.height*(1-1.7/20))
         
-        self.addChild(images["0-bg"]!)
+        bg = SKSpriteNode(imageNamed:"0-bg")
+        bg.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        bg.zPosition = -1
+        self.addChild(bg)
         self.addChild(images["btn_info_normal"]!)
         self.addChild(images["btn_page_normal"]!)
         
@@ -139,7 +138,6 @@ class GameScene: SKScene {
                 resize: false,
                 restore: true)),
             withKey:"walkingInPlaceBear")
-        
         
     }
     
@@ -194,6 +192,14 @@ class GameScene: SKScene {
 //            sprite.runAction(SKAction.repeatActionForever(action))
 //            
 //            self.addChild(sprite)
+            
+            if self.gameModel!.information == 2{
+                for i in 0...MAX_SMALL_PAGES-1{
+                    if images["s"+String(i)]!.containsPoint(location) {
+                        self.setStage(i)
+                    }
+                }
+            }
         }
     }
     
@@ -219,12 +225,13 @@ class GameScene: SKScene {
         }
         
         for touch in (touches as! Set<UITouch>) {
+            
             let location = touch.locationInNode(self)
             
             if(images["btn_info_normal"]!.containsPoint(location)  && self.gameModel.information == 0){
                 images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_normal")
                 self.gameModel.information = 1
-                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!])
+                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!, rect!])
                 self.addChild(rect!)
                 
                 images["bar"]!.zPosition = 2
@@ -241,11 +248,12 @@ class GameScene: SKScene {
                 self.addChild(images["btn_eng"]!)
             }
             
-            if(images["btn_page_normal"]!.containsPoint(location)  && self.gameModel.page == 0){
+            if(images["btn_page_normal"]!.containsPoint(location)  && self.gameModel.information == 0){
                 images["btn_page_normal"]!.texture = SKTexture(imageNamed:"btn_page_normal")
-                self.gameModel.page = 1
+                self.gameModel.information = 2
                 
-                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!])
+                self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!, rect!])
+                
                 self.addChild(rect!)
                 
                 images["btn_close"]!.zPosition = 2
@@ -256,7 +264,6 @@ class GameScene: SKScene {
                     images["s"+String(i)]!.position = CGPointMake(x! + images["s"+String(i)]!.size.width/2 + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
                     self.addChild(images["s"+String(i)]!)
                 }
-                
             }
             
             if images["btn_music"]!.containsPoint(location) && self.gameModel!.information == 1{
@@ -277,13 +284,13 @@ class GameScene: SKScene {
                 }
             }
             
-            if(images["btn_close"]!.containsPoint(location) && (self.gameModel!.information == 1||self.gameModel!.page == 1)){
+            if(images["btn_close"]!.containsPoint(location) && (self.gameModel!.information == 1||self.gameModel!.information == 2)){
                 if(self.gameModel.information == 1){
                     self.gameModel.information = 0
                     self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music"]!,images["btn_sound"]!,images["btn_chn"]!,images["btn_eng"]!])
                 }
-                if(self.gameModel.page == 1){
-                    self.gameModel.page = 0
+                if(self.gameModel.information == 2){
+                    self.gameModel.information = 0
                     self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!])
                     for i in 0...MAX_SMALL_PAGES-1{
                         images["s"+String(i)]!.zPosition = 2
@@ -294,9 +301,10 @@ class GameScene: SKScene {
                 self.addChild(images["btn_page_normal"]!)
             }
             
+
+            
         }
     }
-    
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
@@ -307,7 +315,6 @@ class GameScene: SKScene {
             var barWidth:CGFloat = (images["s0"]!.size.width + screenSize.width/40) * CGFloat(MAX_SMALL_PAGES)
             
             var x = images["s0"]!.position.x
-            
             
             if(x + velocity <= screenSize.width - barWidth + images["s0"]!.size.width/2){
                 x = screenSize.width - barWidth + images["s0"]!.size.width/2
@@ -324,5 +331,41 @@ class GameScene: SKScene {
         
     }
     
+    func setStage(stage:Int){
+//        switch(stage){
+//        case 0:
+//            createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
+//            break
+//        case 1:
+//            createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
+//            createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
+//            createNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*815.5/1536)
+//            createNode("light", x:screenSize.width*163.5/2048, y:screenSize.height*674.5/1536)
+//            createNode("toy", x:screenSize.width*113/2048, y:screenSize.height*1256/1536)
+//            createNode("cat1", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
+//            createNode("cat2", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
+//            createNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*915.5/1536)
+//            createNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*1032.5/1536)
+//            createNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*846.5/1536)
+//            createNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*847/1536)
+//            createNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*444.5/1536)
+//            createNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*1032/1536)
+//            createNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*928/1536)
+//            createNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*1084/1536)
+//            break
+//        case 2:
+//            createNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*931/1536)
+//            createNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*875.5/1536)
+//            createNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*971.5/1536)
+//            createNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*768/1536)
+//            createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
+//            createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
+//            break
+//        default:
+//            break
+//        }
+        
+        bg.texture = SKTexture(imageNamed:String(stage)+"-bg")
+    }
 
 }
