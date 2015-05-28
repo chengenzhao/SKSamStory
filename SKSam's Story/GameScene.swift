@@ -23,6 +23,7 @@ class GameScene: SKScene {
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
+    var stageNodes = [SKNode]()
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -59,7 +60,7 @@ class GameScene: SKScene {
         }
         
         //0
-        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
+//        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
 //        //1
 //        createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
 //        createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
@@ -159,6 +160,13 @@ class GameScene: SKScene {
     func createNode(name:String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
         var node = self.createNode(name)
         node.position = CGPointMake(x,y)
+        return node
+    }
+    
+    func createSKNode(name:String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
+        var node = SKSpriteNode(imageNamed:name)
+        node.position = CGPointMake(x,y)
+        node.name = name
         return node
     }
     
@@ -352,9 +360,11 @@ class GameScene: SKScene {
                         
                         self.gameModel.window = self.gameModel.window == 0 ? 1 : 0
                         if self.gameModel.window==0{
-                            self.addChild(images["window"]!)
+                            var node = self.createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
+                            self.addChild(node)//images["window"]!
+                            stageNodes.append(node)
                         }else{
-                            self.removeChildrenInArray([images["window"]!])
+                            self.removeChildrenInArray([self.childNodeWithName("window")!])
                         }
                         
                         if self.gameModel.sound == 1 && self.gameModel.window == 1{
@@ -423,10 +433,13 @@ class GameScene: SKScene {
         
         self.gameModel.setStage(s)
         
-//        switch(stage){
-//        case 0:
-//            createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
-//            break
+        switch(stage){
+        case 0:
+            var node = createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
+            self.addChild(node)
+            self.stageNodes.append(node)
+            self.gameModel.window = 0
+            break
 //        case 1:
 //            createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
 //            createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
@@ -452,9 +465,9 @@ class GameScene: SKScene {
 //            createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
 //            createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
 //            break
-//        default:
-//            break
-//        }
+        default:
+            break
+        }
         
         self.removeChildrenInArray([images["accomplish0"]!,images["accomplish1"]!,images["accomplish2"]!,images["accomplish3"]!,images["accomplish4"]!])
         
@@ -487,13 +500,15 @@ class GameScene: SKScene {
     }
     
     func clean(){
-        switch(self.gameModel.getCurrentStage()){
-        case 0:
-            self.removeChildrenInArray([images["window"]!])
-            break
-        default:
-            break
-        }
+        self.removeChildrenInArray(self.stageNodes)
+        self.stageNodes.removeAll()
+//        switch self.gameModel.getCurrentStage(){
+//        case 0:
+//            self.gameModel.window = 0
+//            break
+//        default:
+//            break
+//        }
     }
     
     func updateAccomplish(){
