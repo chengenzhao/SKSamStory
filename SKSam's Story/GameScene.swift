@@ -23,7 +23,6 @@ class GameScene: SKScene {
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
-    var stageNodes = [SKNode]()
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -362,7 +361,6 @@ class GameScene: SKScene {
                         if self.gameModel.window==0{
                             var node = self.createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
                             self.addChild(node)//images["window"]!
-                            stageNodes.append(node)
                         }else{
                             self.removeChildrenInArray([self.childNodeWithName("window")!])
                         }
@@ -437,7 +435,6 @@ class GameScene: SKScene {
         case 0:
             var node = createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
             self.addChild(node)
-            self.stageNodes.append(node)
             self.gameModel.window = 0
             break
 //        case 1:
@@ -500,15 +497,15 @@ class GameScene: SKScene {
     }
     
     func clean(){
-        self.removeChildrenInArray(self.stageNodes)
-        self.stageNodes.removeAll()
-//        switch self.gameModel.getCurrentStage(){
-//        case 0:
-//            self.gameModel.window = 0
-//            break
-//        default:
-//            break
-//        }
+        switch self.gameModel.getCurrentStage(){
+        case 0:
+            if let node = self.childNodeWithName("window"){
+                self.removeChildrenInArray([node])
+            }
+            break
+        default:
+            break
+        }
     }
     
     func updateAccomplish(){
