@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		A87E58D31B15B110008B3254 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87E58D21B15B110008B3254 /* Main.storyboard */; };
 		A87E58D51B15B609008B3254 /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87E58D41B15B609008B3254 /* GlobalConstants.swift */; };
+		A8C268CE1B17139800A77A55 /* meow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8C268C81B17139800A77A55 /* meow.wav */; };
+		A8C268CF1B17139800A77A55 /* tapBell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268C91B17139800A77A55 /* tapBell.mp3 */; };
+		A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268CA1B17139800A77A55 /* childrenPlay.mp3 */; };
+		A8C268D11B17139800A77A55 /* guitar.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268CB1B17139800A77A55 /* guitar.mp3 */; };
+		A8C268D21B17139800A77A55 /* window.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268CC1B17139800A77A55 /* window.mp3 */; };
+		A8C268D31B17139800A77A55 /* music0.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268CD1B17139800A77A55 /* music0.mp3 */; };
+		A8C268D51B17141200A77A55 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8C268D41B17141200A77A55 /* GlobalVariables.swift */; };
 		A8E407451B1347BF005DA379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E407441B1347BF005DA379 /* AppDelegate.swift */; };
 		A8E407471B1347BF005DA379 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = A8E407461B1347BF005DA379 /* GameScene.sks */; };
 		A8E407491B1347BF005DA379 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E407481B1347BF005DA379 /* GameScene.swift */; };
@@ -33,6 +40,13 @@
 /* Begin PBXFileReference section */
 		A87E58D21B15B110008B3254 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		A87E58D41B15B609008B3254 /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
+		A8C268C81B17139800A77A55 /* meow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = meow.wav; sourceTree = "<group>"; };
+		A8C268C91B17139800A77A55 /* tapBell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tapBell.mp3; sourceTree = "<group>"; };
+		A8C268CA1B17139800A77A55 /* childrenPlay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = childrenPlay.mp3; sourceTree = "<group>"; };
+		A8C268CB1B17139800A77A55 /* guitar.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = guitar.mp3; sourceTree = "<group>"; };
+		A8C268CC1B17139800A77A55 /* window.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = window.mp3; sourceTree = "<group>"; };
+		A8C268CD1B17139800A77A55 /* music0.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music0.mp3; sourceTree = "<group>"; };
+		A8C268D41B17141200A77A55 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		A8E4073F1B1347BF005DA379 /* SKSam's Story.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SKSam's Story.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E407431B1347BF005DA379 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8E407441B1347BF005DA379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,6 +101,12 @@
 		A8E407411B1347BF005DA379 /* SKSam's Story */ = {
 			isa = PBXGroup;
 			children = (
+				A8C268C81B17139800A77A55 /* meow.wav */,
+				A8C268C91B17139800A77A55 /* tapBell.mp3 */,
+				A8C268CA1B17139800A77A55 /* childrenPlay.mp3 */,
+				A8C268CB1B17139800A77A55 /* guitar.mp3 */,
+				A8C268CC1B17139800A77A55 /* window.mp3 */,
+				A8C268CD1B17139800A77A55 /* music0.mp3 */,
 				A87E58D21B15B110008B3254 /* Main.storyboard */,
 				A8E407741B136C36005DA379 /* BearImages.atlas */,
 				A8E407441B1347BF005DA379 /* AppDelegate.swift */,
@@ -98,6 +118,7 @@
 				A8E407421B1347BF005DA379 /* Supporting Files */,
 				A8E407681B134BC3005DA379 /* GameModel.swift */,
 				A87E58D41B15B609008B3254 /* GlobalConstants.swift */,
+				A8C268D41B17141200A77A55 /* GlobalVariables.swift */,
 			);
 			path = "SKSam's Story";
 			sourceTree = "<group>";
@@ -207,11 +228,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C268CE1B17139800A77A55 /* meow.wav in Resources */,
 				A8E407531B1347BF005DA379 /* LaunchScreen.xib in Resources */,
+				A8C268D21B17139800A77A55 /* window.mp3 in Resources */,
 				A87E58D31B15B110008B3254 /* Main.storyboard in Resources */,
 				A8E407501B1347BF005DA379 /* Images.xcassets in Resources */,
 				A8E407751B136C36005DA379 /* BearImages.atlas in Resources */,
+				A8C268D31B17139800A77A55 /* music0.mp3 in Resources */,
+				A8C268D11B17139800A77A55 /* guitar.mp3 in Resources */,
+				A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */,
 				A8E407471B1347BF005DA379 /* GameScene.sks in Resources */,
+				A8C268CF1B17139800A77A55 /* tapBell.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8C268D51B17141200A77A55 /* GlobalVariables.swift in Sources */,
 				A8E407491B1347BF005DA379 /* GameScene.swift in Sources */,
 				A8E407691B134BC3005DA379 /* GameModel.swift in Sources */,
 				A87E58D51B15B609008B3254 /* GlobalConstants.swift in Sources */,

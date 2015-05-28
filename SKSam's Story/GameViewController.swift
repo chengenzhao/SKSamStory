@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
@@ -42,6 +43,12 @@ class GameViewController: UIViewController {
         var recognizerLeft = UISwipeGestureRecognizer(target: self, action:"respondToSwipeGesture:")
         recognizerLeft.direction = UISwipeGestureRecognizerDirection.Left
         view.addGestureRecognizer(recognizerLeft)
+        
+        musicPlayer = AVAudioPlayer(contentsOfURL: musicSound, error: nil)
+        
+        musicPlayer.prepareToPlay()
+        musicPlayer.numberOfLoops = -1
+        musicPlayer.play()
     }
     
     override func viewDidAppear(animated: Bool) {

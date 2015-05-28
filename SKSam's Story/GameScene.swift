@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene {
     
@@ -26,7 +27,7 @@ class GameScene: SKScene {
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
-        
+        setStage(0)
     }
     
     var bear : SKSpriteNode!
@@ -52,14 +53,14 @@ class GameScene: SKScene {
         createNode("btn_next_normal", x:screenSize.width*9/10, y:screenSize.height/2)
         createNode("btn_prev_normal", x:screenSize.width/10, y:screenSize.height/2)
         
-        createNode("accomplish0", x:screenSize.width*9/10, y:screenSize.height/20)
+        createNode("accomplish0", imageName:"accomplish1", x:screenSize.width*9.5/10, y:screenSize.height*19/20)
         for i in 1...4{
-            var x = screenSize.width*9/10 - images["accomplish0"]!.size.width*CGFloat(i)
-            createNode("accomplish"+String(i), x:x, y:screenSize.height/20)
+            var x = screenSize.width*9.5/10 - images["accomplish0"]!.size.width*CGFloat(i)
+            createNode("accomplish"+String(i), imageName:"accomplish1", x:x, y:screenSize.height*19/20)
         }
         
-//        //0
-//        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*978/1536)
+        //0
+        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
 //        //1
 //        createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
 //        createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
@@ -84,19 +85,15 @@ class GameScene: SKScene {
 //        createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
 //        createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
         
-        createNode("btn_music", x:screenSize.width*10/12, y:screenSize.height*19/20)
-        createNode("btn_sound", x:screenSize.width*11/12, y:screenSize.height*19/20)
+        createNode("btn_music_normal", x:screenSize.width*10/12, y:screenSize.height*19/20)
+        createNode("btn_sound_normal", x:screenSize.width*11/12, y:screenSize.height*19/20)
         
         createNode("btn_chn", x:screenSize.width*10.5/12, y:screenSize.height*8.7/10)
         createNode("btn_eng", x:screenSize.width*11.5/12, y:screenSize.height*8.7/10)
         
-        createNode("s0")
-        createNode("s1")
-        createNode("s2")
-        createNode("s3")
-        createNode("s4")
-        createNode("s5")
-        createNode("s6")
+        for i in 0...25{
+            createNode("s"+String(i))
+        }
         
         createNode("bar", x:screenSize.width*2.3/6, y:screenSize.height*(1-1.7/20))
         
@@ -109,7 +106,7 @@ class GameScene: SKScene {
         
         self.addChild(images["btn_next_normal"]!)
         self.addChild(images["btn_prev_normal"]!)
-        
+                
         rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width, screenSize.height*0.175))
         rect!.fillColor = UIColor(red: 197/255.0, green: 61/255.0, blue: 25/255.0, alpha: 1.0)
         rect!.strokeColor = rect!.fillColor
@@ -151,16 +148,25 @@ class GameScene: SKScene {
 //        self.createNode(name)
 //    }
     
+    func createNode(name:String, imageName:String) -> SKSpriteNode{
+        var node = SKSpriteNode(imageNamed:imageName)
+        node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        images[name] = node
+        return node
+    }
+    
     func createNode(name:String, x:CGFloat, y:CGFloat){
         var node = self.createNode(name)
         node.position = CGPointMake(x,y)
     }
     
+    func createNode(name:String, imageName:String, x:CGFloat, y:CGFloat){
+        var node = self.createNode(name,imageName:imageName)
+        node.position = CGPointMake(x,y)
+    }
+    
     func createNode(name:String) -> SKSpriteNode{
-        var node = SKSpriteNode(imageNamed:name)
-        node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-        images[name] = node
-        return node
+        return self.createNode(name, imageName: name)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -251,10 +257,10 @@ class GameScene: SKScene {
                 self.addChild(images["bar"]!)
                 images["btn_close"]!.zPosition = 2
                 self.addChild(images["btn_close"]!)
-                images["btn_music"]!.zPosition = 2
-                self.addChild(images["btn_music"]!)
-                images["btn_sound"]!.zPosition = 2
-                self.addChild(images["btn_sound"]!)
+                images["btn_music_normal"]!.zPosition = 2
+                self.addChild(images["btn_music_normal"]!)
+                images["btn_sound_normal"]!.zPosition = 2
+                self.addChild(images["btn_sound_normal"]!)
                 images["btn_chn"]!.zPosition = 2
                 self.addChild(images["btn_chn"]!)
                 images["btn_eng"]!.zPosition = 2
@@ -279,28 +285,37 @@ class GameScene: SKScene {
                 }
             }
             
-            if images["btn_music"]!.containsPoint(location) && self.gameModel!.information == 1{
+            if images["btn_music_normal"]!.containsPoint(location) && self.gameModel!.information == 1{
                 self.gameModel.music = self.gameModel.music == 0 ? 1:0
                 if self.gameModel.music == 0{
-                    images["btn_music"]!.texture = SKTexture(imageNamed: "btn_music_off")
+                    images["btn_music_normal"]!.texture = SKTexture(imageNamed: "btn_music_pressed")
                 }else{
-                    images["btn_music"]!.texture = SKTexture(imageNamed: "btn_music")
+                    images["btn_music_normal"]!.texture = SKTexture(imageNamed: "btn_music_normal")
+                }
+                
+                if self.gameModel!.music == 1 && !musicPlayer.playing
+                    && self.stageHasMusic(self.gameModel!.getCurrentStage()){
+                        musicPlayer.play()
+                }
+                
+                if self.gameModel!.music == 0 && musicPlayer.playing{
+                    musicPlayer.stop()
                 }
             }
             
-            if images["btn_sound"]!.containsPoint(location) && self.gameModel!.information == 1{
+            if images["btn_sound_normal"]!.containsPoint(location) && self.gameModel!.information == 1{
                 self.gameModel.sound = self.gameModel.sound == 0 ? 1:0
                 if self.gameModel.sound == 0{
-                    images["btn_sound"]!.texture = SKTexture(imageNamed: "btn_sound_off")
+                    images["btn_sound_normal"]!.texture = SKTexture(imageNamed: "btn_sound_pressed")
                 }else{
-                    images["btn_sound"]!.texture = SKTexture(imageNamed: "btn_sound")
+                    images["btn_sound_normal"]!.texture = SKTexture(imageNamed: "btn_sound_normal")
                 }
             }
             
             if(images["btn_close"]!.containsPoint(location) && (self.gameModel!.information == 1||self.gameModel!.information == 2)){
                 if(self.gameModel.information == 1){
                     self.gameModel.information = 0
-                    self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music"]!,images["btn_sound"]!,images["btn_chn"]!,images["btn_eng"]!])
+                    self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!,images["btn_music_normal"]!,images["btn_sound_normal"]!,images["btn_chn"]!,images["btn_eng"]!])
                 }
                 if(self.gameModel.information == 2){
                     self.gameModel.information = 0
@@ -317,13 +332,36 @@ class GameScene: SKScene {
             if(images["btn_next_normal"]!.containsPoint(location)){
                 images["btn_next_normal"]!.texture = SKTexture(imageNamed:"btn_next_normal")
                 var stage = self.gameModel.getCurrentStage()
-                self.gameModel.setStage(self.setStage(stage+1))
+                self.setStage(stage+1)
             }
             
             if(images["btn_prev_normal"]!.containsPoint(location)){
                 images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_normal")
                 var stage = self.gameModel.getCurrentStage()
-                self.gameModel.setStage(self.setStage(stage-1))
+                self.setStage(stage-1)
+            }
+            
+            switch(self.gameModel.getCurrentStage()){
+            case 0:
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                        self.gameModel.accomplished.remove("window")
+                        self.updateAccomplish()
+                        
+                        self.gameModel.window = self.gameModel.window == 0 ? 1 : 0
+                        if self.gameModel.window==0{
+                            self.addChild(images["window"]!)
+                        }else{
+                            self.removeChildrenInArray([images["window"]!])
+                        }
+                        
+                        if self.gameModel.sound == 1 && self.gameModel.window == 1{
+                            self.playSound("window")
+                        }
+                }
+                break
+            default:
+                break
             }
             
         }
@@ -347,6 +385,14 @@ class GameScene: SKScene {
                 x = x + velocity
             }
             
+            if velocity > 0{
+                velocity--
+            }
+            
+            if velocity < 0{
+                velocity++
+            }
+            
             for i in 0...MAX_SMALL_PAGES-1{
                 images["s"+String(i)]!.position = CGPointMake(x + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
             }
@@ -355,8 +401,25 @@ class GameScene: SKScene {
     }
     
     func setStage(stage:Int) -> Int{
+        
+        if self.stageHasMusic(stage) && self.gameModel!.music == 1{
+            musicPlayer.stop()
+            if stage==0 {
+                musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music0", ofType: "mp3")!)
+                musicPlayer = AVAudioPlayer(contentsOfURL: musicSound, error: nil)
+            }
+            
+            musicPlayer.play()
+        }else{
+            musicPlayer.stop()
+        }
+        
+        self.clean()
+        
         var s = stage < 0 ? 0 : stage
         s = s >= MAX_PAGES ? MAX_PAGES-1 : s
+        
+        self.gameModel.setStage(s)
         
 //        switch(stage){
 //        case 0:
@@ -391,11 +454,86 @@ class GameScene: SKScene {
 //            break
 //        }
         
+        self.removeChildrenInArray([images["accomplish0"]!,images["accomplish1"]!,images["accomplish2"]!,images["accomplish3"]!,images["accomplish4"]!])
         
+        for i in 0...self.gameModel.toAccomplish-1{
+            self.addChild(images["accomplish"+String(i)]!)
+        }
         
-        bg.texture = SKTexture(imageNamed:String(s)+"-bg")
+        self.updateAccomplish()
+        
+        var texture:SKTexture!
+        
+        if s == 22 || s==23{
+            texture = SKTexture(imageNamed:"20-bg")
+        }else if s == 11{
+            texture = SKTexture(imageNamed:"16-bg")
+        }else{
+            texture = SKTexture(imageNamed:String(s)+"-bg")
+        }
+        
+        bg.size = texture.size()
+        bg.texture = texture
+        
+        if s == 10 || s == 18{
+            bg.position = CGPointMake(0,bg.size.height/2)
+        }else{
+            bg.position = CGPointMake(bg.size.width/2,bg.size.height/2)
+        }
         
         return s
     }
+    
+    func clean(){
+        switch(self.gameModel.getCurrentStage()){
+        case 0:
+            self.removeChildrenInArray([images["window"]!])
+            break
+        default:
+            break
+        }
+    }
+    
+    func updateAccomplish(){
+        for i in 0...self.gameModel.toAccomplish-1{
+            if i < self.gameModel.toAccomplish - self.gameModel.accomplished.count{
+                images["accomplish"+String(i)]!.texture = SKTexture(imageNamed:"accomplish2")
+            }else{
+                images["accomplish"+String(i)]!.texture = SKTexture(imageNamed:"accomplish1")
+            }
+        }
+    }
+    
+    func stageHasMusic(stage:Int) -> Bool{
+        if stage == 0{
+            return true;
+        }
+        return false;
+    }
+    
+    func stageHasSound(stage:Int) -> Bool{
+        if stage == 1{
+            return true;
+        }
+        return false;
+    }
 
+    func playSound(name:String){
+        
+        var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!)
+        soundPlayer = AVAudioPlayer(contentsOfURL: sound, error: nil)
+        
+        soundPlayer.prepareToPlay()
+        soundPlayer.play()
+    }
+    
+    func playSound(name:String, type:String){
+        
+        var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: type)!)
+        soundPlayer = AVAudioPlayer(contentsOfURL: sound, error: nil)
+        
+        soundPlayer.prepareToPlay()
+        soundPlayer.play()
+    }
+    
 }
