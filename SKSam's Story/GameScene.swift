@@ -23,7 +23,6 @@ class GameScene: SKScene {
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
-    var bg:SKSpriteNode!
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -97,9 +96,10 @@ class GameScene: SKScene {
         
         createNode("bar", x:screenSize.width*2.3/6, y:screenSize.height*(1-1.7/20))
         
-        bg = SKSpriteNode(imageNamed:"0-bg")
+        var bg = SKSpriteNode(imageNamed:"0-bg")
         bg.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         bg.zPosition = -1
+        bg.name = "bg"
         self.addChild(bg)
         self.addChild(images["btn_info_normal"]!)
         self.addChild(images["btn_page_normal"]!)
@@ -152,12 +152,14 @@ class GameScene: SKScene {
         var node = SKSpriteNode(imageNamed:imageName)
         node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         images[name] = node
+        node.name = name
         return node
     }
     
-    func createNode(name:String, x:CGFloat, y:CGFloat){
+    func createNode(name:String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
         var node = self.createNode(name)
         node.position = CGPointMake(x,y)
+        return node
     }
     
     func createNode(name:String, imageName:String, x:CGFloat, y:CGFloat){
@@ -472,13 +474,13 @@ class GameScene: SKScene {
             texture = SKTexture(imageNamed:String(s)+"-bg")
         }
         
-        bg.size = texture.size()
-        bg.texture = texture
+        (self.childNodeWithName("bg") as! SKSpriteNode).size = texture.size()
+        (self.childNodeWithName("bg") as! SKSpriteNode).texture = texture
         
         if s == 10 || s == 18{
-            bg.position = CGPointMake(0,bg.size.height/2)
+            self.childNodeWithName("bg")!.position = CGPointMake(0,(self.childNodeWithName("bg") as! SKSpriteNode).size.height/2)
         }else{
-            bg.position = CGPointMake(bg.size.width/2,bg.size.height/2)
+            self.childNodeWithName("bg")!.position = CGPointMake((self.childNodeWithName("bg") as! SKSpriteNode).size.width/2,(self.childNodeWithName("bg") as! SKSpriteNode).size.height/2)
         }
         
         return s
