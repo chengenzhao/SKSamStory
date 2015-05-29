@@ -23,6 +23,7 @@ class GameScene: SKScene {
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
+    var node:SKSpriteNode?
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -49,40 +50,14 @@ class GameScene: SKScene {
         createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height*19/20)
         createNode("btn_close", x:screenSize.width/2, y:screenSize.height*(1-0.19))
         
-        createNode("btn_next_normal", x:screenSize.width*9/10, y:screenSize.height/2)
-        createNode("btn_prev_normal", x:screenSize.width/10, y:screenSize.height/2)
+        createNode("btn_next_normal", x:screenSize.width*19/20, y:screenSize.height/2)
+        createNode("btn_prev_normal", x:screenSize.width/20, y:screenSize.height/2)
         
         createNode("accomplish0", imageName:"accomplish1", x:screenSize.width*9.5/10, y:screenSize.height*19/20)
         for i in 1...4{
             var x = screenSize.width*9.5/10 - images["accomplish0"]!.size.width*CGFloat(i)
             createNode("accomplish"+String(i), imageName:"accomplish1", x:x, y:screenSize.height*19/20)
         }
-        
-        //0
-//        createNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
-//        //1
-//        createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
-//        createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
-//        createNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*815.5/1536)
-//        createNode("light", x:screenSize.width*163.5/2048, y:screenSize.height*674.5/1536)
-//        createNode("toy", x:screenSize.width*113/2048, y:screenSize.height*1256/1536)
-//        createNode("cat1", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-//        createNode("cat2", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-//        createNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*915.5/1536)
-//        createNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*1032.5/1536)
-//        createNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*846.5/1536)
-//        createNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*847/1536)
-//        createNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*444.5/1536)
-//        createNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*1032/1536)
-//        createNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*928/1536)
-//        createNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*1084/1536)
-//        //2
-//        createNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*931/1536)
-//        createNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*875.5/1536)
-//        createNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*971.5/1536)
-//        createNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*768/1536)
-//        createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
-//        createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
         
         createNode("btn_music_normal", x:screenSize.width*10/12, y:screenSize.height*19/20)
         createNode("btn_sound_normal", x:screenSize.width*11/12, y:screenSize.height*19/20)
@@ -101,12 +76,17 @@ class GameScene: SKScene {
         bg.zPosition = -1
         bg.name = "bg"
         self.addChild(bg)
+        
         self.addChild(images["btn_info_normal"]!)
         self.addChild(images["btn_page_normal"]!)
-        
         self.addChild(images["btn_next_normal"]!)
         self.addChild(images["btn_prev_normal"]!)
-                
+        
+        images["btn_info_normal"]!.zPosition = 2
+        images["btn_page_normal"]!.zPosition = 2
+        images["btn_next_normal"]!.zPosition = 2
+        images["btn_prev_normal"]!.zPosition = 2
+        
         rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width, screenSize.height*0.175))
         rect!.fillColor = UIColor(red: 197/255.0, green: 61/255.0, blue: 25/255.0, alpha: 1.0)
         rect!.strokeColor = rect!.fillColor
@@ -143,11 +123,6 @@ class GameScene: SKScene {
         
     }
     
-//    func createNode(name:String, x:CGFloat, y:CGFloat){
-//        coordinates[name] = (x,y)
-//        self.createNode(name)
-//    }
-    
     func createNode(name:String, imageName:String) -> SKSpriteNode{
         var node = SKSpriteNode(imageNamed:imageName)
         node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
@@ -176,6 +151,12 @@ class GameScene: SKScene {
     
     func createNode(name:String) -> SKSpriteNode{
         return self.createNode(name, imageName: name)
+    }
+    
+    func createAndAddSKNode(name: String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
+        var node = self.createSKNode(name, x: x, y: y)
+        self.addChild(node)
+        return node
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -362,7 +343,7 @@ class GameScene: SKScene {
                             var node = self.createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
                             self.addChild(node)//images["window"]!
                         }else{
-                            self.removeChildrenInArray([self.childNodeWithName("window")!])
+                            self.removeSKNode("window")
                         }
                         
                         if self.gameModel.sound == 1 && self.gameModel.window == 1{
@@ -433,35 +414,211 @@ class GameScene: SKScene {
         
         switch(stage){
         case 0:
-            var node = createSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
-            self.addChild(node)
+            createAndAddSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
             self.gameModel.window = 0
             break
-//        case 1:
-//            createNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*467.5/1536)
-//            createNode("photo", x:screenSize.width*262/2048, y:screenSize.height*469/1536)
-//            createNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*815.5/1536)
-//            createNode("light", x:screenSize.width*163.5/2048, y:screenSize.height*674.5/1536)
-//            createNode("toy", x:screenSize.width*113/2048, y:screenSize.height*1256/1536)
-//            createNode("cat1", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-//            createNode("cat2", x:screenSize.width*1658.5/2048, y:screenSize.height*988.5/1536)
-//            createNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*915.5/1536)
-//            createNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*1032.5/1536)
-//            createNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*846.5/1536)
-//            createNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*847/1536)
-//            createNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*444.5/1536)
-//            createNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*1032/1536)
-//            createNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*928/1536)
-//            createNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*1084/1536)
-//            break
-//        case 2:
-//            createNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*931/1536)
-//            createNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*875.5/1536)
-//            createNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*971.5/1536)
-//            createNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*768/1536)
-//            createNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*996/1536)
-//            createNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*1105/1536)
-//            break
+        case 1:
+            createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
+            createAndAddSKNode("photo", x:screenSize.width*262/2048, y:screenSize.height*(1-469/1536))
+            createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
+            createAndAddSKNode("light1", x:screenSize.width*163.5/2048, y:screenSize.height*(1-674.5/1536))
+            createAndAddSKNode("toy", x:screenSize.width*113/2048, y:screenSize.height*(1-1256/1536))
+            createAndAddSKNode("cat-1", x:screenSize.width*1658.5/2048, y:screenSize.height*(1-988.5/1536))
+            createAndAddSKNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*(1-915.5/1536))
+            createAndAddSKNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*(1-1032.5/1536))
+            createAndAddSKNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536))
+            createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
+            createAndAddSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
+            createAndAddSKNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
+            createAndAddSKNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536))
+            createAndAddSKNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536))
+            break
+        case 2:
+            createAndAddSKNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*540/1536)
+            createAndAddSKNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*(1-931/1536))
+            createAndAddSKNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*(1-875.5/1536))
+            createAndAddSKNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*(1-971.5/1536))
+            createAndAddSKNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*(1-768/1536))
+            createAndAddSKNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*(1-1105/1536))
+            break
+        case 3:
+            createAndAddSKNode("3-sam", x:screenSize.width*1193.5/2048, y:screenSize.height*(1-850.5/1536))
+            break
+        case 4:
+            createAndAddSKNode("4-door", x:screenSize.width*708.5/2048, y:screenSize.height*(1-598/1536))
+            createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
+            createAndAddSKNode("photo", x:screenSize.width*262/2048, y:screenSize.height*(1-469/1536))
+            createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
+            createAndAddSKNode("cat-1", x:screenSize.width*2004.5/2048, y:screenSize.height*(1-1140/1536))
+            createAndAddSKNode("4-box2", x:screenSize.width*1260.5/2048, y:screenSize.height*(1-1103.5/1536))
+            createAndAddSKNode("4-toy_inbox2", x:screenSize.width*1324/2048, y:screenSize.height*(1-975.5/1536))
+            createAndAddSKNode("4-ball", x:screenSize.width*1341.5/2048, y:screenSize.height*(1-1031.5/1536))
+            createAndAddSKNode("4-toy_inbox", x:screenSize.width*1213/2048, y:screenSize.height*(1-1004/1536))
+            createAndAddSKNode("4-car", x:screenSize.width*1002/2048, y:screenSize.height*(1-1262/1536))
+            createAndAddSKNode("4-boy_body", x:screenSize.width*792.5/2048, y:screenSize.height*(1-1086/1536))
+            createAndAddSKNode("4-boy_arm", x:screenSize.width*921.5/2048, y:screenSize.height*(1-1199/1536))
+            createAndAddSKNode("4-doll", x:screenSize.width*1429/2048, y:screenSize.height*(1-1221/1536))
+            createAndAddSKNode("4-magician", x:screenSize.width*406/2048, y:screenSize.height*(1-861.5/1536))
+            createAndAddSKNode("4-toy-1", x:screenSize.width*449/2048, y:screenSize.height*(1-788/1536))
+            createAndAddSKNode("4-lily_head", x:screenSize.width*1563/2048, y:screenSize.height*(1-1071/1536))
+            createAndAddSKNode("4-lily_body", x:screenSize.width*1441.5/2048, y:screenSize.height*(1-1328.5/1536))
+            createAndAddSKNode("4-box", x:screenSize.width*233.5/2048, y:screenSize.height*(1-1380.5/1536))
+            createAndAddSKNode("4-plane", x:screenSize.width*398.5/2048, y:screenSize.height*(1-1345/1536))
+            break
+        case 5:
+            createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
+            createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
+            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
+            break
+        case 6:
+            createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
+            createAndAddSKNode("6-lily", x:screenSize.width*1279.5/2048, y:screenSize.height*(1-815.5/1536))
+            createAndAddSKNode("6-light1", x:screenSize.width*922.5/2048, y:screenSize.height*(1-501.5/1536))
+            break
+        case 7:
+            createAndAddSKNode("cat-1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
+            createAndAddSKNode("7-doll", x:screenSize.width*614/2048, y:screenSize.height*(1-777.5/1536))
+            createAndAddSKNode("7-lily_leg_1", x:screenSize.width*802/2048, y:screenSize.height*(1-914/1536))
+            createAndAddSKNode("7-lily_arm_2", x:screenSize.width*1000.5/2048, y:screenSize.height*(1-572/1536))
+            createAndAddSKNode("7-lily_arm_1", x:screenSize.width*733.5/2048, y:screenSize.height*(1-561.5/1536))
+            createAndAddSKNode("7-lily", x:screenSize.width*869/2048, y:screenSize.height*(1-474.5/1536))
+            createAndAddSKNode("7-sam_leg_2", x:screenSize.width*1407/2048, y:screenSize.height*(1-1307.5/1536))
+            createAndAddSKNode("7-sam", x:screenSize.width*1402.4/2048, y:screenSize.height*(1-856.5/1536))
+            break
+        case 8:
+            createAndAddSKNode("8-tree_1", x:screenSize.width*493/2048, y:screenSize.height*(1-595/1536))
+            createAndAddSKNode("8-raven_1", x:screenSize.width*1831/2048, y:screenSize.height*(1-1184/1536))
+            createAndAddSKNode("8-lily", x:screenSize.width*646.5/2048, y:screenSize.height*(1-867/1536))
+            createAndAddSKNode("8-lily_leg_2", x:screenSize.width*660.5/2048, y:screenSize.height*(1-1021.5/1536))
+            createAndAddSKNode("8-lily_leg_1", x:screenSize.width*636/2048, y:screenSize.height*(1-1023/1536))
+            createAndAddSKNode("8-mouth1", x:screenSize.width*674.5/2048, y:screenSize.height*(1-803/1536))
+            createAndAddSKNode("8-sam_leg_1", x:screenSize.width*368.5/2048, y:screenSize.height*(1-1420/1536))
+            createAndAddSKNode("8-sam_leg_2", x:screenSize.width*452/2048, y:screenSize.height*(1-1440/1536))
+            createAndAddSKNode("8-sam_body", x:screenSize.width*451.5/2048, y:screenSize.height*(1-1175.5/1536))
+            break
+        case 9:
+            createAndAddSKNode("9-cape1", x:screenSize.width*1343/2048, y:screenSize.height*(1-957/1536))
+            createAndAddSKNode("9-body", x:screenSize.width*1272/2048, y:screenSize.height*(1-721.5/1536))
+            createAndAddSKNode("9-leg1", x:screenSize.width*1378/2048, y:screenSize.height*(1-1298/1536))
+            createAndAddSKNode("9-hand1", x:screenSize.width*937.5/2048, y:screenSize.height*(1-905/1536))
+            createAndAddSKNode("9-mouth1", x:screenSize.width*1325/2048, y:screenSize.height*(1-542.5/1536))
+
+            break
+        case 10:
+            createAndAddSKNode("10-mi", x:screenSize.width*(1564.5/2048 - 1), y:screenSize.height*(1-418.5/1536))
+            createAndAddSKNode("10-do", x:screenSize.width*(3693.5/2048 - 1), y:screenSize.height*(1-573.5/1536))
+            createAndAddSKNode("10-fa", x:screenSize.width*(1983.5/2048 - 1), y:screenSize.height*(1-886/1536))
+            createAndAddSKNode("10-si", x:screenSize.width*(2875/2048 - 1), y:screenSize.height*(1-938.5/1536))
+            createAndAddSKNode("10-re", x:screenSize.width*(2494/2048 - 1), y:screenSize.height*(1-539.5/1536))
+            createAndAddSKNode("10-doo", x:screenSize.width*(2428.5/2048 - 1), y:screenSize.height*(1-920/1536))
+            createAndAddSKNode("10-so", x:screenSize.width*(3509.5/2048 - 1), y:screenSize.height*(1-928/1536))
+            createAndAddSKNode("10-la", x:screenSize.width*(3219.5/2048 - 1), y:screenSize.height*(1-932/1536))
+            createAndAddSKNode("10-dragon1", x:screenSize.width*(1081/2048 - 1), y:screenSize.height*(1-1017.5/1536))
+            createAndAddSKNode("10-cloud", x:screenSize.width*(1806/2048 - 1), y:screenSize.height*(1-673/1536))
+            break
+        case 11:
+            createAndAddSKNode("11-tree", x:screenSize.width*689.5/2048, y:screenSize.height*(1-1244/1536))
+            createAndAddSKNode("11-step1", x:screenSize.width*758.5/2048, y:screenSize.height*(1-1083.5/1536))
+            createAndAddSKNode("11-dragon1", x:screenSize.width*1548/2048, y:screenSize.height*(1-400/1536))
+            createAndAddSKNode("11-mask", x:screenSize.width*1024/2048, y:screenSize.height*768/1536)
+            break
+        case 12:
+            createAndAddSKNode("12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536))
+            createAndAddSKNode("12-wing1", x:screenSize.width*1567/2048, y:screenSize.height*(1-1075/1536))
+            createAndAddSKNode("12-body", x:screenSize.width*1170/2048, y:screenSize.height*(1-873/1536))
+            createAndAddSKNode("12-head", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
+            createAndAddSKNode("12-fire1", x:screenSize.width*446/2048, y:screenSize.height*(1-630.5/1536))
+            createAndAddSKNode("12-fire2", x:screenSize.width*224/2048, y:screenSize.height*(1-873/1536))
+            break
+        case 13:
+            createAndAddSKNode("13-sam_l", x:screenSize.width*969/2048, y:screenSize.height*(1-727/1536))
+            createAndAddSKNode("13-state1", x:screenSize.width*1036/2048, y:screenSize.height*(1-764/1536))
+            createAndAddSKNode("13-sam_r_1", x:screenSize.width*1298.5/2048, y:screenSize.height*(1-756.5/1536))
+            createAndAddSKNode("13-sam_r_2", x:screenSize.width*1351/2048, y:screenSize.height*(1-750/1536))
+            createAndAddSKNode("13-sam_r_3", x:screenSize.width*1405.5/2048, y:screenSize.height*(1-664/1536))
+            createAndAddSKNode("13-tremble", x:screenSize.width*1109/2048, y:screenSize.height*(1-919.5/1536))
+            break
+        case 14:
+            createAndAddSKNode("12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536))
+            createAndAddSKNode("12-wing1", x:screenSize.width*1567/2048, y:screenSize.height*(1-1075/1536))
+            createAndAddSKNode("14-body", x:screenSize.width*1170/2048, y:screenSize.height*(1-873/1536))
+            createAndAddSKNode("12-head", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
+            createAndAddSKNode("14-hand", x:screenSize.width*910/2048, y:screenSize.height*(1-1154.5/1536))
+            break
+        case 15:
+            createAndAddSKNode("15-line", x:screenSize.width*947/2048, y:screenSize.height*(1-910.5/1536))
+            createAndAddSKNode("15-characters", x:screenSize.width*992/2048, y:screenSize.height*(1-653.5/1536))
+            break
+        case 16:
+            createAndAddSKNode("16_01", x:screenSize.width*54.5/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_02", x:screenSize.width*177.5/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_03", x:screenSize.width*319.5/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_04", x:screenSize.width*483/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_05", x:screenSize.width*680/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_06", x:screenSize.width*876/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_07", x:screenSize.width*1052/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_08", x:screenSize.width*1411.5/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_09", x:screenSize.width*1866/2048, y:screenSize.height*(1-65.5/1536))
+            createAndAddSKNode("16_10", x:screenSize.width*393.5/2048, y:screenSize.height*(1-226/1536))
+            createAndAddSKNode("16_11", x:screenSize.width*1152.5/2048, y:screenSize.height*(1-226/1536))
+            createAndAddSKNode("16_12", x:screenSize.width*1783/2048, y:screenSize.height*(1-226/1536))
+            createAndAddSKNode("16_13", x:screenSize.width*218/2048, y:screenSize.height*(1-651/1536))
+            createAndAddSKNode("16_14", x:screenSize.width*678.5/2048, y:screenSize.height*(1-694.5/1536))
+            createAndAddSKNode("16_15", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-720.5/1536))
+            createAndAddSKNode("16_16", x:screenSize.width*1591/2048, y:screenSize.height*(1-720.5/1536))
+            createAndAddSKNode("16_17", x:screenSize.width*1920/2048, y:screenSize.height*(1-720.5/1536))
+            createAndAddSKNode("16_18", x:screenSize.width*218/2048, y:screenSize.height*(1-1258.5/1536))
+            createAndAddSKNode("16_19", x:screenSize.width*678.5/2048, y:screenSize.height*(1-1302/1536))
+            createAndAddSKNode("16_20", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-1328/1536))
+            createAndAddSKNode("16_21", x:screenSize.width*1719/2048, y:screenSize.height*(1-1328/1536))
+            break
+        case 17:
+            createAndAddSKNode("17-smoke", x:screenSize.width*1188/2048, y:screenSize.height*(1-520.5/1536))
+            createAndAddSKNode("17-fire", x:screenSize.width*959/2048, y:screenSize.height*(1-1132/1536))
+            break
+        case 18:
+            createAndAddSKNode("18-smoke", x:0, y:screenSize.height*(1-768/1536))
+            createAndAddSKNode("18-sam", x:screenSize.width*(2969-2048)/2048, y:screenSize.height*(1-768/1536))
+            createAndAddSKNode("18-lily", x:screenSize.width*(1699.5-2048)/2048, y:screenSize.height*(1-1044.5/1536))
+            createAndAddSKNode("18-tear1", x:screenSize.width*(3273.5-2048)/2048, y:screenSize.height*(1-809.5/1536))
+            break
+        case 19:
+            createAndAddSKNode("19-mom1", x:screenSize.width*756/2048, y:screenSize.height*(1-710.5/1536))
+            createAndAddSKNode("19-sam1", x:screenSize.width*1882/2048, y:screenSize.height*(1-1449.5/1536))
+            break
+        case 20:
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
+            createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
+            createAndAddSKNode("20-flying1", x:screenSize.width*911.5/2048, y:screenSize.height*(1-287.5/1536))
+            createAndAddSKNode("20-flying2", x:screenSize.width*1470/2048, y:screenSize.height*(1-250/1536))
+            createAndAddSKNode("20-rock", x:screenSize.width*1161/2048, y:screenSize.height*(1-1038/1536))
+            break
+        case 21:
+            createAndAddSKNode("21-state1", x:screenSize.width*1030/2048, y:screenSize.height*(1-759.5/1536))
+            createAndAddSKNode("21-mask", x:screenSize.width*1024/2048, y:screenSize.height*(768/1536))
+            break
+        case 22:
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
+            createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
+            createAndAddSKNode("22-mom", x:screenSize.width*550/2048, y:screenSize.height*(1-600/1536)).zPosition = 1
+            createAndAddSKNode("22-sam", x:screenSize.width*1129/2048, y:screenSize.height*(1-929/1536)).zPosition = 1
+            createAndAddSKNode("22-lily", x:screenSize.width*1604/2048, y:screenSize.height*(1-1012.5/1536)).zPosition = 1
+            break
+        case 23:
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
+            createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
+            createAndAddSKNode("23-state1", x:screenSize.width*1122/2048, y:screenSize.height*(1-910/1536)).zPosition = 1
+            break;
+        case 24:
+            createAndAddSKNode("24-water1", x:screenSize.width*1460.5/2048, y:screenSize.height*(1-1034.5/1536))
+            createAndAddSKNode("24-tree1", x:screenSize.width*557.5/2048, y:screenSize.height*(1-786/1536))
+            break
+        case 25:
+            createAndAddSKNode("25-lady1", x:screenSize.width*1105/2048, y:screenSize.height*(1-508/1536))
+            createAndAddSKNode("25-river", x:screenSize.width*1024/2048, y:screenSize.height*(1-933/1536))
+            createAndAddSKNode("25-lady2", x:screenSize.width*562.5/2048, y:screenSize.height*(1-754.5/1536))
+            
+            break
         default:
             break
         }
@@ -499,12 +656,202 @@ class GameScene: SKScene {
     func clean(){
         switch self.gameModel.getCurrentStage(){
         case 0:
-            if let node = self.childNodeWithName("window"){
-                self.removeChildrenInArray([node])
+            self.removeSKNode("window")
+            break
+        case 1:
+            self.removeSKNode("frame")
+            self.removeSKNode("photo")
+            self.removeSKNode("fire")
+            self.removeSKNode("light1")
+            self.removeSKNode("toy")
+            self.removeSKNode("cat-1")
+            self.removeSKNode("teacher")
+            self.removeSKNode("boy")
+            self.removeSKNode("boy_arm_r")
+            self.removeSKNode("boy_arm_l")
+            self.removeSKNode("note")
+            self.removeSKNode("1-lily")
+            self.removeSKNode("1-lily-r")
+            self.removeSKNode("1-lily-l")
+            break
+        case 2:
+            self.removeSKNode("2-lily")
+            self.removeSKNode("2-lily-1")
+            self.removeSKNode("2-lily-2")
+            self.removeSKNode("2-teacher")
+            self.removeSKNode("2-fire")
+            self.removeSKNode("2-sam")
+            break
+        case 3:
+            self.removeSKNode("3-sam")
+            break
+        case 4:
+            self.removeSKNode("4-door")
+            self.removeSKNode("frame")
+            self.removeSKNode("photo")
+            self.removeSKNode("fire")
+            self.removeSKNode("cat-1")
+            self.removeSKNode("4-box2")
+            self.removeSKNode("4-toy_inbox2")
+            self.removeSKNode("4-ball")
+            self.removeSKNode("4-toy_inbox")
+            self.removeSKNode("4-car")
+            self.removeSKNode("4-boy_body")
+            self.removeSKNode("4-boy_arm")
+            self.removeSKNode("4-doll")
+            self.removeSKNode("4-magician")
+            self.removeSKNode("4-toy-1")
+            self.removeSKNode("4-lily_head")
+            self.removeSKNode("4-lily_body")
+            self.removeSKNode("4-box")
+            self.removeSKNode("4-plane")
+            break
+        case 5:
+            self.removeSKNode("5-TV")
+            self.removeSKNode("5-sam")
+            self.removeSKNode("5-llily1")
+            break
+        case 6:
+            self.removeSKNode("wcat1")
+            self.removeSKNode("6-lily")
+            self.removeSKNode("6-light1")
+            break
+        case 7:
+            self.removeSKNode("cat-1")
+            self.removeSKNode("7-doll")
+            self.removeSKNode("7-lily_leg_1")
+            self.removeSKNode("7-lily_arm_2")
+            self.removeSKNode("7-lily_arm_1")
+            self.removeSKNode("7-lily")
+            self.removeSKNode("7-sam_leg_2")
+            self.removeSKNode("7-sam")
+            break
+        case 8:
+            self.removeSKNode("8-tree_1")
+            self.removeSKNode("8-raven_1")
+            self.removeSKNode("8-lily")
+            self.removeSKNode("8-lily_leg_2")
+            self.removeSKNode("8-lily_leg_1")
+            self.removeSKNode("8-mouth1")
+            self.removeSKNode("8-sam_leg_1")
+            self.removeSKNode("8-sam_leg_2")
+            self.removeSKNode("8-sam_body")
+            break
+        case 9:
+            self.removeSKNode("9-cape1")
+            self.removeSKNode("9-body")
+            self.removeSKNode("9-leg1")
+            self.removeSKNode("9-hand1")
+            self.removeSKNode("9-mouth1")
+            break
+        case 10:
+            self.removeSKNode("10-mi")
+            self.removeSKNode("10-do")
+            self.removeSKNode("10-fa")
+            self.removeSKNode("10-si")
+            self.removeSKNode("10-re")
+            self.removeSKNode("10-doo")
+            self.removeSKNode("10-so")
+            self.removeSKNode("10-la")
+            self.removeSKNode("10-dragon1")
+            self.removeSKNode("10-cloud")
+            break
+        case 11:
+            self.removeSKNode("11-step1")
+            self.removeSKNode("11-dragon1")
+            self.removeSKNode("11-mask")
+            self.removeSKNode("11-tree")
+            break
+        case 12:
+            self.removeSKNode("12-wing1")
+            self.removeSKNode("12-wing2")
+            self.removeSKNode("12-head")
+            self.removeSKNode("12-body")
+            self.removeSKNode("12-fire1")
+            self.removeSKNode("12-fire2")
+            break
+        case 13:
+            self.removeSKNode("13-sam_l")
+            self.removeSKNode("13-state1")
+            self.removeSKNode("13-sam_r_1")
+            self.removeSKNode("13-sam_r_2")
+            self.removeSKNode("13-sam_r_3")
+            self.removeSKNode("13-tremble")
+            break
+        case 14:
+            self.removeSKNode("12-wing2")
+            self.removeSKNode("12-wing1")
+            self.removeSKNode("14-body")
+            self.removeSKNode("12-head")
+            self.removeSKNode("14-hand")
+            break
+        case 15:
+            self.removeSKNode("15-line")
+            self.removeSKNode("15-characters")
+            break
+        case 16:
+            for i in 1...21{
+                if i<10 {
+                    self.removeSKNode("16_0"+String(i))
+                }else{
+                    self.removeSKNode("16_"+String(i))
+                }
             }
+            break
+        case 17:
+            self.removeSKNode("17-smoke")
+            self.removeSKNode("17-fire")
+            break
+        case 18:
+            self.removeSKNode("18-smoke")
+            self.removeSKNode("18-sam")
+            self.removeSKNode("18-lily")
+            self.removeSKNode("18-tear1")
+            break
+        case 19:
+            self.removeSKNode("19-mom1")
+            self.removeSKNode("19-sam1")
+            break
+        case 20:
+            self.removeSKNode("20-moutain")
+            self.removeSKNode("20-ground")
+            self.removeSKNode("20-flying1")
+            self.removeSKNode("20-flying2")
+            self.removeSKNode("20-rock")
+            break
+        case 21:
+            self.removeSKNode("21-mask")
+            self.removeSKNode("21-state1")
+            break
+        case 22:
+            self.removeSKNode("20-moutain")
+            self.removeSKNode("20-ground")
+            self.removeSKNode("22-mom")
+            self.removeSKNode("22-sam")
+            self.removeSKNode("22-lily")
+            break
+        case 23:
+            self.removeSKNode("20-moutain")
+            self.removeSKNode("20-ground")
+            self.removeSKNode("23-state1")
+            break
+        case 24:
+            self.removeSKNode("24-water1")
+            self.removeSKNode("24-tree1")
+            break
+        case 25:
+            self.removeSKNode("25-lady1")
+            self.removeSKNode("25-river")
+            self.removeSKNode("25-lady2")
             break
         default:
             break
+        }
+    }
+    
+    func removeSKNode(name:String){
+        if let node = self.childNodeWithName(name){
+            self.removeChildrenInArray([node])
         }
     }
     
