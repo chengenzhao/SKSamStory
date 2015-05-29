@@ -3,16 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "wcat2.png"
+      "filename" : "shake2.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "wcat2@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "shake2@2x.png"
     }
   ],
   "info" : {

@@ -209,6 +209,8 @@ class GameScene: SKScene {
                     }
                 }
             }
+            
+           
         }
     }
     
@@ -336,6 +338,7 @@ class GameScene: SKScene {
                 if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
                     && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
                         self.gameModel.accomplished.remove("window")
+                        self.removeSKNode("touch1")
                         self.updateAccomplish()
                         
                         self.gameModel.window = self.gameModel.window == 0 ? 1 : 0
@@ -351,6 +354,13 @@ class GameScene: SKScene {
                         }
                 }
                 break
+            case 16:
+                if let node = self.childNodeWithName("touch1"){
+                    if node.containsPoint(location){
+                        self.removeSKNode("touch1")
+                    }
+                }
+                break
             default:
                 break
             }
@@ -361,6 +371,65 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         gameModel!.update()
+        
+        switch self.gameModel.getCurrentStage(){
+        case 0:
+            self.gameModel.temp0 += 1
+            if self.gameModel.temp0 % 13 == 0{
+                if let node = self.childNodeWithName("touch1") as? SKSpriteNode{
+                    if self.gameModel.temp0 % 26 == 0{
+                        node.texture = SKTexture(imageNamed:"touch1")
+                    }else{
+                        node.texture = SKTexture(imageNamed:"touch2")
+                    }
+                }
+            }
+            break
+        case 1:
+            self.gameModel.temp0 += 1
+            if self.gameModel.temp0 % 13 == 0{
+                if let node = self.childNodeWithName("shake1") as? SKSpriteNode{
+                    if self.gameModel.temp0 % 26 == 0{
+                        node.texture = SKTexture(imageNamed:"shake1")
+                    }else{
+                        node.texture = SKTexture(imageNamed:"shake2")
+                    }
+                }
+            }
+            break
+        case 16:
+            self.gameModel.temp0 += 1
+            if self.gameModel.temp0 % 13 == 0{
+                if let node = self.childNodeWithName("touch1") as? SKSpriteNode{
+                    if self.gameModel.temp0 % 26 == 0{
+                        node.texture = SKTexture(imageNamed:"touch1")
+                    }else{
+                        node.texture = SKTexture(imageNamed:"touch2")
+                    }
+                }
+            }
+            break
+        case 10:
+            if let node = self.childNodeWithName("swipe"){
+                self.gameModel.temp0 += 1
+                if self.gameModel.temp0 > 75{
+                    self.gameModel.temp0 = 0
+                }
+                node.position.x = CGFloat(252/2+self.gameModel.temp0)
+            }
+            break
+        case 18:
+            if let node = self.childNodeWithName("swipe"){
+                self.gameModel.temp0 += 1
+                if self.gameModel.temp0 > 75{
+                    self.gameModel.temp0 = 0
+                }
+                node.position.x = CGFloat(252/2+self.gameModel.temp0)
+            }
+            break
+        default:
+            break
+        }
         
         if self.moveRight || self.moveLeft{
             
@@ -416,9 +485,19 @@ class GameScene: SKScene {
         case 0:
             createAndAddSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
             self.gameModel.window = 0
+            
+            createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
             break
         case 1:
-            createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
+            var tn = createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
+            tn.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "frame"), size: tn.size)
+            if let pb = tn.physicsBody{
+                pb.affectedByGravity = true
+                pb.allowsRotation = true
+                pb.dynamic = true
+                pb.pinned = true
+            }
+            
             createAndAddSKNode("photo", x:screenSize.width*262/2048, y:screenSize.height*(1-469/1536))
             createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
             createAndAddSKNode("light1", x:screenSize.width*163.5/2048, y:screenSize.height*(1-674.5/1536))
@@ -432,6 +511,7 @@ class GameScene: SKScene {
             createAndAddSKNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
             createAndAddSKNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536))
             createAndAddSKNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536))
+            createAndAddSKNode("shake1", x: screenSize.width*874/2048, y:screenSize.height*(1-269/1536))
             break
         case 2:
             createAndAddSKNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*540/1536)
@@ -513,8 +593,12 @@ class GameScene: SKScene {
             createAndAddSKNode("10-doo", x:screenSize.width*(2428.5/2048 - 1), y:screenSize.height*(1-920/1536))
             createAndAddSKNode("10-so", x:screenSize.width*(3509.5/2048 - 1), y:screenSize.height*(1-928/1536))
             createAndAddSKNode("10-la", x:screenSize.width*(3219.5/2048 - 1), y:screenSize.height*(1-932/1536))
-            createAndAddSKNode("10-dragon1", x:screenSize.width*(1081/2048 - 1), y:screenSize.height*(1-1017.5/1536))
-            createAndAddSKNode("10-cloud", x:screenSize.width*(1806/2048 - 1), y:screenSize.height*(1-673/1536))
+            createAndAddSKNode("10-dragon1", x:screenSize.width*(1081.0/2048 - 1), y:screenSize.height*(1-1017.5/1536))
+            createAndAddSKNode("10-cloud", x:screenSize.width*(1806.0/2048 - 1), y:screenSize.height*(1-673/1536))
+            
+            createAndAddSKNode("swipeline", x:screenSize.width*300/2048, y:screenSize.height*(1-650.0/1536))
+            createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
+            
             break
         case 11:
             createAndAddSKNode("11-tree", x:screenSize.width*689.5/2048, y:screenSize.height*(1-1244/1536))
@@ -571,6 +655,7 @@ class GameScene: SKScene {
             createAndAddSKNode("16_19", x:screenSize.width*678.5/2048, y:screenSize.height*(1-1302/1536))
             createAndAddSKNode("16_20", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-1328/1536))
             createAndAddSKNode("16_21", x:screenSize.width*1719/2048, y:screenSize.height*(1-1328/1536))
+            createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
             break
         case 17:
             createAndAddSKNode("17-smoke", x:screenSize.width*1188/2048, y:screenSize.height*(1-520.5/1536))
@@ -581,6 +666,10 @@ class GameScene: SKScene {
             createAndAddSKNode("18-sam", x:screenSize.width*(2969-2048)/2048, y:screenSize.height*(1-768/1536))
             createAndAddSKNode("18-lily", x:screenSize.width*(1699.5-2048)/2048, y:screenSize.height*(1-1044.5/1536))
             createAndAddSKNode("18-tear1", x:screenSize.width*(3273.5-2048)/2048, y:screenSize.height*(1-809.5/1536))
+            
+            createAndAddSKNode("swipeline", x:screenSize.width*300/2048, y:screenSize.height*(1-650.0/1536))
+            createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
+            
             break
         case 19:
             createAndAddSKNode("19-mom1", x:screenSize.width*756/2048, y:screenSize.height*(1-710.5/1536))
@@ -657,6 +746,7 @@ class GameScene: SKScene {
         switch self.gameModel.getCurrentStage(){
         case 0:
             self.removeSKNode("window")
+            self.removeSKNode("touch1")
             break
         case 1:
             self.removeSKNode("frame")
@@ -673,6 +763,7 @@ class GameScene: SKScene {
             self.removeSKNode("1-lily")
             self.removeSKNode("1-lily-r")
             self.removeSKNode("1-lily-l")
+            self.removeSKNode("shake1")
             break
         case 2:
             self.removeSKNode("2-lily")
@@ -755,6 +846,8 @@ class GameScene: SKScene {
             self.removeSKNode("10-la")
             self.removeSKNode("10-dragon1")
             self.removeSKNode("10-cloud")
+            self.removeSKNode("swipeline")
+            self.removeSKNode("swipe")
             break
         case 11:
             self.removeSKNode("11-step1")
@@ -797,6 +890,7 @@ class GameScene: SKScene {
                     self.removeSKNode("16_"+String(i))
                 }
             }
+            self.removeSKNode("touch1")
             break
         case 17:
             self.removeSKNode("17-smoke")
@@ -807,6 +901,8 @@ class GameScene: SKScene {
             self.removeSKNode("18-sam")
             self.removeSKNode("18-lily")
             self.removeSKNode("18-tear1")
+            self.removeSKNode("swipeline")
+            self.removeSKNode("swipe")
             break
         case 19:
             self.removeSKNode("19-mom1")
@@ -895,6 +991,16 @@ class GameScene: SKScene {
         
         soundPlayer.prepareToPlay()
         soundPlayer.play()
+    }
+    
+    func shake(){
+        switch(self.gameModel.getCurrentStage()){
+        case 1:
+            self.removeSKNode("shake1")
+            break
+        default:
+            break
+        }
     }
     
 }

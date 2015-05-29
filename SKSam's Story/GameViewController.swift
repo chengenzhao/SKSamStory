@@ -94,7 +94,7 @@ class GameViewController: UIViewController {
     }
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer){
-        
+//        println("test");
         if let scene = gameScene{
         
         if let swipeGesture = gesture as? UISwipeGestureRecognizer{
@@ -131,5 +131,14 @@ class GameViewController: UIViewController {
             gameScene!.velocity = location.x - startPoint.x
         }
     }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        if motion == .MotionShake{
+            if let scene = self.gameScene{
+                scene.shake()
+            }
+        }
+    }
+    
     
 }

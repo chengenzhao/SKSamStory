@@ -31,10 +31,6 @@ class GameModel{
     var temp3:Int = 0
     var temp4:Int = 0
     
-//    func getBarIconsMaxInt() -> Int{
-//        return max(page, information)
-//    }
-    
     func update(){
         
     }
