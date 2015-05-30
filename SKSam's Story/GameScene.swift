@@ -312,13 +312,17 @@ class GameScene: SKScene {
             if(images["btn_next_normal"]!.containsPoint(location)){
                 images["btn_next_normal"]!.texture = SKTexture(imageNamed:"btn_next_normal")
                 var stage = self.gameModel.getCurrentStage()
-                self.setStage(stage+1)
+                if stage < MAX_PAGES-1{
+                    self.setStage(stage+1)
+                }
             }
             
             if(images["btn_prev_normal"]!.containsPoint(location)){
                 images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_normal")
                 var stage = self.gameModel.getCurrentStage()
-                self.setStage(stage-1)
+                if stage > 0{
+                    self.setStage(stage-1)
+                }
             }
             
             switch(self.gameModel.getCurrentStage()){
@@ -394,7 +398,6 @@ class GameScene: SKScene {
             }
         }
     }
-    
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
