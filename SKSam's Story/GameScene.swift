@@ -373,6 +373,29 @@ class GameScene: SKScene {
         }
     }
     
+    func alternateAlpha(name:String, alpha0:CGFloat, alpha1: CGFloat, index:Int){
+        if let node = self.childNodeWithName(name) as? SKSpriteNode{
+            dic[name] = dic[name] == nil ? 1: nil
+            if dic[name] == nil{
+                node.alpha = alpha0
+            }else{
+                node.alpha = alpha1
+            }
+        }
+    }
+    
+    func alternateImage(name:String, image1: SKTexture, index:Int){
+        if let node = self.childNodeWithName(name) as? SKSpriteNode{
+            dic[name] = dic[name] == nil ? 1: nil
+            if dic[name] == nil{
+                node.texture = SKTexture(imageNamed:name)
+            }else{
+                node.texture = image1
+            }
+        }
+    }
+    
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         gameModel!.update()
@@ -381,37 +404,23 @@ class GameScene: SKScene {
         case 0:
             self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
-                if let node = self.childNodeWithName("touch1") as? SKSpriteNode{
-                    if self.gameModel.temp0 % 26 == 0{
-                        node.texture = SKTexture(imageNamed:"touch1")
-                    }else{
-                        node.texture = SKTexture(imageNamed:"touch2")
-                    }
-                }
+                self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
             }
             break
         case 1:
             self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
-                if let node = self.childNodeWithName("shake1") as? SKSpriteNode{
-                    if self.gameModel.temp0 % 26 == 0{
-                        node.texture = SKTexture(imageNamed:"shake1")
-                    }else{
-                        node.texture = SKTexture(imageNamed:"shake2")
-                    }
-                }
+                
+                self.alternateImage("shake1", image1: SKTexture(imageNamed: "shake2"), index: self.gameModel.temp0 % 26)
+                
+                self.alternateAlpha("fire", alpha0: 200.0/255, alpha1: 0.5, index:self.gameModel.temp0 % 26)
+                
             }
             break
         case 16:
             self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
-                if let node = self.childNodeWithName("touch1") as? SKSpriteNode{
-                    if self.gameModel.temp0 % 26 == 0{
-                        node.texture = SKTexture(imageNamed:"touch1")
-                    }else{
-                        node.texture = SKTexture(imageNamed:"touch2")
-                    }
-                }
+                self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
             }
             break
         case 10:
@@ -489,8 +498,6 @@ class GameScene: SKScene {
         switch(stage){
         case 0:
             createAndAddSKNode("window", x:screenSize.width*756/2048, y:screenSize.height*(1536-978)/1536)
-            self.gameModel.window = 0
-            
             createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
             break
         case 1:
@@ -505,7 +512,7 @@ class GameScene: SKScene {
             createAndAddSKNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536))
             createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
             createAndAddSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
-            createAndAddSKNode("1-lily", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
+            createAndAddSKNode("lily_body", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
             createAndAddSKNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536))
             createAndAddSKNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536))
             createAndAddSKNode("shake1", x: screenSize.width*874/2048, y:screenSize.height*(1-269/1536))
@@ -758,7 +765,7 @@ class GameScene: SKScene {
             self.removeSKNode("boy_arm_r")
             self.removeSKNode("boy_arm_l")
             self.removeSKNode("note")
-            self.removeSKNode("1-lily")
+            self.removeSKNode("lily_body")
             self.removeSKNode("1-lily-r")
             self.removeSKNode("1-lily-l")
             self.removeSKNode("shake1")

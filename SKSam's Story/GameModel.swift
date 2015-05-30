@@ -46,6 +46,7 @@ class GameModel{
     
     func setStage(stage:Int){
         currentStage = stage
+        window = 0
         tempM1 = 0
         temp0 = 0
         temp1 = CGFloat(0)
