@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import AVFoundation
+import CoreMotion
 
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
@@ -31,6 +32,8 @@ class GameViewController: UIViewController {
     var gameModel:GameModel?
     var gameScene:GameScene?
     
+    let motionManager:CMMotionManager = CMMotionManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,6 +52,59 @@ class GameViewController: UIViewController {
         musicPlayer.prepareToPlay()
         musicPlayer.numberOfLoops = -1
         musicPlayer.play()
+        
+        
+        if  motionManager.accelerometerAvailable{
+            
+            if  motionManager.accelerometerActive  ==  false{
+                
+                motionManager.accelerometerUpdateInterval  =  40.0  /  40.0
+                
+                motionManager.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue(),
+                    withHandler:  {(data:  CMAccelerometerData!,  error:  NSError!)  in
+                        
+//                        println("Acceleration  x  =  \(data.acceleration.x)")
+//                        println("Acceleration  y  =  \(data.acceleration.y)")
+//                        println("Acceleration  z  =  \(data.acceleration.z)")
+                        self.rotate(data.acceleration.x, y: data.acceleration.y)
+                        
+                })
+                
+            }  else  {
+                println("Gyro  is  already  active")
+            }
+            
+        }  else  {
+            println("Gyro  isn't  available")
+        }
+        
+//        if  motionManager.gyroAvailable{
+//            
+//            if  motionManager.gyroActive  ==  false{
+//                
+//                motionManager.gyroUpdateInterval  =  40.0*10  /  40.0
+//                
+//                motionManager.startGyroUpdatesToQueue(NSOperationQueue.currentQueue(),
+//                    withHandler:  {(data:  CMGyroData!,  error:  NSError!)  in
+//                        
+//                        println("Gyro  Rotation  x  =  \(data.rotationRate.x)")
+//                        println("Gyro  Rotation  y  =  \(data.rotationRate.y)")
+//                        println("Gyro  Rotation  z  =  \(data.rotationRate.z)")
+//                        
+//                })
+//                
+//            }  else  {
+//                println("Gyro  is  already  active")
+//            }
+//            
+//        }  else  {
+//            println("Gyro  isn't  available")
+//        }
+//
+//        
+//        println(motionManager.deviceMotionActive) // print false
+//
+//        motionManager.accelerometerData.acceleration.x
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -133,10 +189,17 @@ class GameViewController: UIViewController {
     }
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        
         if motion == .MotionShake{
             if let scene = self.gameScene{
                 scene.shake()
             }
+        }
+    }
+    
+    func rotate(x:Double, y:Double){
+        if let scene = self.gameScene{
+            scene.rotate(atan(-y/x))
         }
     }
     

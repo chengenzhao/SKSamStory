@@ -190,18 +190,6 @@ class GameScene: SKScene {
                 images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_pressed")
             }
             
-//            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-//            
-//            sprite.xScale = 0.5
-//            sprite.yScale = 0.5
-//            sprite.position = location
-//            
-//            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-//            
-//            sprite.runAction(SKAction.repeatActionForever(action))
-//            
-//            self.addChild(sprite)
-            
             if self.gameModel!.information == 2{
                 for i in 0...MAX_SMALL_PAGES-1{
                     if images["s"+String(i)]!.containsPoint(location) {
@@ -354,6 +342,10 @@ class GameScene: SKScene {
                         }
                 }
                 break
+            case 1:
+                self.alternateNode("cat-1", location:location, alterTexture:"cat-2")
+                self.alternateNode("light1", location:location, alterTexture:"light2")
+                self.alternateNode("toy", location:location, alterTexture:"toy2")
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
@@ -365,6 +357,19 @@ class GameScene: SKScene {
                 break
             }
             
+        }
+    }
+    
+    var dic = [String:Int]()
+    
+    func alternateNode(name:String, location:CGPoint, alterTexture:String){
+        if self.childNodeWithName(name)!.containsPoint(location){
+            dic[name] = dic[name] == nil ? 1:nil
+            if dic[name] == nil{
+                (self.childNodeWithName(name)! as! SKSpriteNode).texture = SKTexture(imageNamed: name)
+            }else{
+                (self.childNodeWithName(name)! as! SKSpriteNode).texture = SKTexture(imageNamed: alterTexture)
+            }
         }
     }
     
@@ -489,15 +494,7 @@ class GameScene: SKScene {
             createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
             break
         case 1:
-            var tn = createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
-            tn.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "frame"), size: tn.size)
-            if let pb = tn.physicsBody{
-                pb.affectedByGravity = true
-                pb.allowsRotation = true
-                pb.dynamic = true
-                pb.pinned = true
-            }
-            
+            createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
             createAndAddSKNode("photo", x:screenSize.width*262/2048, y:screenSize.height*(1-469/1536))
             createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
             createAndAddSKNode("light1", x:screenSize.width*163.5/2048, y:screenSize.height*(1-674.5/1536))
@@ -743,6 +740,7 @@ class GameScene: SKScene {
     }
     
     func clean(){
+        dic.removeAll()
         switch self.gameModel.getCurrentStage(){
         case 0:
             self.removeSKNode("window")
@@ -997,6 +995,27 @@ class GameScene: SKScene {
         switch(self.gameModel.getCurrentStage()){
         case 1:
             self.removeSKNode("shake1")
+            self.gameModel.temp1 = 1
+            break
+        default:
+            break
+        }
+    }
+    func rotate(angle:Double){
+        switch(self.gameModel.getCurrentStage()){
+        case 1:
+            if self.gameModel.temp1 == 1{
+            var ta = angle
+            ta = ta > M_PI / 4 ? M_PI / 4 : ta
+            var lower = -M_PI / 4
+            ta = ta < lower ? lower : ta
+            let action = SKAction.rotateToAngle(CGFloat(ta), duration:1)
+            
+            if let node = self.childNodeWithName("frame") as? SKSpriteNode{
+                node.removeAllActions()
+                node.runAction(action)
+            }
+            }
             break
         default:
             break
