@@ -113,9 +113,9 @@ class GameScene: SKScene {
 //        
 //        walkingBear()
         
-        var w = createAndAddSKNodeWithAnchorPoint("touch", imageName:"touch1",x:100,y:100,corner:Corner.RIGHT_BOTTOM)
-        let action = SKAction.rotateByAngle(CGFloat(-M_PI), duration:2)
-        w.runAction(SKAction.repeatActionForever(action))
+//        var w = createAndAddSKNodeWithAnchorPoint("touch", imageName:"touch1",x:100,y:100,corner:Corner.RIGHT_BOTTOM)
+//        let action = SKAction.rotateByAngle(CGFloat(-M_PI), duration:2)
+//        w.runAction(SKAction.repeatActionForever(action))
     }
     
     func walkingBear() {
@@ -395,6 +395,10 @@ class GameScene: SKScene {
                 self.alternateNode("cat-1", location:location, alterTexture:"cat-2")
                 self.alternateNode("light1", location:location, alterTexture:"light2")
                 self.alternateNode("toy", location:location, alterTexture:"toy2")
+
+                self.wave("1-lily-r", radians: CGFloat(-M_PI*25/180), location: location)
+                self.wave("1-lily-l", radians: CGFloat(M_PI*25/180), location: location)
+
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
@@ -406,6 +410,16 @@ class GameScene: SKScene {
                 break
             }
             
+        }
+    }
+    
+    func wave(name:String, radians:CGFloat, duration:NSTimeInterval = 1, location: CGPoint){
+        if self.childNodeWithName(name)!.containsPoint(location){
+            if let node = self.childNodeWithName(name) as? SKSpriteNode{
+                let action0 = SKAction.rotateByAngle(radians, duration:duration)
+                let action1 = SKAction.rotateByAngle(-radians, duration:duration)
+                node.runAction(SKAction.sequence([action0,action1]))
+            }
         }
     }
     
@@ -561,8 +575,8 @@ class GameScene: SKScene {
             createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
             createAndAddSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
             createAndAddSKNode("lily_body", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
-            createAndAddSKNode("1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536))
-            createAndAddSKNode("1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536))
+            createAndAddSKNodeWithAnchorPoint("1-lily-r", imageName:"1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536), corner: Corner.RIGHT_BOTTOM)
+            createAndAddSKNodeWithAnchorPoint("1-lily-l", imageName:"1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536), corner: Corner.LEFT_TOP)
             createAndAddSKNode("shake1", x: screenSize.width*874/2048, y:screenSize.height*(1-269/1536))
             break
         case 2:
