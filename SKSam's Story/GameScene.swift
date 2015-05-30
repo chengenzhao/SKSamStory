@@ -46,6 +46,8 @@ class GameScene: SKScene {
         x = screenSize.width/40
         y = screenSize.height*39/40
         
+        
+        
         createNode("btn_info_normal", x:screenSize.width/20, y:screenSize.height*19/20)
         createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height*19/20)
         createNode("btn_close", x:screenSize.width/2, y:screenSize.height*(1-0.19))
@@ -109,7 +111,11 @@ class GameScene: SKScene {
 //        bear.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
 //        addChild(bear)
 //        
-//        walkingBear() 
+//        walkingBear()
+        
+        var w = createAndAddSKNodeWithAnchorPoint("touch", imageName:"touch1",x:100,y:100,corner:Corner.RIGHT_BOTTOM)
+        let action = SKAction.rotateByAngle(CGFloat(-M_PI), duration:2)
+        w.runAction(SKAction.repeatActionForever(action))
     }
     
     func walkingBear() {
@@ -155,6 +161,45 @@ class GameScene: SKScene {
     
     func createAndAddSKNode(name: String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
         var node = self.createSKNode(name, x: x, y: y)
+        self.addChild(node)
+        return node
+    }
+    
+    func createAndAddSKNodeWithAnchorPoint(name: String, imageName:String, x:CGFloat, y:CGFloat, anchorXOffset:CGFloat, anchorYOffset:CGFloat) -> SKSpriteNode{
+        var node = SKSpriteNode()
+        node.name = name
+        node.position = CGPointMake(x+anchorXOffset, y+anchorYOffset)
+        var child = self.createNode(imageName)
+        child.position = CGPointMake(-anchorXOffset, -anchorYOffset)
+        node.addChild(child)
+        self.addChild(node)
+        return node
+    }
+    
+    func createAndAddSKNodeWithAnchorPoint(name: String, imageName:String, x:CGFloat, y:CGFloat, corner:Corner) -> SKSpriteNode{
+        var node = SKSpriteNode()
+        var child = self.createNode(imageName)
+        var anchorXOffset = child.size.width/2
+        var anchorYOffset = child.size.height/2
+        switch(corner){
+        case Corner.LEFT_TOP:
+            anchorXOffset = -1 * anchorXOffset
+            break
+        case Corner.LEFT_BOTTOM:
+            anchorXOffset = -1 * anchorXOffset
+            anchorYOffset = -1 * anchorYOffset
+            break
+        case Corner.RIGHT_BOTTOM:
+            anchorYOffset = -1 * anchorYOffset
+            break
+        default:
+            break
+        }
+        node.name = name
+        node.position = CGPointMake(x+anchorXOffset, y+anchorYOffset)
+        
+        child.position = CGPointMake(-anchorXOffset, -anchorYOffset)
+        node.addChild(child)
         self.addChild(node)
         return node
     }
