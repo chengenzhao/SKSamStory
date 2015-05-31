@@ -55,10 +55,10 @@ class GameScene: SKScene {
         createNode("btn_next_normal", x:screenSize.width*19/20, y:screenSize.height/2)
         createNode("btn_prev_normal", x:screenSize.width/20, y:screenSize.height/2)
         
-        createNode("accomplish0", imageName:"accomplish1", x:screenSize.width*9.5/10, y:screenSize.height*19/20)
+        createNode("accomplish0", imageName:"accomplish1", x:screenSize.width*9.5/10, y:screenSize.height*19/20).zPosition = 0.5
         for i in 1...4{
             var x = screenSize.width*9.5/10 - images["accomplish0"]!.size.width*CGFloat(i)
-            createNode("accomplish"+String(i), imageName:"accomplish1", x:x, y:screenSize.height*19/20)
+            createNode("accomplish"+String(i), imageName:"accomplish1", x:x, y:screenSize.height*19/20).zPosition = 0.5
         }
         
         createNode("btn_music_normal", x:screenSize.width*10/12, y:screenSize.height*19/20)
@@ -150,9 +150,10 @@ class GameScene: SKScene {
         return node
     }
     
-    func createNode(name:String, imageName:String, x:CGFloat, y:CGFloat){
+    func createNode(name:String, imageName:String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
         var node = self.createNode(name,imageName:imageName)
         node.position = CGPointMake(x,y)
+        return node
     }
     
     func createNode(name:String) -> SKSpriteNode{
@@ -162,6 +163,12 @@ class GameScene: SKScene {
     func createAndAddSKNode(name: String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
         var node = self.createSKNode(name, x: x, y: y)
         self.addChild(node)
+        return node
+    }
+    
+    func createAddHiddenSKNode(name: String, x:CGFloat, y:CGFloat) -> SKSpriteNode{
+        var node = createAndAddSKNode(name, x: x, y: y)
+        node.alpha = 0
         return node
     }
     
@@ -398,12 +405,130 @@ class GameScene: SKScene {
 
                 self.wave("1-lily-r", radians: CGFloat(-M_PI*25/180), location: location)
                 self.wave("1-lily-l", radians: CGFloat(M_PI*25/180), location: location)
-
+                
+                self.display("teacher",name:"note", location: location)
+                break
+            case 2:
+//                self.wave("2-lily-1", radians: CGFloat(M_PI*25/180), location: location)
+                
+//                self.display("2-teacher",name:"dialog", location: location)
+                
+                if let node = self.childNodeWithName("dialog") as? SKSpriteNode{
+                    if let touches = self.childNodeWithName("2-teacher") as? SKSpriteNode{
+                        if touches.containsPoint(location){
+                            node.alpha = 1
+                            self.gameModel.accomplished.remove("teacher")
+                            self.updateAccomplish()
+                        }
+                        
+                    }
+                    
+                }
+                
+                if self.childNodeWithName("2-lily")!.containsPoint(location){
+                    self.childNodeWithName("hello")!.alpha = 1
+                    self.childNodeWithName("imlily")!.alpha = 1
+                    if let node = self.childNodeWithName("2-lily-1") as? SKSpriteNode{
+                        if !node.hasActions(){
+                            let action0 = SKAction.rotateByAngle(CGFloat(M_PI*25/180), duration:1)
+                            let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*25/180), duration:1)
+                            node.runAction(SKAction.sequence([action0,action1]))
+                        }
+                    }
+                    self.gameModel.accomplished.remove("lily")
+                    self.updateAccomplish()
+                }
+                
+//                if let node = self.childNodeWithName("dialog") as? SKSpriteNode{
+//                    if let touches = self.childNodeWithName("2-teacher") as? SKSpriteNode{
+//                        if touches.containsPoint(location){
+//                            node.alpha = 1
+//                        }
+//                    }
+//                    self.gameModel.accomplished.remove("teacher")
+//                    self.updateAccomplish()
+//                }
+//                self.display("2-lily",name:"hello", location: location)
+//                self.display("2-lily",name:"imlily", location: location)
+                
+                break
+            case 3:
+                self.display("l1",name:"l1", location: location)
+                self.display("l2",name:"l2", location: location)
+                self.display("l3",name:"l3", location: location)
+                self.display("l4",name:"l4", location: location)
+                self.display("l5",name:"l5", location: location)
+                self.display("l6",name:"l6", location: location)
+                self.display("l7",name:"l7", location: location)
+                if let node = self.childNodeWithName("touch1"){
+                    if node.containsPoint(location){
+                        self.removeSKNode("touch1")
+                    }
+                }
+                break
+            case 4:
+                self.alternateNode("cat-1", location: location, alterTexture: "cat-2")
+                if let node = self.childNodeWithName("4-toy_inbox"){
+                    if !node.hasActions() && node.containsPoint(location){
+                        let action0 = SKAction.rotateByAngle(CGFloat(M_PI*15/180), duration:1)
+                        let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*15/180), duration:1)
+                        node.runAction(SKAction.sequence([action0,action1,action0,action1,action0,action1]))
+                    }
+                }
+                if let node = self.childNodeWithName("4-ball"){
+                    if !node.hasActions() && node.containsPoint(location){
+                        let action0 = SKAction.rotateByAngle(CGFloat(2*M_PI), duration:0.5)
+                        node.runAction(SKAction.sequence([action0,action0,action0]))
+                    }
+                }
+                if let node = self.childNodeWithName("4-toy-1"){
+                    if !node.hasActions() && node.containsPoint(location){
+                        let action0 = SKAction.rotateByAngle(CGFloat(M_PI*15/180), duration:0.25)
+                        let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*15/180), duration:0.25)
+                        node.runAction(SKAction.sequence([action0,action1,action0,action1,action0,action1]))
+                    }
+                }
+                if let node = self.childNodeWithName("4-plane"){
+                    if !node.hasActions() && node.containsPoint(location){
+                        let action0 = SKAction.rotateByAngle(CGFloat(M_PI*15/180), duration:1)
+                        let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*15/180), duration:1)
+                        node.runAction(SKAction.sequence([action0,action1,action0,action1,action0,action1]))
+                    }
+                }
+                if let node = self.childNodeWithName("4-boy_arm"){
+                    if !node.hasActions() && node.containsPoint(location){
+                        let action0 = SKAction.rotateByAngle(CGFloat(M_PI*30/180), duration:1)
+                        let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*30/180), duration:1)
+                        node.runAction(SKAction.sequence([action0,action1]))
+                        if let n = self.childNodeWithName("4-car"){
+                            let action2 = SKAction.moveByX(100,y:0, duration: 0.5)
+                            self.childNodeWithName("4-car")!.runAction(SKAction.repeatActionForever(action2))
+                        }
+                    }
+                }
+                if self.childNodeWithName("4-door")!.containsPoint(location){
+                    
+                    self.childNodeWithName("4-door")!.alpha = self.childNodeWithName("4-door")!.alpha > 0.5 ? 0:1
+                    let action0 = SKAction.rotateByAngle(-CGFloat(M_PI*30/180), duration:1)
+                    let action1 = SKAction.rotateByAngle(CGFloat(M_PI*30/180), duration:1)
+                    if !self.childNodeWithName("4-lily_head")!.hasActions(){
+                        self.childNodeWithName("4-lily_head")!.runAction(SKAction.sequence([action0,action1]))
+                    }
+                    self.gameModel.accomplished.remove("door")
+                    self.updateAccomplish()
+                }
+                break
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
                         self.removeSKNode("touch1")
                     }
+                }
+                self.display("16_01",name:"16_01",location:location)
+                self.display("16_02",name:"16_02",location:location)
+                self.display("16_03",name:"16_03",location:location)
+                for i in 13...21{
+                    self.display("16_"+String(i),name:"16_"+String(i), location: location)
                 }
                 break
             default:
@@ -413,12 +538,25 @@ class GameScene: SKScene {
         }
     }
     
+    func display(touch:String, name:String, location:CGPoint){
+        
+        if let node = self.childNodeWithName(name) as? SKSpriteNode{
+            if let touches = self.childNodeWithName(touch) as? SKSpriteNode{
+                if touches.containsPoint(location){
+                    node.alpha = 1
+                }
+            }
+        }
+    }
+    
     func wave(name:String, radians:CGFloat, duration:NSTimeInterval = 1, location: CGPoint){
         if self.childNodeWithName(name)!.containsPoint(location){
             if let node = self.childNodeWithName(name) as? SKSpriteNode{
-                let action0 = SKAction.rotateByAngle(radians, duration:duration)
-                let action1 = SKAction.rotateByAngle(-radians, duration:duration)
-                node.runAction(SKAction.sequence([action0,action1]))
+                if !node.hasActions(){
+                    let action0 = SKAction.rotateByAngle(radians, duration:duration)
+                    let action1 = SKAction.rotateByAngle(-radians, duration:duration)
+                    node.runAction(SKAction.sequence([action0,action1]))
+                }
             }
         }
     }
@@ -461,16 +599,15 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         gameModel!.update()
+        self.gameModel.temp0 += 1
         
         switch self.gameModel.getCurrentStage(){
         case 0:
-            self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
                 self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
             }
             break
         case 1:
-            self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
                 
                 self.alternateImage("shake1", image1: SKTexture(imageNamed: "shake2"), index: self.gameModel.temp0 % 26)
@@ -479,15 +616,32 @@ class GameScene: SKScene {
                 
             }
             break
+        case 2:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateAlpha("2-fire", alpha0: 200.0/255, alpha1: 0.5, index:self.gameModel.temp0 % 26)
+            }
+            break
+        case 3:
+            if self.gameModel.temp0 % 13 == 0{
+                self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
+            }
+            break
+        case 4:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("shake1", image1: SKTexture(imageNamed: "shake2"), index: self.gameModel.temp0 % 26)
+                
+                self.alternateAlpha("fire", alpha0: 200.0/255, alpha1: 0.5, index:self.gameModel.temp0 % 26)
+            }
+            break
         case 16:
-            self.gameModel.temp0 += 1
             if self.gameModel.temp0 % 13 == 0{
                 self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
             }
             break
         case 10:
             if let node = self.childNodeWithName("swipe"){
-                self.gameModel.temp0 += 1
                 if self.gameModel.temp0 > 75{
                     self.gameModel.temp0 = 0
                 }
@@ -496,7 +650,6 @@ class GameScene: SKScene {
             break
         case 18:
             if let node = self.childNodeWithName("swipe"){
-                self.gameModel.temp0 += 1
                 if self.gameModel.temp0 > 75{
                     self.gameModel.temp0 = 0
                 }
@@ -573,7 +726,7 @@ class GameScene: SKScene {
             createAndAddSKNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*(1-1032.5/1536))
             createAndAddSKNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536))
             createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
-            createAndAddSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
+            createAddHiddenSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
             createAndAddSKNode("lily_body", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
             createAndAddSKNodeWithAnchorPoint("1-lily-r", imageName:"1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536), corner: Corner.RIGHT_BOTTOM)
             createAndAddSKNodeWithAnchorPoint("1-lily-l", imageName:"1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536), corner: Corner.LEFT_TOP)
@@ -582,17 +735,29 @@ class GameScene: SKScene {
         case 2:
             createAndAddSKNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*540/1536)
             createAndAddSKNode("2-lily", x:screenSize.width*431/2048, y:screenSize.height*(1-931/1536))
-            createAndAddSKNode("2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*(1-875.5/1536))
+            createAndAddSKNodeWithAnchorPoint("2-lily-1",  imageName:"2-lily-1", x:screenSize.width*609/2048, y:screenSize.height*(1-875.5/1536), corner:Corner.LEFT_TOP).zPosition = 2
             createAndAddSKNode("2-lily-2", x:screenSize.width*274.5/2048, y:screenSize.height*(1-971.5/1536))
             createAndAddSKNode("2-teacher", x:screenSize.width*1006/2048, y:screenSize.height*(1-768/1536))
             createAndAddSKNode("2-sam", x:screenSize.width*1414.5/2048, y:screenSize.height*(1-1105/1536))
+            createAddHiddenSKNode("hello", x:screenSize.width*627.5/2048, y:screenSize.height*(1-455.5/1536))
+            createAddHiddenSKNode("imlily", x:screenSize.width*639/2048, y:screenSize.height*(1-773.5/1536))
+            createAddHiddenSKNode("dialog", x:screenSize.width*1310/2048, y:screenSize.height*(1-279.5/1536))
             break
         case 3:
             createAndAddSKNode("3-sam", x:screenSize.width*1193.5/2048, y:screenSize.height*(1-850.5/1536))
+            createAddHiddenSKNode("l1", x:screenSize.width*716.5/2048, y:screenSize.height*(1-156/1536))
+            createAddHiddenSKNode("l2", x:screenSize.width*874/2048, y:screenSize.height*(1-373/1536))
+            createAddHiddenSKNode("l3", x:screenSize.width*1643/2048, y:screenSize.height*(1-594.5/1536))
+            createAddHiddenSKNode("l4", x:screenSize.width*628/2048, y:screenSize.height*(1-844.5/1536))
+            createAddHiddenSKNode("l5", x:screenSize.width*656.5/2048, y:screenSize.height*(1-1244.5/1536))
+            createAddHiddenSKNode("l6", x:screenSize.width*1581.5/2048, y:screenSize.height*(1-1392/1536))
+            createAddHiddenSKNode("l7", x:screenSize.width*1396.5/2048, y:screenSize.height*(1-1048/1536))
+            createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
             break
         case 4:
-            createAndAddSKNode("4-door", x:screenSize.width*708.5/2048, y:screenSize.height*(1-598/1536))
+            createAddHiddenSKNode("4-door", x:screenSize.width*708.5/2048, y:screenSize.height*(1-598/1536))
             createAndAddSKNode("frame", x:screenSize.width*235.5/2048, y:screenSize.height*(1-467.5/1536))
+            createAndAddSKNode("shake1", x: screenSize.width*874/2048, y:screenSize.height*(1-269/1536))
             createAndAddSKNode("photo", x:screenSize.width*262/2048, y:screenSize.height*(1-469/1536))
             createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
             createAndAddSKNode("cat-1", x:screenSize.width*2004.5/2048, y:screenSize.height*(1-1140/1536))
@@ -602,11 +767,11 @@ class GameScene: SKScene {
             createAndAddSKNode("4-toy_inbox", x:screenSize.width*1213/2048, y:screenSize.height*(1-1004/1536))
             createAndAddSKNode("4-car", x:screenSize.width*1002/2048, y:screenSize.height*(1-1262/1536))
             createAndAddSKNode("4-boy_body", x:screenSize.width*792.5/2048, y:screenSize.height*(1-1086/1536))
-            createAndAddSKNode("4-boy_arm", x:screenSize.width*921.5/2048, y:screenSize.height*(1-1199/1536))
+            createAndAddSKNodeWithAnchorPoint("4-boy_arm", imageName:"4-boy_arm", x:screenSize.width*921.5/2048, y:screenSize.height*(1-1199/1536), corner: Corner.LEFT_TOP)
             createAndAddSKNode("4-doll", x:screenSize.width*1429/2048, y:screenSize.height*(1-1221/1536))
             createAndAddSKNode("4-magician", x:screenSize.width*406/2048, y:screenSize.height*(1-861.5/1536))
             createAndAddSKNode("4-toy-1", x:screenSize.width*449/2048, y:screenSize.height*(1-788/1536))
-            createAndAddSKNode("4-lily_head", x:screenSize.width*1563/2048, y:screenSize.height*(1-1071/1536))
+            createAndAddSKNodeWithAnchorPoint("4-lily_head", imageName: "4-lily_head", x:screenSize.width*1563/2048, y:screenSize.height*(1-1071/1536), anchorXOffset:0,anchorYOffset:-121/2)
             createAndAddSKNode("4-lily_body", x:screenSize.width*1441.5/2048, y:screenSize.height*(1-1328.5/1536))
             createAndAddSKNode("4-box", x:screenSize.width*233.5/2048, y:screenSize.height*(1-1380.5/1536))
             createAndAddSKNode("4-plane", x:screenSize.width*398.5/2048, y:screenSize.height*(1-1345/1536))
@@ -622,7 +787,7 @@ class GameScene: SKScene {
             createAndAddSKNode("6-light1", x:screenSize.width*922.5/2048, y:screenSize.height*(1-501.5/1536))
             break
         case 7:
-            createAndAddSKNode("cat-1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
+            createAndAddSKNode("wcat1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
             createAndAddSKNode("7-doll", x:screenSize.width*614/2048, y:screenSize.height*(1-777.5/1536))
             createAndAddSKNode("7-lily_leg_1", x:screenSize.width*802/2048, y:screenSize.height*(1-914/1536))
             createAndAddSKNode("7-lily_arm_2", x:screenSize.width*1000.5/2048, y:screenSize.height*(1-572/1536))
@@ -700,28 +865,22 @@ class GameScene: SKScene {
             createAndAddSKNode("15-characters", x:screenSize.width*992/2048, y:screenSize.height*(1-653.5/1536))
             break
         case 16:
-            createAndAddSKNode("16_01", x:screenSize.width*54.5/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_02", x:screenSize.width*177.5/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_03", x:screenSize.width*319.5/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_04", x:screenSize.width*483/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_05", x:screenSize.width*680/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_06", x:screenSize.width*876/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_07", x:screenSize.width*1052/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_08", x:screenSize.width*1411.5/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_09", x:screenSize.width*1866/2048, y:screenSize.height*(1-65.5/1536))
-            createAndAddSKNode("16_10", x:screenSize.width*393.5/2048, y:screenSize.height*(1-226/1536))
-            createAndAddSKNode("16_11", x:screenSize.width*1152.5/2048, y:screenSize.height*(1-226/1536))
-            createAndAddSKNode("16_12", x:screenSize.width*1783/2048, y:screenSize.height*(1-226/1536))
-            createAndAddSKNode("16_13", x:screenSize.width*218/2048, y:screenSize.height*(1-651/1536))
-            createAndAddSKNode("16_14", x:screenSize.width*678.5/2048, y:screenSize.height*(1-694.5/1536))
-            createAndAddSKNode("16_15", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-720.5/1536))
-            createAndAddSKNode("16_16", x:screenSize.width*1591/2048, y:screenSize.height*(1-720.5/1536))
-            createAndAddSKNode("16_17", x:screenSize.width*1920/2048, y:screenSize.height*(1-720.5/1536))
-            createAndAddSKNode("16_18", x:screenSize.width*218/2048, y:screenSize.height*(1-1258.5/1536))
-            createAndAddSKNode("16_19", x:screenSize.width*678.5/2048, y:screenSize.height*(1-1302/1536))
-            createAndAddSKNode("16_20", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-1328/1536))
-            createAndAddSKNode("16_21", x:screenSize.width*1719/2048, y:screenSize.height*(1-1328/1536))
+            createAndAddSKNode("16_dia", x:screenSize.width*1034.5/2048, y:screenSize.height*(1-635.5/1536))
+            createAddHiddenSKNode("16_01", x:screenSize.width*393.5/2048, y:screenSize.height*(1-160.5/1536))
+            createAddHiddenSKNode("16_02", x:screenSize.width*1152.5/2048, y:screenSize.height*(1-160.5/1536))
+            createAddHiddenSKNode("16_03", x:screenSize.width*1783/2048, y:screenSize.height*(1-160.5/1536))
+            createAddHiddenSKNode("16_13", x:screenSize.width*218/2048, y:screenSize.height*(1-651/1536))
+            createAddHiddenSKNode("16_14", x:screenSize.width*678.5/2048, y:screenSize.height*(1-694.5/1536))
+            createAddHiddenSKNode("16_15", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-720.5/1536))
+            createAddHiddenSKNode("16_16", x:screenSize.width*1591/2048, y:screenSize.height*(1-720.5/1536))
+            createAddHiddenSKNode("16_17", x:screenSize.width*1920/2048, y:screenSize.height*(1-720.5/1536))
+            createAddHiddenSKNode("16_18", x:screenSize.width*218/2048, y:screenSize.height*(1-1258.5/1536))
+            createAddHiddenSKNode("16_19", x:screenSize.width*678.5/2048, y:screenSize.height*(1-1302/1536))
+            createAddHiddenSKNode("16_20", x:screenSize.width*1155.5/2048, y:screenSize.height*(1-1328/1536))
+            createAddHiddenSKNode("16_21", x:screenSize.width*1719/2048, y:screenSize.height*(1-1328/1536))
+            
             createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
+            
             break
         case 17:
             createAndAddSKNode("17-smoke", x:screenSize.width*1188/2048, y:screenSize.height*(1-520.5/1536))
@@ -779,9 +938,11 @@ class GameScene: SKScene {
         }
         
         self.removeChildrenInArray([images["accomplish0"]!,images["accomplish1"]!,images["accomplish2"]!,images["accomplish3"]!,images["accomplish4"]!])
-        
-        for i in 0...self.gameModel.toAccomplish-1{
-            self.addChild(images["accomplish"+String(i)]!)
+        if self.gameModel.toAccomplish > 0{
+            for i in 0...self.gameModel.toAccomplish-1{
+                images["accomplish"+String(i)]!.zPosition = 0.5
+                self.addChild(images["accomplish"+String(i)]!)
+            }
         }
         
         self.updateAccomplish()
@@ -839,13 +1000,21 @@ class GameScene: SKScene {
             self.removeSKNode("2-teacher")
             self.removeSKNode("2-fire")
             self.removeSKNode("2-sam")
+            self.removeSKNode("imlily")
+            self.removeSKNode("hello")
+            self.removeSKNode("dialog")
             break
         case 3:
             self.removeSKNode("3-sam")
+            for i in 1...7{
+                self.removeSKNode("l"+String(i))
+            }
+            self.removeSKNode("touch1")
             break
         case 4:
             self.removeSKNode("4-door")
             self.removeSKNode("frame")
+            self.removeSKNode("shake1")
             self.removeSKNode("photo")
             self.removeSKNode("fire")
             self.removeSKNode("cat-1")
@@ -875,7 +1044,7 @@ class GameScene: SKScene {
             self.removeSKNode("6-light1")
             break
         case 7:
-            self.removeSKNode("cat-1")
+            self.removeSKNode("wcat1")
             self.removeSKNode("7-doll")
             self.removeSKNode("7-lily_leg_1")
             self.removeSKNode("7-lily_arm_2")
@@ -950,13 +1119,14 @@ class GameScene: SKScene {
             self.removeSKNode("15-characters")
             break
         case 16:
-            for i in 1...21{
-                if i<10 {
-                    self.removeSKNode("16_0"+String(i))
-                }else{
-                    self.removeSKNode("16_"+String(i))
-                }
+            self.removeSKNode("16_01")
+            self.removeSKNode("16_02")
+            self.removeSKNode("16_03")
+            for i in 13...21{
+                self.removeSKNode("16_"+String(i))
+                
             }
+            self.removeSKNode("16_dia")
             self.removeSKNode("touch1")
             break
         case 17:
@@ -1019,12 +1189,14 @@ class GameScene: SKScene {
     }
     
     func updateAccomplish(){
+        if self.gameModel.toAccomplish>0{
         for i in 0...self.gameModel.toAccomplish-1{
             if i < self.gameModel.toAccomplish - self.gameModel.accomplished.count{
                 images["accomplish"+String(i)]!.texture = SKTexture(imageNamed:"accomplish2")
             }else{
                 images["accomplish"+String(i)]!.texture = SKTexture(imageNamed:"accomplish1")
             }
+        }
         }
     }
     
@@ -1066,6 +1238,10 @@ class GameScene: SKScene {
             self.removeSKNode("shake1")
             self.gameModel.temp1 = 1
             break
+        case 4:
+            self.removeSKNode("shake1")
+            self.gameModel.temp1 = 1
+            break
         default:
             break
         }
@@ -1084,6 +1260,20 @@ class GameScene: SKScene {
                 node.removeAllActions()
                 node.runAction(action)
             }
+            }
+            break
+        case 4:
+            if self.gameModel.temp1 == 1{
+                var ta = angle
+                ta = ta > M_PI / 4 ? M_PI / 4 : ta
+                var lower = -M_PI / 4
+                ta = ta < lower ? lower : ta
+                let action = SKAction.rotateToAngle(CGFloat(ta), duration:1)
+                
+                if let node = self.childNodeWithName("frame") as? SKSpriteNode{
+                    node.removeAllActions()
+                    node.runAction(action)
+                }
             }
             break
         default:

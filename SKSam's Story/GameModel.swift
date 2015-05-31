@@ -66,11 +66,16 @@ class GameModel{
             accomplished.insert("boy")
             break
         case 2:
+            toAccomplish=2
+            accomplished.insert("lily")
+            accomplished.insert("teacher")
+            break
+        case 4:
             toAccomplish=1
-            accomplished.insert("test")
+            accomplished.insert("door")
             break
         default:
-            toAccomplish=1
+            toAccomplish=0
             break
         }
     }
