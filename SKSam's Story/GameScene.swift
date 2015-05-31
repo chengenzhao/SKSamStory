@@ -677,6 +677,13 @@ class GameScene: SKScene {
                 self.alternateAlpha("fire", alpha0: 200.0/255, alpha1: 0.5, index:self.gameModel.temp0 % 26)
             }
             break
+        case 5:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("5-TV", image1: SKTexture(imageNamed: "5-TV2"), index: self.gameModel.temp0 % 26)
+
+            }
+            break
         case 16:
             if self.gameModel.temp0 % 13 == 0{
                 self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
