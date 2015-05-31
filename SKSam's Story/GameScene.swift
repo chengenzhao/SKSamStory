@@ -128,8 +128,9 @@ class GameScene: SKScene {
         
         let numImages = animatedAtlas.textureNames.count
         for var i=1; i<=numImages/2; i++ {
-            let bearTextureName = texture+"\(i)"
-            walkFrames.append(animatedAtlas.textureNamed(bearTextureName))
+            let texture = texture+"\(i)"
+            walkFrames.append(animatedAtlas.textureNamed(texture))
+//            print(texture)
         }
         
         textures = walkFrames
@@ -137,21 +138,22 @@ class GameScene: SKScene {
         let firstFrame = textures[0]
         node = SKSpriteNode(texture: firstFrame)
         node.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        node.name = name
         self.addChild(node)
         
         return (node, textures)
     }
     
-//    func walkingBear() {
-//        //This is our general runAction method to make our bear walk.
-//        bear.runAction(SKAction.repeatActionForever(
-//            SKAction.animateWithTextures(bearWalkingFrames,
-//                timePerFrame: (0.1),
-//                resize: false,
-//                restore: true)),
-//            withKey:"walkingInPlaceBear")
-//        
-//    }
+    func walkingBear(node:SKSpriteNode, texture:[SKTexture]) {
+        //This is our general runAction method to make our bear walk.
+        node.runAction(//SKAction.repeatActionForever(
+            SKAction.animateWithTextures(texture,
+                timePerFrame: (1),
+                resize: false,
+                restore: true),//)
+            withKey:"walkingInPlaceBear")
+        
+    }
     
     func createNode(name:String, imageName:String) -> SKSpriteNode{
         var node = SKSpriteNode(imageNamed:imageName)
@@ -804,7 +806,8 @@ class GameScene: SKScene {
             createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
             createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
 //            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
-            createAnimationNode("BearImages",texture:"bear",location:CGPointMake(100, 100))
+            var lily=createAnimationNode("5-lily",texture:"llily",location:CGPointMake(screenSize.width*970.5/2048, screenSize.height*(1-768/1536)))
+            self.walkingBear(lily.0,texture: lily.1)
             break
         case 6:
             createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
@@ -1061,7 +1064,7 @@ class GameScene: SKScene {
         case 5:
             self.removeSKNode("5-TV")
             self.removeSKNode("5-sam")
-            self.removeSKNode("5-llily1")
+            self.removeSKNode("5-lily")
             break
         case 6:
             self.removeSKNode("wcat1")
