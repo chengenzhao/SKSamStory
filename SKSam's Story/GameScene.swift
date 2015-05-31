@@ -17,6 +17,7 @@ class GameScene: SKScene {
     
     var images = [String:SKSpriteNode]()
     var coordinates = [String:(CGFloat,CGFloat)]()
+    
     var rect:SKShapeNode?
     var moveLeft = false
     var moveRight = false
@@ -29,6 +30,8 @@ class GameScene: SKScene {
         self.gameModel = gameModel
         setStage(0)
     }
+    
+    var animation:(SKSpriteNode,[SKTexture])!
     
 //    var bear : SKSpriteNode!
 //    var bearWalkingFrames : [SKTexture]!
@@ -544,6 +547,19 @@ class GameScene: SKScene {
                     self.updateAccomplish()
                 }
                 break
+            case 5:
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                        self.playSound("dooropen",type:"wav")
+                        animation.0.runAction(SKAction.moveByX(0, y: 0, duration: 1),
+                            completion:{self.animation.0.alpha = 1;
+                                self.animation.0.runAction(SKAction.animateWithTextures(self.animation.1,
+                                    timePerFrame: (1),
+                                    resize: false,
+                                    restore: false))})
+                       
+                }
+                break
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
@@ -806,8 +822,9 @@ class GameScene: SKScene {
             createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
             createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
 //            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
-            var lily=createAnimationNode("5-lily",texture:"llily",location:CGPointMake(screenSize.width*970.5/2048, screenSize.height*(1-768/1536)))
-            self.walkingBear(lily.0,texture: lily.1)
+            animation=createAnimationNode("5-lily",texture:"llily",location:CGPointMake(screenSize.width*970.5/2048, screenSize.height*(1-768/1536)))
+            animation.0.alpha = 0
+//            self.walkingBear(lily.0,texture: lily.1)
             break
         case 6:
             createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
