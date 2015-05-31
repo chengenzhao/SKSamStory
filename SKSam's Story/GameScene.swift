@@ -30,8 +30,8 @@ class GameScene: SKScene {
         setStage(0)
     }
     
-    var bear : SKSpriteNode!
-    var bearWalkingFrames : [SKTexture]!
+//    var bear : SKSpriteNode!
+//    var bearWalkingFrames : [SKTexture]!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -45,8 +45,6 @@ class GameScene: SKScene {
 
         x = screenSize.width/40
         y = screenSize.height*39/40
-        
-        
         
         createNode("btn_info_normal", x:screenSize.width/20, y:screenSize.height*19/20)
         createNode("btn_page_normal", x:screenSize.width/2, y:screenSize.height*19/20)
@@ -118,16 +116,42 @@ class GameScene: SKScene {
 //        w.runAction(SKAction.repeatActionForever(action))
     }
     
-    func walkingBear() {
-        //This is our general runAction method to make our bear walk.
-        bear.runAction(SKAction.repeatActionForever(
-            SKAction.animateWithTextures(bearWalkingFrames,
-                timePerFrame: (0.1),
-                resize: false,
-                restore: true)),
-            withKey:"walkingInPlaceBear")
+
+    
+    func createAnimationNode(name:String, texture:String, location: CGPoint) -> (SKSpriteNode, [SKTexture]){
         
+        var node : SKSpriteNode!
+        var textures : [SKTexture]!
+        
+        let animatedAtlas = SKTextureAtlas(named: name)
+        var walkFrames = [SKTexture]()
+        
+        let numImages = animatedAtlas.textureNames.count
+        for var i=1; i<=numImages/2; i++ {
+            let bearTextureName = texture+"\(i)"
+            walkFrames.append(animatedAtlas.textureNamed(bearTextureName))
+        }
+        
+        textures = walkFrames
+        
+        let firstFrame = textures[0]
+        node = SKSpriteNode(texture: firstFrame)
+        node.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        self.addChild(node)
+        
+        return (node, textures)
     }
+    
+//    func walkingBear() {
+//        //This is our general runAction method to make our bear walk.
+//        bear.runAction(SKAction.repeatActionForever(
+//            SKAction.animateWithTextures(bearWalkingFrames,
+//                timePerFrame: (0.1),
+//                resize: false,
+//                restore: true)),
+//            withKey:"walkingInPlaceBear")
+//        
+//    }
     
     func createNode(name:String, imageName:String) -> SKSpriteNode{
         var node = SKSpriteNode(imageNamed:imageName)
@@ -779,7 +803,8 @@ class GameScene: SKScene {
         case 5:
             createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
             createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
-            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
+//            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
+            createAnimationNode("BearImages",texture:"bear",location:CGPointMake(100, 100))
             break
         case 6:
             createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
