@@ -26,6 +26,7 @@
 		A818A6831B1C7C850058C62A /* help.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A6821B1C7C850058C62A /* help.atlas */; };
 		A818A6861B1C806C0058C62A /* 11-dragon.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A6841B1C806C0058C62A /* 11-dragon.atlas */; };
 		A818A6871B1C806C0058C62A /* 11-step.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A6851B1C806C0058C62A /* 11-step.atlas */; };
+		A818A6891B1C96DE0058C62A /* 18-tear.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A6881B1C96DE0058C62A /* 18-tear.atlas */; };
 		A821D1F31B1B14D200BCCEB5 /* 5-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */; };
 		A821D1F51B1B36D000BCCEB5 /* dooropen.wav in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F41B1B36D000BCCEB5 /* dooropen.wav */; };
 		A87E58D31B15B110008B3254 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87E58D21B15B110008B3254 /* Main.storyboard */; };
@@ -78,6 +79,7 @@
 		A818A6821B1C7C850058C62A /* help.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = help.atlas; sourceTree = "<group>"; };
 		A818A6841B1C806C0058C62A /* 11-dragon.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "11-dragon.atlas"; sourceTree = "<group>"; };
 		A818A6851B1C806C0058C62A /* 11-step.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "11-step.atlas"; sourceTree = "<group>"; };
+		A818A6881B1C96DE0058C62A /* 18-tear.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "18-tear.atlas"; sourceTree = "<group>"; };
 		A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "5-lily.atlas"; sourceTree = "<group>"; };
 		A821D1F41B1B36D000BCCEB5 /* dooropen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dooropen.wav; sourceTree = "<group>"; };
 		A87E58D21B15B110008B3254 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				A8C268CC1B17139800A77A55 /* window.mp3 */,
 				A8C268CD1B17139800A77A55 /* music0.mp3 */,
 				A87E58D21B15B110008B3254 /* Main.storyboard */,
+				A818A6881B1C96DE0058C62A /* 18-tear.atlas */,
 				A818A6841B1C806C0058C62A /* 11-dragon.atlas */,
 				A818A6851B1C806C0058C62A /* 11-step.atlas */,
 				A818A6821B1C7C850058C62A /* help.atlas */,
@@ -313,6 +316,7 @@
 				A8C268D31B17139800A77A55 /* music0.mp3 in Resources */,
 				A818A5A81B1C2FD10058C62A /* 6-lily.atlas in Resources */,
 				A818A5DC1B1C771D0058C62A /* doo.mp3 in Resources */,
+				A818A6891B1C96DE0058C62A /* 18-tear.atlas in Resources */,
 				A8C268D11B17139800A77A55 /* guitar.mp3 in Resources */,
 				A818A6831B1C7C850058C62A /* help.atlas in Resources */,
 				A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */,

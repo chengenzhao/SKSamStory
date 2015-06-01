@@ -310,7 +310,13 @@ class GameScene: SKScene {
                     self.childNodeWithName("10-la")!.position.x +=  dis
                     self.childNodeWithName("10-dragon1")!.position.x +=  dis
                     self.childNodeWithName("10-cloud")!.position.x +=  dis
+                }else if self.gameModel!.getCurrentStage() == 18{
+                    self.childNodeWithName("18-smoke")!.position.x +=  dis
+                    self.childNodeWithName("18-sam")!.position.x +=  dis
+                    self.childNodeWithName("18-lily")!.position.x +=  dis
+                    self.childNodeWithName("18-tear")!.position.x +=  dis
                 }
+                
                 self.removeSKNode("swipeline")
                 self.removeSKNode("swipe")
             }
@@ -802,7 +808,19 @@ class GameScene: SKScene {
                     self.display("16_"+String(i),name:"16_"+String(i), location: location)
                 }
                 break
-                
+            case 18:
+                if let node = self.childNodeWithName("18-sam"){
+                    if node.containsPoint(location) && self.gameModel.temp2 == 0{
+                        var action = SKAction.animateWithTextures(self.animation.1,
+                            timePerFrame: (0.3),
+                            resize: false,
+                            restore: true)
+                        let action1 = SKAction.moveByX(0, y: -200, duration: 0.9)
+                        animation.0.runAction(SKAction.group([action,action1]))
+                        self.gameModel.temp2 = 1
+                    }
+                }
+                break
             default:
                 break
             }
@@ -959,14 +977,6 @@ class GameScene: SKScene {
                 self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
             }
             break
-        case 18:
-            if let node = self.childNodeWithName("swipe"){
-                if self.gameModel.temp0 > 75{
-                    self.gameModel.temp0 = 0
-                }
-                node.position.x = CGFloat(252/2+self.gameModel.temp0)
-            }
-            break
         case 17:
             if self.gameModel.temp0 % 13 == 0{
                 var node = self.childNodeWithName("17-fire")! as! SKSpriteNode
@@ -982,6 +992,19 @@ class GameScene: SKScene {
                 smoke.position.y += 1
             }
             break
+        case 18:
+            if let node = self.childNodeWithName("swipe"){
+                if self.gameModel.temp0 > 75{
+                    self.gameModel.temp0 = 0
+                }
+                node.position.x = CGFloat(252/2+self.gameModel.temp0)
+            }
+            if let smoke = self.childNodeWithName("18-smoke") as? SKSpriteNode{
+                smoke.position.x += 1
+                smoke.position.y += 1
+            }
+            break
+
         default:
             break
         }
@@ -1222,10 +1245,11 @@ class GameScene: SKScene {
             createAndAddSKNode("17-fire", x:screenSize.width*959/2048, y:screenSize.height*(1-1132/1536))
             break
         case 18:
-            createAndAddSKNode("18-smoke", x:0, y:screenSize.height*(1-768/1536))
+            createAndAddSKNode("18-smoke", x:0, y:screenSize.height*(1-768.0/1536)).zPosition = 2
             createAndAddSKNode("18-sam", x:screenSize.width*(2969-2048)/2048, y:screenSize.height*(1-768/1536))
-            createAndAddSKNode("18-lily", x:screenSize.width*(1699.5-2048)/2048, y:screenSize.height*(1-1044.5/1536))
-            createAndAddSKNode("18-tear1", x:screenSize.width*(3273.5-2048)/2048, y:screenSize.height*(1-809.5/1536))
+            createAndAddSKNode("18-lily", x:screenSize.width*(1699.5-2048)/2048, y:screenSize.height*(1-1044.5/1536))//.alpha = 0
+            animation=createAnimationNode("18-tear",texture:"tear", location:CGPointMake(screenSize.width*(3227.5-2048)/2048, screenSize.height*(1-813.5/1536)))
+//            createAndAddSKNode("18-tear1", x:screenSize.width*(3273.5-2048)/2048, y:screenSize.height*(1-809.5/1536))
             
             createAndAddSKNode("swipeline", x:screenSize.width*300/2048, y:screenSize.height*(1-650.0/1536))
             createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
@@ -1457,7 +1481,7 @@ class GameScene: SKScene {
             self.removeSKNode("18-smoke")
             self.removeSKNode("18-sam")
             self.removeSKNode("18-lily")
-            self.removeSKNode("18-tear1")
+            self.removeSKNode("18-tear")
             self.removeSKNode("swipeline")
             self.removeSKNode("swipe")
             break
