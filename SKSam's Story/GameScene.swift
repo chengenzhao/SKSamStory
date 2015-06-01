@@ -814,7 +814,7 @@ class GameScene: SKScene {
                         var action = SKAction.animateWithTextures(self.animation.1,
                             timePerFrame: (0.3),
                             resize: false,
-                            restore: true)
+                            restore: false)
                         let action1 = SKAction.moveByX(0, y: -200, duration: 0.9)
                         animation.0.runAction(SKAction.group([action,action1]))
                         self.gameModel.temp2 = 1
