@@ -624,6 +624,28 @@ class GameScene: SKScene {
                 
                 self.display("7-lily",name:"7-diag", location: location)
                 break
+            case 8:
+                if self.childNodeWithName("8-lily")!.containsPoint(location){
+                    
+                    var action2 = SKAction.animateWithTextures(self.animation.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action3 = SKAction.moveByX(CGFloat(-50), y: -CGFloat(100), duration: 3)
+                    self.animation!.0.runAction(SKAction.group([action2,action3]))
+                    
+                    var action4 = SKAction.animateWithTextures(self.animation1.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action5 = SKAction.moveByX(CGFloat(-50), y: -CGFloat(100), duration: 3)
+                    self.animation1.0.runAction(SKAction.group([action4,action5]))
+                }
+                self.display("8-lily",name:"8-diag", location: location)
+                
+                self.alternateNode("8-raven_1", location:location, alterTexture:"8-raven_2",
+                    sound:"vulture",type:"wav")
+                break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
                     
@@ -706,13 +728,16 @@ class GameScene: SKScene {
     
     var dic = [String:Int]()
     
-    func alternateNode(name:String, location:CGPoint, alterTexture:String){
+    func alternateNode(name:String, location:CGPoint, alterTexture:String, sound:String="", type:String=""){
         if self.childNodeWithName(name)!.containsPoint(location){
             dic[name] = dic[name] == nil ? 1:nil
             if dic[name] == nil{
                 (self.childNodeWithName(name)! as! SKSpriteNode).texture = SKTexture(imageNamed: name)
             }else{
                 (self.childNodeWithName(name)! as! SKSpriteNode).texture = SKTexture(imageNamed: alterTexture)
+                if sound != ""{
+                    self.playSound(sound,type:type)
+                }
             }
         }
     }
@@ -789,6 +814,13 @@ class GameScene: SKScene {
             if self.gameModel.temp0 % 13 == 0{
                 
                 self.alternateImage("6-light1", image1: SKTexture(imageNamed: "6-light2"), index: self.gameModel.temp0 % 26)
+                
+            }
+            break
+        case 8:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("8-tree_1", image1: SKTexture(imageNamed: "8-tree_2"), index: self.gameModel.temp0 % 26)
                 
             }
             break
@@ -939,7 +971,6 @@ class GameScene: SKScene {
         case 5:
             createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
             createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
-//            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
             animation=createAnimationNode("5-lily",texture:"llily",location:CGPointMake(screenSize.width*970.5/2048, screenSize.height*(1-768/1536)))
             animation.0.zPosition = 2
             animation.0.alpha = 0
@@ -947,7 +978,6 @@ class GameScene: SKScene {
             break
         case 6:
             createAndAddSKNode("6-light1", x:screenSize.width*922.5/2048, y:screenSize.height*(1-501.5/1536))
-//            createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
             animation=createAnimationNode("6-lily",texture:"lily", location:CGPointMake(screenSize.width*1479.5/2048, screenSize.height*(1-815.5/1536)))
             animation.0.zPosition = 1
             animation1=createAnimationNode("wcat",texture:"wcat", location:CGPointMake(screenSize.width*1792.5/2048, screenSize.height*(1-1147.5/1536)))
@@ -955,17 +985,8 @@ class GameScene: SKScene {
             createAddHiddenSKNode("6-diag", x:screenSize.width*1596.5/2048, y:screenSize.height*(1-439.5/1536)).zPosition = 3
             break
         case 7:
-//            createAndAddSKNode("wcat1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
             animation=createAnimationNode("wcat",texture:"wcat", location:CGPointMake(screenSize.width*210.5/2048, screenSize.height*(1-835.5/1536)))
             animation.0.xScale = -1
-            
-//            createAndAddSKNode("7-doll", x:screenSize.width*614/2048, y:screenSize.height*(1-777.5/1536))
-//            createAndAddSKNode("7-lily_leg_1", x:screenSize.width*802/2048, y:screenSize.height*(1-914/1536))
-//            createAndAddSKNode("7-lily_arm_2", x:screenSize.width*1000.5/2048, y:screenSize.height*(1-572/1536))
-//            createAndAddSKNode("7-lily_arm_1", x:screenSize.width*733.5/2048, y:screenSize.height*(1-561.5/1536))
-//            createAndAddSKNode("7-lily", x:screenSize.width*869/2048, y:screenSize.height*(1-474.5/1536))
-//            createAndAddSKNode("7-sam_leg_2", x:screenSize.width*1407/2048, y:screenSize.height*(1-1307.5/1536))
-//            createAndAddSKNode("7-sam", x:screenSize.width*1402.4/2048, y:screenSize.height*(1-856.5/1536))
             animation1=createAnimationNode("7-lily",texture:"lily", location:CGPointMake(screenSize.width*850/2048, screenSize.height*(1-650/1536)))
             animation2=createAnimationNode("7-sam",texture:"sam", location:CGPointMake(screenSize.width*737.5/2048, screenSize.height*(1-850/1536)))
             createAddHiddenSKNode("7-diag", x:screenSize.width*1162.5/2048, y:screenSize.height*(1-202.5/1536))
@@ -973,13 +994,16 @@ class GameScene: SKScene {
         case 8:
             createAndAddSKNode("8-tree_1", x:screenSize.width*493/2048, y:screenSize.height*(1-595/1536))
             createAndAddSKNode("8-raven_1", x:screenSize.width*1831/2048, y:screenSize.height*(1-1184/1536))
-            createAndAddSKNode("8-lily", x:screenSize.width*646.5/2048, y:screenSize.height*(1-867/1536))
-            createAndAddSKNode("8-lily_leg_2", x:screenSize.width*660.5/2048, y:screenSize.height*(1-1021.5/1536))
-            createAndAddSKNode("8-lily_leg_1", x:screenSize.width*636/2048, y:screenSize.height*(1-1023/1536))
-            createAndAddSKNode("8-mouth1", x:screenSize.width*674.5/2048, y:screenSize.height*(1-803/1536))
-            createAndAddSKNode("8-sam_leg_1", x:screenSize.width*368.5/2048, y:screenSize.height*(1-1420/1536))
-            createAndAddSKNode("8-sam_leg_2", x:screenSize.width*452/2048, y:screenSize.height*(1-1440/1536))
-            createAndAddSKNode("8-sam_body", x:screenSize.width*451.5/2048, y:screenSize.height*(1-1175.5/1536))
+            animation=createAnimationNode("8-lily",texture:"lily", location:CGPointMake(screenSize.width*646.5/2048, screenSize.height*(1-882/1536)))
+            animation1=createAnimationNode("8-sam",texture:"sam", location:CGPointMake(screenSize.width*450/2048, screenSize.height*(1-1175/1536)))
+            createAddHiddenSKNode("8-diag", x:screenSize.width*576.5/2048, y:screenSize.height*(1-628.5/1536))
+//            createAndAddSKNode("8-lily", x:screenSize.width*646.5/2048, y:screenSize.height*(1-867/1536))
+//            createAndAddSKNode("8-lily_leg_2", x:screenSize.width*660.5/2048, y:screenSize.height*(1-1021.5/1536))
+//            createAndAddSKNode("8-lily_leg_1", x:screenSize.width*636/2048, y:screenSize.height*(1-1023/1536))
+//            createAndAddSKNode("8-mouth1", x:screenSize.width*674.5/2048, y:screenSize.height*(1-803/1536))
+//            createAndAddSKNode("8-sam_leg_1", x:screenSize.width*368.5/2048, y:screenSize.height*(1-1420/1536))
+//            createAndAddSKNode("8-sam_leg_2", x:screenSize.width*452/2048, y:screenSize.height*(1-1440/1536))
+//            createAndAddSKNode("8-sam_body", x:screenSize.width*451.5/2048, y:screenSize.height*(1-1175.5/1536))
             break
         case 9:
             createAndAddSKNode("9-cape1", x:screenSize.width*1343/2048, y:screenSize.height*(1-957/1536))
@@ -1234,12 +1258,14 @@ class GameScene: SKScene {
             self.removeSKNode("8-tree_1")
             self.removeSKNode("8-raven_1")
             self.removeSKNode("8-lily")
-            self.removeSKNode("8-lily_leg_2")
-            self.removeSKNode("8-lily_leg_1")
-            self.removeSKNode("8-mouth1")
-            self.removeSKNode("8-sam_leg_1")
-            self.removeSKNode("8-sam_leg_2")
-            self.removeSKNode("8-sam_body")
+            self.removeSKNode("8-sam")
+            self.removeSKNode("8-diag")
+//            self.removeSKNode("8-lily_leg_2")
+//            self.removeSKNode("8-lily_leg_1")
+//            self.removeSKNode("8-mouth1")
+//            self.removeSKNode("8-sam_leg_1")
+//            self.removeSKNode("8-sam_leg_2")
+//            self.removeSKNode("8-sam_body")
             break
         case 9:
             self.removeSKNode("9-cape1")
