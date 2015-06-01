@@ -14,6 +14,7 @@
 		A818A5C51B1C5C9F0058C62A /* 8-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A5C41B1C5C9F0058C62A /* 8-lily.atlas */; };
 		A818A5C91B1C5CC10058C62A /* 8-sam.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A5C81B1C5CC10058C62A /* 8-sam.atlas */; };
 		A818A5CB1B1C62D50058C62A /* vulture.wav in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CA1B1C62D50058C62A /* vulture.wav */; };
+		A818A5CD1B1C65970058C62A /* 9-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CC1B1C65970058C62A /* 9-lily.atlas */; };
 		A821D1F31B1B14D200BCCEB5 /* 5-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */; };
 		A821D1F51B1B36D000BCCEB5 /* dooropen.wav in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F41B1B36D000BCCEB5 /* dooropen.wav */; };
 		A87E58D31B15B110008B3254 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87E58D21B15B110008B3254 /* Main.storyboard */; };
@@ -54,6 +55,7 @@
 		A818A5C41B1C5C9F0058C62A /* 8-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "8-lily.atlas"; sourceTree = "<group>"; };
 		A818A5C81B1C5CC10058C62A /* 8-sam.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "8-sam.atlas"; sourceTree = "<group>"; };
 		A818A5CA1B1C62D50058C62A /* vulture.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vulture.wav; sourceTree = "<group>"; };
+		A818A5CC1B1C65970058C62A /* 9-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "9-lily.atlas"; sourceTree = "<group>"; };
 		A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "5-lily.atlas"; sourceTree = "<group>"; };
 		A821D1F41B1B36D000BCCEB5 /* dooropen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dooropen.wav; sourceTree = "<group>"; };
 		A87E58D21B15B110008B3254 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				A8C268CC1B17139800A77A55 /* window.mp3 */,
 				A8C268CD1B17139800A77A55 /* music0.mp3 */,
 				A87E58D21B15B110008B3254 /* Main.storyboard */,
+				A818A5CC1B1C65970058C62A /* 9-lily.atlas */,
 				A818A5C81B1C5CC10058C62A /* 8-sam.atlas */,
 				A818A5C41B1C5C9F0058C62A /* 8-lily.atlas */,
 				A818A5C21B1C4D390058C62A /* 7-sam.atlas */,
@@ -257,6 +260,7 @@
 			files = (
 				A8C268CE1B17139800A77A55 /* meow.wav in Resources */,
 				A8E407531B1347BF005DA379 /* LaunchScreen.xib in Resources */,
+				A818A5CD1B1C65970058C62A /* 9-lily.atlas in Resources */,
 				A8C268D21B17139800A77A55 /* window.mp3 in Resources */,
 				A821D1F51B1B36D000BCCEB5 /* dooropen.wav in Resources */,
 				A87E58D31B15B110008B3254 /* Main.storyboard in Resources */,

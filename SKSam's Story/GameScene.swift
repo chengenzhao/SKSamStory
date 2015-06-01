@@ -646,6 +646,19 @@ class GameScene: SKScene {
                 self.alternateNode("8-raven_1", location:location, alterTexture:"8-raven_2",
                     sound:"vulture",type:"wav")
                 break
+            case 9:
+                if self.childNodeWithName("9-lily")!.containsPoint(location){
+                    var action1 = SKAction.scaleBy(1.1, duration: 1.2)
+                    var action2 = SKAction.animateWithTextures(self.animation.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action3 = SKAction.moveByX(-CGFloat(50), y: -CGFloat(100), duration: 1.2)
+                    
+                    self.animation!.0.runAction(SKAction.group([action1, action2,action3]))
+                    
+                }
+                break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
                     
@@ -997,20 +1010,16 @@ class GameScene: SKScene {
             animation=createAnimationNode("8-lily",texture:"lily", location:CGPointMake(screenSize.width*646.5/2048, screenSize.height*(1-882/1536)))
             animation1=createAnimationNode("8-sam",texture:"sam", location:CGPointMake(screenSize.width*450/2048, screenSize.height*(1-1175/1536)))
             createAddHiddenSKNode("8-diag", x:screenSize.width*576.5/2048, y:screenSize.height*(1-628.5/1536))
-//            createAndAddSKNode("8-lily", x:screenSize.width*646.5/2048, y:screenSize.height*(1-867/1536))
-//            createAndAddSKNode("8-lily_leg_2", x:screenSize.width*660.5/2048, y:screenSize.height*(1-1021.5/1536))
-//            createAndAddSKNode("8-lily_leg_1", x:screenSize.width*636/2048, y:screenSize.height*(1-1023/1536))
-//            createAndAddSKNode("8-mouth1", x:screenSize.width*674.5/2048, y:screenSize.height*(1-803/1536))
-//            createAndAddSKNode("8-sam_leg_1", x:screenSize.width*368.5/2048, y:screenSize.height*(1-1420/1536))
-//            createAndAddSKNode("8-sam_leg_2", x:screenSize.width*452/2048, y:screenSize.height*(1-1440/1536))
-//            createAndAddSKNode("8-sam_body", x:screenSize.width*451.5/2048, y:screenSize.height*(1-1175.5/1536))
             break
         case 9:
-            createAndAddSKNode("9-cape1", x:screenSize.width*1343/2048, y:screenSize.height*(1-957/1536))
-            createAndAddSKNode("9-body", x:screenSize.width*1272/2048, y:screenSize.height*(1-721.5/1536))
-            createAndAddSKNode("9-leg1", x:screenSize.width*1378/2048, y:screenSize.height*(1-1298/1536))
-            createAndAddSKNode("9-hand1", x:screenSize.width*937.5/2048, y:screenSize.height*(1-905/1536))
-            createAndAddSKNode("9-mouth1", x:screenSize.width*1325/2048, y:screenSize.height*(1-542.5/1536))
+            animation=createAnimationNode("9-lily",texture:"lily", location:CGPointMake(screenSize.width*1300/2048, screenSize.height*(1-800/1536)))
+            animation.0.xScale = 0.8
+            animation.0.yScale = 0.8
+//            createAndAddSKNode("9-cape1", x:screenSize.width*1343/2048, y:screenSize.height*(1-957/1536))
+//            createAndAddSKNode("9-body", x:screenSize.width*1272/2048, y:screenSize.height*(1-721.5/1536))
+//            createAndAddSKNode("9-leg1", x:screenSize.width*1378/2048, y:screenSize.height*(1-1298/1536))
+//            createAndAddSKNode("9-hand1", x:screenSize.width*937.5/2048, y:screenSize.height*(1-905/1536))
+//            createAndAddSKNode("9-mouth1", x:screenSize.width*1325/2048, y:screenSize.height*(1-542.5/1536))
 
             break
         case 10:
@@ -1140,7 +1149,6 @@ class GameScene: SKScene {
         default:
             break
         }
-        
         self.removeChildrenInArray([images["accomplish0"]!,images["accomplish1"]!,images["accomplish2"]!,images["accomplish3"]!,images["accomplish4"]!])
         if self.gameModel.toAccomplish > 0{
             for i in 0...self.gameModel.toAccomplish-1{
@@ -1260,19 +1268,14 @@ class GameScene: SKScene {
             self.removeSKNode("8-lily")
             self.removeSKNode("8-sam")
             self.removeSKNode("8-diag")
-//            self.removeSKNode("8-lily_leg_2")
-//            self.removeSKNode("8-lily_leg_1")
-//            self.removeSKNode("8-mouth1")
-//            self.removeSKNode("8-sam_leg_1")
-//            self.removeSKNode("8-sam_leg_2")
-//            self.removeSKNode("8-sam_body")
             break
         case 9:
-            self.removeSKNode("9-cape1")
-            self.removeSKNode("9-body")
-            self.removeSKNode("9-leg1")
-            self.removeSKNode("9-hand1")
-            self.removeSKNode("9-mouth1")
+//            self.removeSKNode("9-cape1")
+//            self.removeSKNode("9-body")
+//            self.removeSKNode("9-leg1")
+//            self.removeSKNode("9-hand1")
+//            self.removeSKNode("9-mouth1")
+            self.removeSKNode("9-lily")
             break
         case 10:
             self.removeSKNode("10-mi")
