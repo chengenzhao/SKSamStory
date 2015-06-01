@@ -228,6 +228,8 @@ class GameScene: SKScene {
         case Corner.RIGHT_BOTTOM:
             anchorYOffset = -1 * anchorYOffset
             break
+        case Corner.RIGHT_MIDDLE:
+            anchorYOffset=0
         default:
             break
         }
@@ -560,6 +562,43 @@ class GameScene: SKScene {
                        
                 }
                 break
+            case 12:
+                if self.childNodeWithName("12-body")!.containsPoint(location){
+                    
+                    var fire1 = self.childNodeWithName("12-fire1")! as! SKSpriteNode
+                    if !fire1.hasActions(){
+                        var action = SKAction.rotateByAngle(CGFloat(-M_PI*30/180), duration: 1)
+                        var action4 = SKAction.rotateByAngle(CGFloat(M_PI*30/180), duration: 1)
+                        
+                        self.childNodeWithName("12-head")!.runAction(SKAction.sequence([action, action4]))
+                        
+                        action = SKAction.rotateByAngle(CGFloat(M_PI*15/180), duration: 1)
+                        action4 = SKAction.rotateByAngle(CGFloat(-M_PI*15/180), duration: 1)
+                        
+                        self.childNodeWithName("12-wing1")!.runAction(SKAction.sequence([action, action4]))
+                        
+                        action = SKAction.rotateByAngle(CGFloat(M_PI*20/180), duration: 1)
+                        action4 = SKAction.rotateByAngle(CGFloat(-M_PI*20/180), duration: 1)
+                        self.childNodeWithName("12-wing2")!.runAction(SKAction.sequence([action4, action]))
+                        
+                        fire1.alpha = 1
+                        let action0 = SKAction.rotateByAngle(CGFloat(M_PI*10), duration:2.5)
+                        var action1 = SKAction.moveToX(-CGFloat(500),  duration:2.5)
+                        var action3 = SKAction.moveToY(-CGFloat(500), duration: 2.5)
+                        var action2 = SKAction.scaleTo(CGFloat(3), duration: 2.5)
+                        
+                        fire1.runAction(
+                            SKAction.group([action0,action1,action2,action3]),completion:{fire1.position = self.childNodeWithName("12-head")!.position;fire1.alpha = 0;fire1.xScale=0.5;fire1.yScale=0.5})
+                        var fire2 = self.childNodeWithName("12-fire2")! as! SKSpriteNode
+                        fire2.alpha = 1
+                        action3 = SKAction.moveToY(-CGFloat(1000), duration:2.5)
+                        fire2.runAction(
+                            SKAction.group([action0,action1,action2,action3]),completion:{fire2.position = self.childNodeWithName("12-head")!.position;fire2.alpha = 0;fire2.xScale=0.5;fire2.yScale=0.5})
+                    }
+
+                }
+
+                break
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
@@ -830,6 +869,7 @@ class GameScene: SKScene {
             createAndAddSKNode("5-sam", x:screenSize.width*1370.5/2048, y:screenSize.height*(1-806.5/1536))
 //            createAndAddSKNode("5-llily1", x:screenSize.width*581.5/2048, y:screenSize.height*(1-768/1536))
             animation=createAnimationNode("5-lily",texture:"llily",location:CGPointMake(screenSize.width*970.5/2048, screenSize.height*(1-768/1536)))
+            animation.0.zPosition = 2
             animation.0.alpha = 0
 //            self.walkingBear(lily.0,texture: lily.1)
             break
@@ -890,12 +930,18 @@ class GameScene: SKScene {
             createAndAddSKNode("11-mask", x:screenSize.width*1024/2048, y:screenSize.height*768/1536)
             break
         case 12:
-            createAndAddSKNode("12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536))
-            createAndAddSKNode("12-wing1", x:screenSize.width*1567/2048, y:screenSize.height*(1-1075/1536))
+            createAndAddSKNodeWithAnchorPoint("12-wing2", imageName:"12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536), corner: Corner.RIGHT_MIDDLE)
+            createAndAddSKNodeWithAnchorPoint("12-wing1", imageName:"12-wing1", x:screenSize.width*1567/2048, y:screenSize.height*(1-1075/1536),anchorXOffset: -213, anchorYOffset: 55)
             createAndAddSKNode("12-body", x:screenSize.width*1170/2048, y:screenSize.height*(1-873/1536))
             createAndAddSKNode("12-head", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
-            createAndAddSKNode("12-fire1", x:screenSize.width*446/2048, y:screenSize.height*(1-630.5/1536))
-            createAndAddSKNode("12-fire2", x:screenSize.width*224/2048, y:screenSize.height*(1-873/1536))
+            var node = createAndAddSKNode("12-fire1", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
+            node.xScale = 0.5
+            node.yScale = 0.5
+            node.alpha = 0
+            node = createAndAddSKNode("12-fire2", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
+            node.xScale = 0.5
+            node.yScale = 0.5
+            node.alpha = 0
             break
         case 13:
             createAndAddSKNode("13-sam_l", x:screenSize.width*969/2048, y:screenSize.height*(1-727/1536))
