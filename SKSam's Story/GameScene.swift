@@ -802,6 +802,7 @@ class GameScene: SKScene {
                     self.display("16_"+String(i),name:"16_"+String(i), location: location)
                 }
                 break
+                
             default:
                 break
             }
@@ -931,23 +932,17 @@ class GameScene: SKScene {
             }
             break
         case 10:
-            if self.gameModel.temp0 % 13 == 0{
-                
-                self.alternateImage("10-dragon1", image1: SKTexture(imageNamed: "10-dragon2"), index: self.gameModel.temp0 % 26)
-                
-            }
-            break
-        case 16:
-            if self.gameModel.temp0 % 13 == 0{
-                self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
-            }
-            break
-        case 10:
             if let node = self.childNodeWithName("swipe"){
                 if self.gameModel.temp0 > 75{
                     self.gameModel.temp0 = 0
                 }
                 node.position.x = CGFloat(252/2+self.gameModel.temp0)
+            }
+            
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("10-dragon1", image1: SKTexture(imageNamed: "10-dragon2"), index: self.gameModel.temp0 % 26)
+                
             }
             break
         case 15:
@@ -959,12 +954,32 @@ class GameScene: SKScene {
                 }
             }
             break
+        case 16:
+            if self.gameModel.temp0 % 13 == 0{
+                self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
+            }
+            break
         case 18:
             if let node = self.childNodeWithName("swipe"){
                 if self.gameModel.temp0 > 75{
                     self.gameModel.temp0 = 0
                 }
                 node.position.x = CGFloat(252/2+self.gameModel.temp0)
+            }
+            break
+        case 17:
+            if self.gameModel.temp0 % 13 == 0{
+                var node = self.childNodeWithName("17-fire")! as! SKSpriteNode
+                if self.gameModel.temp0 % 26 == 0{
+                    node.size.height *= 1.1
+                }else{
+                    node.size.height /= 1.1
+                }
+            }
+            
+            if let smoke = self.childNodeWithName("17-smoke") as? SKSpriteNode{
+                smoke.position.x += 1
+                smoke.position.y += 1
             }
             break
         default:
