@@ -32,6 +32,8 @@ class GameScene: SKScene {
     }
     
     var animation:(SKSpriteNode,[SKTexture])!
+    var animation1:(SKSpriteNode,[SKTexture])!
+    var animation2:(SKSpriteNode,[SKTexture])!
     
 //    var bear : SKSpriteNode!
 //    var bearWalkingFrames : [SKTexture]!
@@ -140,7 +142,7 @@ class GameScene: SKScene {
         
         let firstFrame = textures[0]
         node = SKSpriteNode(texture: firstFrame)
-        node.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
+        node.position = location//CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
         node.name = name
         self.addChild(node)
         
@@ -552,6 +554,7 @@ class GameScene: SKScene {
             case 5:
                 if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
                     && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                        if self.gameModel!.temp2 == 0{
                         self.playSound("dooropen",type:"wav")
                         animation.0.runAction(SKAction.moveByX(0, y: 0, duration: 1),
                             completion:{self.animation.0.alpha = 1;
@@ -559,8 +562,67 @@ class GameScene: SKScene {
                                     timePerFrame: (1),
                                     resize: false,
                                     restore: false))})
-                       
+                            self.gameModel.temp2 = 1
+                        }
                 }
+                
+                break
+            case 6:
+                if self.childNodeWithName("6-lily")!.containsPoint(location){
+                    
+                    var action0 = SKAction.animateWithTextures(self.animation.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action1 = SKAction.moveByX(-CGFloat(100), y: 0, duration: 3)
+                    self.animation!.0.runAction(SKAction.group([action0,action1]))
+                    
+                }
+                
+                if self.childNodeWithName("wcat")!.containsPoint(location){
+                    
+                    var action0 = SKAction.animateWithTextures(self.animation1.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action1 = SKAction.moveByX(-CGFloat(40), y: 0, duration: 1.2)
+                    self.animation1!.0.runAction(SKAction.repeatAction(SKAction.group([action0,action1]), count: 2))
+                    
+                }
+                self.display("6-lily",name:"6-diag", location: location)
+                
+                break
+            case 7:
+                
+                if self.childNodeWithName("wcat")!.containsPoint(location){
+                    
+                    var action0 = SKAction.animateWithTextures(self.animation.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action1 = SKAction.moveByX(CGFloat(40), y: -CGFloat(40), duration: 1.2)
+                    self.animation!.0.runAction(SKAction.repeatAction(SKAction.group([action0,action1]), count: 2))
+                    
+                }
+                
+                if self.childNodeWithName("7-lily")!.containsPoint(location){
+                    
+                    var action2 = SKAction.animateWithTextures(self.animation1.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action3 = SKAction.moveByX(CGFloat(100), y: -CGFloat(100), duration: 3)
+                    self.animation1!.0.runAction(SKAction.group([action2,action3]))
+                    
+                    var action4 = SKAction.animateWithTextures(self.animation2.1,
+                        timePerFrame: (0.3),
+                        resize: false,
+                        restore: false)
+                    var action5 = SKAction.moveByX(CGFloat(100), y: -CGFloat(100), duration: 3)
+                    self.animation2.0.runAction(SKAction.group([action4,action5]))
+                }
+                
+                self.display("7-lily",name:"7-diag", location: location)
                 break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
@@ -723,6 +785,13 @@ class GameScene: SKScene {
 
             }
             break
+        case 6:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("6-light1", image1: SKTexture(imageNamed: "6-light2"), index: self.gameModel.temp0 % 26)
+                
+            }
+            break
         case 16:
             if self.gameModel.temp0 % 13 == 0{
                 self.alternateImage("touch1", image1: SKTexture(imageNamed: "touch2"), index: self.gameModel.temp0 % 26)
@@ -778,6 +847,9 @@ class GameScene: SKScene {
     }
     
     func setStage(stage:Int) -> Int{
+        animation = nil
+        animation1 = nil
+        animation2 = nil
         
         if self.stageHasMusic(stage) && self.gameModel!.music == 1{
             musicPlayer.stop()
@@ -874,19 +946,29 @@ class GameScene: SKScene {
 //            self.walkingBear(lily.0,texture: lily.1)
             break
         case 6:
-            createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
-            createAndAddSKNode("6-lily", x:screenSize.width*1279.5/2048, y:screenSize.height*(1-815.5/1536))
             createAndAddSKNode("6-light1", x:screenSize.width*922.5/2048, y:screenSize.height*(1-501.5/1536))
+//            createAndAddSKNode("wcat1", x:screenSize.width*1792.5/2048, y:screenSize.height*(1-1147.5/1536))
+            animation=createAnimationNode("6-lily",texture:"lily", location:CGPointMake(screenSize.width*1479.5/2048, screenSize.height*(1-815.5/1536)))
+            animation.0.zPosition = 1
+            animation1=createAnimationNode("wcat",texture:"wcat", location:CGPointMake(screenSize.width*1792.5/2048, screenSize.height*(1-1147.5/1536)))
+            animation1.0.zPosition = 1
+            createAddHiddenSKNode("6-diag", x:screenSize.width*1596.5/2048, y:screenSize.height*(1-439.5/1536)).zPosition = 3
             break
         case 7:
-            createAndAddSKNode("wcat1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
-            createAndAddSKNode("7-doll", x:screenSize.width*614/2048, y:screenSize.height*(1-777.5/1536))
-            createAndAddSKNode("7-lily_leg_1", x:screenSize.width*802/2048, y:screenSize.height*(1-914/1536))
-            createAndAddSKNode("7-lily_arm_2", x:screenSize.width*1000.5/2048, y:screenSize.height*(1-572/1536))
-            createAndAddSKNode("7-lily_arm_1", x:screenSize.width*733.5/2048, y:screenSize.height*(1-561.5/1536))
-            createAndAddSKNode("7-lily", x:screenSize.width*869/2048, y:screenSize.height*(1-474.5/1536))
-            createAndAddSKNode("7-sam_leg_2", x:screenSize.width*1407/2048, y:screenSize.height*(1-1307.5/1536))
-            createAndAddSKNode("7-sam", x:screenSize.width*1402.4/2048, y:screenSize.height*(1-856.5/1536))
+//            createAndAddSKNode("wcat1", x:screenSize.width*210.5/2048, y:screenSize.height*(1-835.5/1536))
+            animation=createAnimationNode("wcat",texture:"wcat", location:CGPointMake(screenSize.width*210.5/2048, screenSize.height*(1-835.5/1536)))
+            animation.0.xScale = -1
+            
+//            createAndAddSKNode("7-doll", x:screenSize.width*614/2048, y:screenSize.height*(1-777.5/1536))
+//            createAndAddSKNode("7-lily_leg_1", x:screenSize.width*802/2048, y:screenSize.height*(1-914/1536))
+//            createAndAddSKNode("7-lily_arm_2", x:screenSize.width*1000.5/2048, y:screenSize.height*(1-572/1536))
+//            createAndAddSKNode("7-lily_arm_1", x:screenSize.width*733.5/2048, y:screenSize.height*(1-561.5/1536))
+//            createAndAddSKNode("7-lily", x:screenSize.width*869/2048, y:screenSize.height*(1-474.5/1536))
+//            createAndAddSKNode("7-sam_leg_2", x:screenSize.width*1407/2048, y:screenSize.height*(1-1307.5/1536))
+//            createAndAddSKNode("7-sam", x:screenSize.width*1402.4/2048, y:screenSize.height*(1-856.5/1536))
+            animation1=createAnimationNode("7-lily",texture:"lily", location:CGPointMake(screenSize.width*850/2048, screenSize.height*(1-650/1536)))
+            animation2=createAnimationNode("7-sam",texture:"sam", location:CGPointMake(screenSize.width*737.5/2048, screenSize.height*(1-850/1536)))
+            createAddHiddenSKNode("7-diag", x:screenSize.width*1162.5/2048, y:screenSize.height*(1-202.5/1536))
             break
         case 8:
             createAndAddSKNode("8-tree_1", x:screenSize.width*493/2048, y:screenSize.height*(1-595/1536))
@@ -1137,19 +1219,16 @@ class GameScene: SKScene {
             self.removeSKNode("5-lily")
             break
         case 6:
-            self.removeSKNode("wcat1")
+            self.removeSKNode("wcat")
             self.removeSKNode("6-lily")
             self.removeSKNode("6-light1")
+            self.removeSKNode("6-diag")
             break
         case 7:
-            self.removeSKNode("wcat1")
-            self.removeSKNode("7-doll")
-            self.removeSKNode("7-lily_leg_1")
-            self.removeSKNode("7-lily_arm_2")
-            self.removeSKNode("7-lily_arm_1")
+            self.removeSKNode("wcat")
             self.removeSKNode("7-lily")
-            self.removeSKNode("7-sam_leg_2")
             self.removeSKNode("7-sam")
+            self.removeSKNode("7-diag")
             break
         case 8:
             self.removeSKNode("8-tree_1")
