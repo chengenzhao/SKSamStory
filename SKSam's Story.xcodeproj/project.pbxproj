@@ -15,6 +15,14 @@
 		A818A5C91B1C5CC10058C62A /* 8-sam.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A5C81B1C5CC10058C62A /* 8-sam.atlas */; };
 		A818A5CB1B1C62D50058C62A /* vulture.wav in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CA1B1C62D50058C62A /* vulture.wav */; };
 		A818A5CD1B1C65970058C62A /* 9-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CC1B1C65970058C62A /* 9-lily.atlas */; };
+		A818A5D61B1C771D0058C62A /* re.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CE1B1C771D0058C62A /* re.mp3 */; };
+		A818A5D71B1C771D0058C62A /* so.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5CF1B1C771D0058C62A /* so.mp3 */; };
+		A818A5D81B1C771D0058C62A /* si.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D01B1C771D0058C62A /* si.mp3 */; };
+		A818A5D91B1C771D0058C62A /* la.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D11B1C771D0058C62A /* la.mp3 */; };
+		A818A5DA1B1C771D0058C62A /* mi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D21B1C771D0058C62A /* mi.mp3 */; };
+		A818A5DB1B1C771D0058C62A /* do.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D31B1C771D0058C62A /* do.mp3 */; };
+		A818A5DC1B1C771D0058C62A /* doo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D41B1C771D0058C62A /* doo.mp3 */; };
+		A818A5DD1B1C771D0058C62A /* fa.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A818A5D51B1C771D0058C62A /* fa.mp3 */; };
 		A821D1F31B1B14D200BCCEB5 /* 5-lily.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */; };
 		A821D1F51B1B36D000BCCEB5 /* dooropen.wav in Resources */ = {isa = PBXBuildFile; fileRef = A821D1F41B1B36D000BCCEB5 /* dooropen.wav */; };
 		A87E58D31B15B110008B3254 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A87E58D21B15B110008B3254 /* Main.storyboard */; };
@@ -56,6 +64,14 @@
 		A818A5C81B1C5CC10058C62A /* 8-sam.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "8-sam.atlas"; sourceTree = "<group>"; };
 		A818A5CA1B1C62D50058C62A /* vulture.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = vulture.wav; sourceTree = "<group>"; };
 		A818A5CC1B1C65970058C62A /* 9-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "9-lily.atlas"; sourceTree = "<group>"; };
+		A818A5CE1B1C771D0058C62A /* re.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = re.mp3; sourceTree = "<group>"; };
+		A818A5CF1B1C771D0058C62A /* so.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = so.mp3; sourceTree = "<group>"; };
+		A818A5D01B1C771D0058C62A /* si.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = si.mp3; sourceTree = "<group>"; };
+		A818A5D11B1C771D0058C62A /* la.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = la.mp3; sourceTree = "<group>"; };
+		A818A5D21B1C771D0058C62A /* mi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mi.mp3; sourceTree = "<group>"; };
+		A818A5D31B1C771D0058C62A /* do.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = do.mp3; sourceTree = "<group>"; };
+		A818A5D41B1C771D0058C62A /* doo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = doo.mp3; sourceTree = "<group>"; };
+		A818A5D51B1C771D0058C62A /* fa.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fa.mp3; sourceTree = "<group>"; };
 		A821D1F21B1B14D200BCCEB5 /* 5-lily.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "5-lily.atlas"; sourceTree = "<group>"; };
 		A821D1F41B1B36D000BCCEB5 /* dooropen.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dooropen.wav; sourceTree = "<group>"; };
 		A87E58D21B15B110008B3254 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -121,6 +137,14 @@
 		A8E407411B1347BF005DA379 /* SKSam's Story */ = {
 			isa = PBXGroup;
 			children = (
+				A818A5CE1B1C771D0058C62A /* re.mp3 */,
+				A818A5CF1B1C771D0058C62A /* so.mp3 */,
+				A818A5D01B1C771D0058C62A /* si.mp3 */,
+				A818A5D11B1C771D0058C62A /* la.mp3 */,
+				A818A5D21B1C771D0058C62A /* mi.mp3 */,
+				A818A5D31B1C771D0058C62A /* do.mp3 */,
+				A818A5D41B1C771D0058C62A /* doo.mp3 */,
+				A818A5D51B1C771D0058C62A /* fa.mp3 */,
 				A818A5CA1B1C62D50058C62A /* vulture.wav */,
 				A821D1F41B1B36D000BCCEB5 /* dooropen.wav */,
 				A8C268C81B17139800A77A55 /* meow.wav */,
@@ -258,12 +282,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A818A5DA1B1C771D0058C62A /* mi.mp3 in Resources */,
 				A8C268CE1B17139800A77A55 /* meow.wav in Resources */,
+				A818A5DB1B1C771D0058C62A /* do.mp3 in Resources */,
 				A8E407531B1347BF005DA379 /* LaunchScreen.xib in Resources */,
 				A818A5CD1B1C65970058C62A /* 9-lily.atlas in Resources */,
+				A818A5D61B1C771D0058C62A /* re.mp3 in Resources */,
 				A8C268D21B17139800A77A55 /* window.mp3 in Resources */,
+				A818A5DD1B1C771D0058C62A /* fa.mp3 in Resources */,
+				A818A5D91B1C771D0058C62A /* la.mp3 in Resources */,
 				A821D1F51B1B36D000BCCEB5 /* dooropen.wav in Resources */,
+				A818A5D71B1C771D0058C62A /* so.mp3 in Resources */,
 				A87E58D31B15B110008B3254 /* Main.storyboard in Resources */,
+				A818A5D81B1C771D0058C62A /* si.mp3 in Resources */,
 				A818A5C31B1C4D390058C62A /* 7-sam.atlas in Resources */,
 				A8E407501B1347BF005DA379 /* Images.xcassets in Resources */,
 				A818A5BB1B1C40A20058C62A /* wcat.atlas in Resources */,
@@ -271,6 +302,7 @@
 				A8E407751B136C36005DA379 /* BearImages.atlas in Resources */,
 				A8C268D31B17139800A77A55 /* music0.mp3 in Resources */,
 				A818A5A81B1C2FD10058C62A /* 6-lily.atlas in Resources */,
+				A818A5DC1B1C771D0058C62A /* doo.mp3 in Resources */,
 				A8C268D11B17139800A77A55 /* guitar.mp3 in Resources */,
 				A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */,
 				A8E407471B1347BF005DA379 /* GameScene.sks in Resources */,

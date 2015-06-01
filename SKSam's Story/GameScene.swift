@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var rect:SKShapeNode?
     var moveLeft = false
     var moveRight = false
+    var startPoint:CGPoint!
     var velocity = CGFloat(0.0)
     var x:CGFloat?
     var y:CGFloat?
@@ -275,15 +276,7 @@ class GameScene: SKScene {
                 images["btn_prev_normal"]!.texture = SKTexture(imageNamed:"btn_prev_pressed")
             }
             
-            if self.gameModel!.information == 2{
-                for i in 0...MAX_SMALL_PAGES-1{
-                    if images["s"+String(i)]!.containsPoint(location) {
-                        self.setStage(i)
-                    }
-                }
-            }
-            
-           
+            startPoint = location
         }
     }
     
@@ -296,7 +289,31 @@ class GameScene: SKScene {
         
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
-            
+            var dis = (location.x - startPoint.x)*5
+            if self.gameModel.getCurrentStage() == 10 || self.gameModel.getCurrentStage() == 18{
+                var x = self.childNodeWithName("bg")!.position.x
+                if x + dis < 0{
+                    dis = -x
+                }else if x + dis > screenSize.size.width{
+                    dis = screenSize.size.width - x
+                }
+                
+                if self.gameModel!.getCurrentStage() == 10{
+                    self.childNodeWithName("bg")!.position.x =  x + dis
+                    self.childNodeWithName("10-mi")!.position.x +=  dis
+                    self.childNodeWithName("10-do")!.position.x +=  dis
+                    self.childNodeWithName("10-fa")!.position.x +=  dis
+                    self.childNodeWithName("10-si")!.position.x +=  dis
+                    self.childNodeWithName("10-re")!.position.x +=  dis
+                    self.childNodeWithName("10-doo")!.position.x +=  dis
+                    self.childNodeWithName("10-so")!.position.x +=  dis
+                    self.childNodeWithName("10-la")!.position.x +=  dis
+                    self.childNodeWithName("10-dragon1")!.position.x +=  dis
+                    self.childNodeWithName("10-cloud")!.position.x +=  dis
+                }
+                self.removeSKNode("swipeline")
+                self.removeSKNode("swipe")
+            }
         }
     }
     
@@ -311,6 +328,14 @@ class GameScene: SKScene {
         for touch in (touches as! Set<UITouch>) {
             
             let location = touch.locationInNode(self)
+            
+            if self.gameModel!.information == 2{
+                for i in 0...MAX_SMALL_PAGES-1{
+                    if images["s"+String(i)]!.containsPoint(location) {
+                        self.setStage(i)
+                    }
+                }
+            }
             
             if(images["btn_info_normal"]!.containsPoint(location)  && self.gameModel.information == 0){
                 images["btn_info_normal"]!.texture = SKTexture(imageNamed:"btn_info_normal")
@@ -659,6 +684,32 @@ class GameScene: SKScene {
                     
                 }
                 break
+            case 10:
+                if self.childNodeWithName("10-mi")!.containsPoint(location){
+                    self.playSound("mi")
+                }
+                if self.childNodeWithName("10-do")!.containsPoint(location){
+                    self.playSound("do")
+                }
+                if self.childNodeWithName("10-fa")!.containsPoint(location){
+                    self.playSound("fa")
+                }
+                if self.childNodeWithName("10-si")!.containsPoint(location){
+                    self.playSound("si")
+                }
+                if self.childNodeWithName("10-re")!.containsPoint(location){
+                    self.playSound("re")
+                }
+                if self.childNodeWithName("10-doo")!.containsPoint(location){
+                    self.playSound("doo")
+                }
+                if self.childNodeWithName("10-so")!.containsPoint(location){
+                    self.playSound("so")
+                }
+                if self.childNodeWithName("10-la")!.containsPoint(location){
+                    self.playSound("la")
+                }
+                break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
                     
@@ -834,6 +885,13 @@ class GameScene: SKScene {
             if self.gameModel.temp0 % 13 == 0{
                 
                 self.alternateImage("8-tree_1", image1: SKTexture(imageNamed: "8-tree_2"), index: self.gameModel.temp0 % 26)
+                
+            }
+            break
+        case 10:
+            if self.gameModel.temp0 % 13 == 0{
+                
+                self.alternateImage("10-dragon1", image1: SKTexture(imageNamed: "10-dragon2"), index: self.gameModel.temp0 % 26)
                 
             }
             break
