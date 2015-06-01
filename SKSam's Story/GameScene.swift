@@ -297,9 +297,9 @@ class GameScene: SKScene {
                 }else if x + dis > screenSize.size.width{
                     dis = screenSize.size.width - x
                 }
+                self.childNodeWithName("bg")!.position.x =  x + dis
                 
                 if self.gameModel!.getCurrentStage() == 10{
-                    self.childNodeWithName("bg")!.position.x =  x + dis
                     self.childNodeWithName("10-mi")!.position.x +=  dis
                     self.childNodeWithName("10-do")!.position.x +=  dis
                     self.childNodeWithName("10-fa")!.position.x +=  dis
@@ -710,6 +710,13 @@ class GameScene: SKScene {
                     self.playSound("la")
                 }
                 break
+//            case 11:
+//                var action = SKAction.animateWithTextures(self.animation.1,
+//                    timePerFrame: (0.3),
+//                    resize: false,
+//                    restore: false)
+//                self.animation!.0.runAction(action)
+//                break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
                     
@@ -746,6 +753,13 @@ class GameScene: SKScene {
 
                 }
 
+                break
+            case 13:
+                var action2 = SKAction.animateWithTextures(self.animation.1,
+                    timePerFrame: (0.3),
+                    resize: false,
+                    restore: false)
+                animation.0.runAction(SKAction.repeatActionForever(action2))
                 break
             case 16:
                 if let node = self.childNodeWithName("touch1"){
@@ -1101,6 +1115,8 @@ class GameScene: SKScene {
             createAndAddSKNode("11-step1", x:screenSize.width*758.5/2048, y:screenSize.height*(1-1083.5/1536))
             createAndAddSKNode("11-dragon1", x:screenSize.width*1548/2048, y:screenSize.height*(1-400/1536))
             createAndAddSKNode("11-mask", x:screenSize.width*1024/2048, y:screenSize.height*768/1536)
+//            animation=createAnimationNode("11",texture:"waken", location:CGPointMake(screenSize.width*1024/2048, screenSize.height*(768/1536)))
+            
             break
         case 12:
             createAndAddSKNodeWithAnchorPoint("12-wing2", imageName:"12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536), corner: Corner.RIGHT_MIDDLE)
@@ -1117,12 +1133,13 @@ class GameScene: SKScene {
             node.alpha = 0
             break
         case 13:
-            createAndAddSKNode("13-sam_l", x:screenSize.width*969/2048, y:screenSize.height*(1-727/1536))
-            createAndAddSKNode("13-state1", x:screenSize.width*1036/2048, y:screenSize.height*(1-764/1536))
-            createAndAddSKNode("13-sam_r_1", x:screenSize.width*1298.5/2048, y:screenSize.height*(1-756.5/1536))
-            createAndAddSKNode("13-sam_r_2", x:screenSize.width*1351/2048, y:screenSize.height*(1-750/1536))
-            createAndAddSKNode("13-sam_r_3", x:screenSize.width*1405.5/2048, y:screenSize.height*(1-664/1536))
-            createAndAddSKNode("13-tremble", x:screenSize.width*1109/2048, y:screenSize.height*(1-919.5/1536))
+            animation=createAnimationNode("help",texture:"help", location:CGPointMake(screenSize.width*1024/2048, screenSize.height*(768/1536)))
+//            createAndAddSKNode("13-sam_l", x:screenSize.width*969/2048, y:screenSize.height*(1-727/1536))
+//            createAndAddSKNode("13-state1", x:screenSize.width*1036/2048, y:screenSize.height*(1-764/1536))
+//            createAndAddSKNode("13-sam_r_1", x:screenSize.width*1298.5/2048, y:screenSize.height*(1-756.5/1536))
+//            createAndAddSKNode("13-sam_r_2", x:screenSize.width*1351/2048, y:screenSize.height*(1-750/1536))
+//            createAndAddSKNode("13-sam_r_3", x:screenSize.width*1405.5/2048, y:screenSize.height*(1-664/1536))
+//            createAndAddSKNode("13-tremble", x:screenSize.width*1109/2048, y:screenSize.height*(1-919.5/1536))
             break
         case 14:
             createAndAddSKNode("12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536))
@@ -1354,6 +1371,8 @@ class GameScene: SKScene {
             self.removeSKNode("11-dragon1")
             self.removeSKNode("11-mask")
             self.removeSKNode("11-tree")
+            
+//            self.removeSKNode("11")
             break
         case 12:
             self.removeSKNode("12-wing1")
@@ -1364,12 +1383,13 @@ class GameScene: SKScene {
             self.removeSKNode("12-fire2")
             break
         case 13:
-            self.removeSKNode("13-sam_l")
-            self.removeSKNode("13-state1")
-            self.removeSKNode("13-sam_r_1")
-            self.removeSKNode("13-sam_r_2")
-            self.removeSKNode("13-sam_r_3")
-            self.removeSKNode("13-tremble")
+            self.removeSKNode("help")
+//            self.removeSKNode("13-sam_l")
+//            self.removeSKNode("13-state1")
+//            self.removeSKNode("13-sam_r_1")
+//            self.removeSKNode("13-sam_r_2")
+//            self.removeSKNode("13-sam_r_3")
+//            self.removeSKNode("13-tremble")
             break
         case 14:
             self.removeSKNode("12-wing2")
