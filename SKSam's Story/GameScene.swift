@@ -710,13 +710,20 @@ class GameScene: SKScene {
                     self.playSound("la")
                 }
                 break
-//            case 11:
-//                var action = SKAction.animateWithTextures(self.animation.1,
-//                    timePerFrame: (0.3),
-//                    resize: false,
-//                    restore: false)
-//                self.animation!.0.runAction(action)
-//                break
+            case 11:
+                var action = SKAction.animateWithTextures(self.animation.1,
+                    timePerFrame: (0.3),
+                    resize: false,
+                    restore: false)
+                self.animation!.0.runAction(action)
+                
+                action = SKAction.animateWithTextures(self.animation1.1,
+                    timePerFrame: (0),
+                    resize: false,
+                    restore: false)
+                var action2 = SKAction.moveByX(0, y: 0, duration: 1.2)
+                self.animation1!.0.runAction(SKAction.sequence([action2,action]))
+                break
             case 12:
                 if self.childNodeWithName("12-body")!.containsPoint(location){
                     
@@ -1111,11 +1118,9 @@ class GameScene: SKScene {
             
             break
         case 11:
-            createAndAddSKNode("11-tree", x:screenSize.width*689.5/2048, y:screenSize.height*(1-1244/1536))
-            createAndAddSKNode("11-step1", x:screenSize.width*758.5/2048, y:screenSize.height*(1-1083.5/1536))
-            createAndAddSKNode("11-dragon1", x:screenSize.width*1548/2048, y:screenSize.height*(1-400/1536))
+            animation=createAnimationNode("11-step",texture:"step", location:CGPointMake(screenSize.width*611/2048, screenSize.height*(1-1088.5/1536)))
+            animation1=createAnimationNode("11-dragon",texture:"dragon", location:CGPointMake(screenSize.width*1507/2048, screenSize.height*(1-497.5/1536)))
             createAndAddSKNode("11-mask", x:screenSize.width*1024/2048, y:screenSize.height*768/1536)
-//            animation=createAnimationNode("11",texture:"waken", location:CGPointMake(screenSize.width*1024/2048, screenSize.height*(768/1536)))
             
             break
         case 12:
@@ -1345,11 +1350,6 @@ class GameScene: SKScene {
             self.removeSKNode("8-diag")
             break
         case 9:
-//            self.removeSKNode("9-cape1")
-//            self.removeSKNode("9-body")
-//            self.removeSKNode("9-leg1")
-//            self.removeSKNode("9-hand1")
-//            self.removeSKNode("9-mouth1")
             self.removeSKNode("9-lily")
             break
         case 10:
@@ -1367,12 +1367,9 @@ class GameScene: SKScene {
             self.removeSKNode("swipe")
             break
         case 11:
-            self.removeSKNode("11-step1")
-            self.removeSKNode("11-dragon1")
+            self.removeSKNode("11-step")
+            self.removeSKNode("11-dragon")
             self.removeSKNode("11-mask")
-            self.removeSKNode("11-tree")
-            
-//            self.removeSKNode("11")
             break
         case 12:
             self.removeSKNode("12-wing1")
@@ -1384,12 +1381,6 @@ class GameScene: SKScene {
             break
         case 13:
             self.removeSKNode("help")
-//            self.removeSKNode("13-sam_l")
-//            self.removeSKNode("13-state1")
-//            self.removeSKNode("13-sam_r_1")
-//            self.removeSKNode("13-sam_r_2")
-//            self.removeSKNode("13-sam_r_3")
-//            self.removeSKNode("13-tremble")
             break
         case 14:
             self.removeSKNode("12-wing2")
