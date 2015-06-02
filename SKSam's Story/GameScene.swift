@@ -835,6 +835,71 @@ class GameScene: SKScene {
                 }
                 self.display("19-reunion",name:"19-dia", location: location)
                 break
+            case 20:
+                if let node = self.childNodeWithName("20-ground"){
+                    let action = SKAction.moveByX(10, y: 0, duration: 0.1)
+                    let action2 = SKAction.moveByX( -20 , y: 0, duration: 0.1)
+                    if !node.hasActions(){
+                        node.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                    }
+                
+                    let action3 = SKAction.moveByX(0, y: 5, duration: 0.1)
+                    let action4 = SKAction.moveByX(0, y: -10, duration: 0.1)
+                    if let mountain = self.childNodeWithName("20-moutain"){
+                        if !mountain.hasActions(){
+                            mountain.runAction(SKAction.repeatActionForever(SKAction.sequence([action3, action4,action3])))
+                        }
+                    }
+                    
+                    let action5 = SKAction.moveByX(-120, y: -120, duration: 2)
+                    if let f = self.childNodeWithName("20-flying1"){
+                        if !f.hasActions(){
+                        f.runAction(action5)
+                    }
+                    }
+                    if let f = self.childNodeWithName("20-flying2"){
+                        f.runAction(action5)
+                    }
+                    if let f = self.childNodeWithName("20-rock"){
+                        f.runAction(action5)
+                    }
+                }
+                
+                
+                break
+                
+            case 22:
+                if let node = self.childNodeWithName("20-ground"){
+                    let action = SKAction.moveByX(10, y: 0, duration: 0.1)
+                    let action2 = SKAction.moveByX( -20 , y: 0, duration: 0.1)
+                    if !node.hasActions(){
+                        node.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                    
+                        self.childNodeWithName("22-mom")!.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                        self.childNodeWithName("22-sam")!.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                        self.childNodeWithName("22-lily")!.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                    
+                        let action3 = SKAction.moveByX(0, y: 5, duration: 0.1)
+                        let action4 = SKAction.moveByX(0, y: -10, duration: 0.1)
+                        self.childNodeWithName("20-moutain")!.runAction(SKAction.repeatActionForever(SKAction.sequence([action3, action4,action3])))
+                    }
+                }
+                
+                break
+            case 23:
+                if let node = self.childNodeWithName("20-ground"){
+                    let action = SKAction.moveByX(10, y: 0, duration: 0.1)
+                    let action2 = SKAction.moveByX( -20 , y: 0, duration: 0.1)
+                    if !node.hasActions(){
+                        node.runAction(SKAction.repeatActionForever(SKAction.sequence([action, action2,action])))
+                    
+                        let action3 = SKAction.moveByX(0, y: 5, duration: 0.1)
+                        let action4 = SKAction.moveByX(0, y: -10, duration: 0.1)
+                        self.childNodeWithName("20-moutain")!.runAction(SKAction.repeatActionForever(SKAction.sequence([action3, action4,action3])))
+                    }
+                }
+                
+                break
             default:
                 break
             }
@@ -1278,25 +1343,25 @@ class GameScene: SKScene {
             createAddHiddenSKNode("19-dia", x:screenSize.width*885/2048, y:screenSize.height*(1-334/1536))
             break
         case 20:
-            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
-            createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
-            createAndAddSKNode("20-flying1", x:screenSize.width*911.5/2048, y:screenSize.height*(1-287.5/1536))
-            createAndAddSKNode("20-flying2", x:screenSize.width*1470/2048, y:screenSize.height*(1-250/1536))
-            createAndAddSKNode("20-rock", x:screenSize.width*1161/2048, y:screenSize.height*(1-1038/1536))
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-700/1536))
+            createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536)).zPosition = 1
+            createAndAddSKNode("20-flying1", x:screenSize.width*(911.5+120)/2048, y:screenSize.height*(1-(287.5-120)/1536))
+            createAndAddSKNode("20-flying2", x:screenSize.width*(1470+120)/2048, y:screenSize.height*(1-(250-120)/1536))
+            createAndAddSKNode("20-rock", x:screenSize.width*(1161+120)/2048, y:screenSize.height*(1-(1038-120)/1536)).zPosition = 2
             break
         case 21:
             createAndAddSKNode("21-state1", x:screenSize.width*1030/2048, y:screenSize.height*(1-759.5/1536))
             createAndAddSKNode("21-mask", x:screenSize.width*1024/2048, y:screenSize.height*(768/1536))
             break
         case 22:
-            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-700/1536))
             createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
             createAndAddSKNode("22-mom", x:screenSize.width*550/2048, y:screenSize.height*(1-600/1536)).zPosition = 1
             createAndAddSKNode("22-sam", x:screenSize.width*1129/2048, y:screenSize.height*(1-929/1536)).zPosition = 1
             createAndAddSKNode("22-lily", x:screenSize.width*1604/2048, y:screenSize.height*(1-1012.5/1536)).zPosition = 1
             break
         case 23:
-            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
+            createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-700/1536))
             createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
             createAndAddSKNode("23-state1", x:screenSize.width*1122/2048, y:screenSize.height*(1-910/1536)).zPosition = 1
             break;
