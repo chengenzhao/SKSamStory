@@ -811,10 +811,12 @@ class GameScene: SKScene {
                         action3 = SKAction.moveToY(-CGFloat(1000), duration:2.5)
                         fire2.runAction(
                             SKAction.group([action0,action1,action2,action3]),completion:{fire2.position = self.childNodeWithName("12-head")!.position;fire2.alpha = 0;fire2.xScale=0.5;fire2.yScale=0.5})
+                        
+                        self.playSound("roar", type: "wav")
                     }
 
                 }
-
+                
                 break
             case 13:
                 var action2 = SKAction.animateWithTextures(self.animation.1,
@@ -822,6 +824,7 @@ class GameScene: SKScene {
                     resize: false,
                     restore: false)
                 animation.0.runAction(SKAction.repeatActionForever(action2))
+                self.playSound("scream", type: "wav")
                 break
             case 14:
                 if self.childNodeWithName("14-body")!.containsPoint(location){
@@ -1255,13 +1258,12 @@ class GameScene: SKScene {
         
         if self.stageHasMusic(stage) && self.gameModel!.music == 1{
             musicPlayer.stop()
-            if stage==0 || stage == 25 || stage == 26 || stage == 8{
-                var s = stage == 26 ? 0:stage
+            var s = stage == 26 ? 0:stage
+            s = s == 9 ? 8:s
+            s = (s == 22 || s == 23) ? 20:s
                 
-                musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music"+String(s), ofType: "mp3")!)
-                musicPlayer = AVAudioPlayer(contentsOfURL: musicSound, error: nil)
-                
-            }
+            musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music"+String(s), ofType: "mp3")!)
+            musicPlayer = AVAudioPlayer(contentsOfURL: musicSound, error: nil)
             
             musicPlayer.play()
         }else{
@@ -1401,14 +1403,14 @@ class GameScene: SKScene {
             
             createAndAddSKNode("swipeline", x:screenSize.width*300/2048, y:screenSize.height*(1-650.0/1536))
             createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
-            
+            self.playSound("breathe", type: "wav")
             break
         case 11:
             createAndAddSKNode("11-tree", x:screenSize.width*551/2048, y:screenSize.height*(1-1269.5/1536))
             animation=createAnimationNode("11-step",texture:"step", location:CGPointMake(screenSize.width*611/2048, screenSize.height*(1-1088.5/1536)))
             animation1=createAnimationNode("11-dragon",texture:"dragon", location:CGPointMake(screenSize.width*1507/2048, screenSize.height*(1-497.5/1536)))
             createAndAddSKNode("11-mask", x:screenSize.width*1024/2048, y:screenSize.height*768/1536)
-            
+            self.playSound("footsteps", type: "wav")
             break
         case 12:
             createAndAddSKNodeWithAnchorPoint("12-wing2", imageName:"12-wing2", x:screenSize.width*573/2048, y:screenSize.height*(1-1045/1536), corner: Corner.RIGHT_MIDDLE)
@@ -1787,7 +1789,7 @@ class GameScene: SKScene {
     }
     
     func stageHasMusic(stage:Int) -> Bool{
-        if stage == 0 || stage == 25 || stage == 26 || stage == 8{
+        if stage == 0 || stage == 25 || stage == 26 || stage == 8 || stage == 9 || stage == 10 || stage == 11 || stage == 5 || stage == 16 || stage == 17 || stage == 20 || stage == 22 || stage == 23 || stage == 24{
             return true;
         }
         return false;
