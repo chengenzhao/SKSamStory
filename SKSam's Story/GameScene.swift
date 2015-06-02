@@ -26,6 +26,7 @@ class GameScene: SKScene {
     var x:CGFloat?
     var y:CGFloat?
     var node:SKSpriteNode?
+    var moveBoat:Bool = false
     
     func initialize(gameModel:GameModel){
         self.gameModel = gameModel
@@ -277,6 +278,14 @@ class GameScene: SKScene {
             }
             
             startPoint = location
+            
+            if self.gameModel.getCurrentStage() == 25{
+                if let node = self.childNodeWithName("25-lady2"){
+                    if node.containsPoint(location){
+                        self.moveBoat = true
+                    }
+                }
+            }
         }
     }
     
@@ -319,6 +328,11 @@ class GameScene: SKScene {
                 
                 self.removeSKNode("swipeline")
                 self.removeSKNode("swipe")
+            }
+            if self.gameModel.getCurrentStage() == 25 && moveBoat == true{
+                if let node = self.childNodeWithName("25-lady2"){
+                    node.position = location
+                }
             }
         }
     }
@@ -940,6 +954,19 @@ class GameScene: SKScene {
                     }
                 }
                 break
+            case 25:
+                if let node = self.childNodeWithName("25-lady1") as? SKSpriteNode{
+                    var action = SKAction.moveByX(-1054, y: 0, duration: 12)
+                    if self.gameModel.temp2 == 0{
+                        node.runAction(action)
+                        self.gameModel.temp2 = 1
+                    }
+                }
+                moveBoat = false
+                break
+            case 26:
+                
+                break
             default:
                 break
             }
@@ -1410,7 +1437,7 @@ class GameScene: SKScene {
 //            createAndAddSKNode("24-tree1", x:screenSize.width*557.5/2048, y:screenSize.height*(1-786/1536))
             break
         case 25:
-            createAndAddSKNode("25-lady1", x:screenSize.width*1105/2048, y:screenSize.height*(1-508/1536))
+            createAndAddSKNode("25-lady1", x:screenSize.width*2048/2048, y:screenSize.height*(1-508/1536))
             createAndAddSKNode("25-river", x:screenSize.width*1024/2048, y:screenSize.height*(1-933/1536))
             createAndAddSKNode("25-lady2", x:screenSize.width*562.5/2048, y:screenSize.height*(1-754.5/1536))
             
