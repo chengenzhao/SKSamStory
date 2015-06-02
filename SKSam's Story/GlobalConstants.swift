@@ -8,8 +8,8 @@
 
 import Foundation
 
-let MAX_PAGES = 26
-let MAX_SMALL_PAGES = 26
+let MAX_PAGES = 27
+let MAX_SMALL_PAGES = 27
 
 enum Corner{
     case LEFT_TOP, LEFT_BOTTOM, RIGHT_TOP, RIGHT_BOTTOM, LEFT_MIDDLE, RIGHT_MIDDLE

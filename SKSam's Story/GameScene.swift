@@ -72,7 +72,7 @@ class GameScene: SKScene {
         createNode("btn_chn", x:screenSize.width*10.5/12, y:screenSize.height*8.7/10)
         createNode("btn_eng", x:screenSize.width*11.5/12, y:screenSize.height*8.7/10)
         
-        for i in 0...25{
+        for i in 0...MAX_SMALL_PAGES-1{
             createNode("s"+String(i))
         }
         
@@ -286,6 +286,14 @@ class GameScene: SKScene {
                     }
                 }
             }
+            
+            if self.gameModel.getCurrentStage() == 4{
+                if let node = self.childNodeWithName("4-toy_inbox2"){
+                    if node.containsPoint(location){
+                        self.moveBoat = true
+                    }
+                }
+            }
         }
     }
     
@@ -299,7 +307,8 @@ class GameScene: SKScene {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
             var dis = (location.x - startPoint.x)*5
-            if self.gameModel.getCurrentStage() == 10 || self.gameModel.getCurrentStage() == 18{
+            var stage = self.gameModel.getCurrentStage()
+            if stage == 10 || stage == 18{
                 var x = self.childNodeWithName("bg")!.position.x
                 if x + dis < 0{
                     dis = -x
@@ -329,7 +338,12 @@ class GameScene: SKScene {
                 self.removeSKNode("swipeline")
                 self.removeSKNode("swipe")
             }
-            if self.gameModel.getCurrentStage() == 25 && moveBoat == true{
+            if stage == 4 && moveBoat == true{
+                if let node = self.childNodeWithName("4-toy_inbox2"){
+                    node.position = location
+                }
+            }
+            if stage == 25 && moveBoat == true{
                 if let node = self.childNodeWithName("25-lady2"){
                     node.position = location
                 }
@@ -595,6 +609,7 @@ class GameScene: SKScene {
                     self.gameModel.accomplished.remove("door")
                     self.updateAccomplish()
                 }
+                moveBoat = false
                 break
             case 5:
                 if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
@@ -965,6 +980,34 @@ class GameScene: SKScene {
                 moveBoat = false
                 break
             case 26:
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                        if let node = self.childNodeWithName("6-lily"){
+                            if !node.hasActions(){
+                                var action = SKAction.animateWithTextures(self.animation.1,
+                                    timePerFrame: (0.3),
+                                    resize: true,
+                                    restore: false)
+                                var action1 = SKAction.moveByX(1724, y: 0, duration: 10)
+                                animation.0.runAction(SKAction.group([SKAction.repeatActionForever(action),action1]))
+                                action = SKAction.animateWithTextures(self.animation1.1,
+                                    timePerFrame: (0.3),
+                                    resize: true,
+                                    restore: false)
+                                animation1.0.runAction(SKAction.group([SKAction.repeatActionForever(action),action1]))
+                            }
+                        }
+                }
+                if let node = self.childNodeWithName("26-cat"){
+                    if !node.hasActions(){
+                        var action = SKAction.animateWithTextures(self.animation2.1,
+                            timePerFrame: (0.3),
+                            resize: true,
+                            restore: false)
+                        node.runAction(SKAction.repeatActionForever(action))
+                    }
+                }
+
                 
                 break
             default:
@@ -1260,7 +1303,7 @@ class GameScene: SKScene {
             createAndAddSKNode("fire", x:screenSize.width*1084.5/2048, y:screenSize.height*(1-815.5/1536))
             createAndAddSKNode("cat-1", x:screenSize.width*2004.5/2048, y:screenSize.height*(1-1140/1536))
             createAndAddSKNode("4-box2", x:screenSize.width*1260.5/2048, y:screenSize.height*(1-1103.5/1536))
-            createAndAddSKNode("4-toy_inbox2", x:screenSize.width*1324/2048, y:screenSize.height*(1-975.5/1536))
+            createAndAddSKNode("4-toy_inbox2", x:screenSize.width*250/2048, y:screenSize.height*(1-1400/1536)).zPosition = 2
             createAndAddSKNode("4-ball", x:screenSize.width*1341.5/2048, y:screenSize.height*(1-1031.5/1536))
             createAndAddSKNode("4-toy_inbox", x:screenSize.width*1213/2048, y:screenSize.height*(1-1004/1536))
             createAndAddSKNode("4-car", x:screenSize.width*1002/2048, y:screenSize.height*(1-1262/1536))
@@ -1441,6 +1484,15 @@ class GameScene: SKScene {
             createAndAddSKNode("25-river", x:screenSize.width*1024/2048, y:screenSize.height*(1-933/1536))
             createAndAddSKNode("25-lady2", x:screenSize.width*562.5/2048, y:screenSize.height*(1-754.5/1536))
             
+            break
+        case 26:
+            var node = createAndAddSKNode("26-text", x:screenSize.width*964/2048, y:screenSize.height*(1-602/1536))
+            
+            animation=createAnimationNode("6-lily",texture:"lily", location:CGPointMake(screenSize.width*(0-150)/2048, screenSize.height*(1-1166/1536)))
+            animation.0.xScale = -0.5
+            animation.0.yScale = 0.5
+            animation1=createAnimationNode("26-end",texture:"end", location:CGPointMake(screenSize.width*(0-750)/2048, screenSize.height*(1-1166/1536)))
+            animation2=createAnimationNode("26-cat",texture:"cat", location:CGPointMake(screenSize.width*(1289)/2048, screenSize.height*(1-451.5/1536)))
             break
         default:
             break
@@ -1671,6 +1723,12 @@ class GameScene: SKScene {
             self.removeSKNode("25-lady1")
             self.removeSKNode("25-river")
             self.removeSKNode("25-lady2")
+            break
+        case 26:
+            self.removeSKNode("26-text")
+            self.removeSKNode("6-lily")
+            self.removeSKNode("26-end")
+            self.removeSKNode("26-cat")
             break
         default:
             break
