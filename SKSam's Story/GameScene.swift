@@ -912,6 +912,33 @@ class GameScene: SKScene {
                     }
                 }
                 
+                if let node = self.childNodeWithName("state1") as? SKSpriteNode{
+                    if self.gameModel.temp2 == 0{
+                        self.gameModel.temp2 = 1
+                    }else if node.containsPoint(location){
+                        self.gameModel.temp2 += 1
+//                        if self.gameModel.temp2 > 3{
+//                            self.gameModel.temp2 = 1
+//                        }
+                    }
+                    if self.gameModel.temp2 <= 3{
+                        node.texture = SKTexture(imageNamed: "state"+String(self.gameModel.temp2))
+                    }
+                }
+                break
+                
+            case 24:
+                if let node = self.childNodeWithName("reborn1") as? SKSpriteNode{
+                    if self.gameModel.temp2 == 0{
+                        self.gameModel.temp2 = 1
+                    }else if node.containsPoint(location){
+                        self.gameModel.temp2 += 1
+                        
+                    }
+                    if self.gameModel.temp2 <= 5{
+                        node.texture = SKTexture(imageNamed: "reborn"+String(self.gameModel.temp2))
+                    }
+                }
                 break
             default:
                 break
@@ -1376,11 +1403,11 @@ class GameScene: SKScene {
         case 23:
             createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-700/1536))
             createAndAddSKNode("20-ground", x:screenSize.width*1024/2048, y:screenSize.height*(1-1085/1536))
-            createAndAddSKNode("23-state1", x:screenSize.width*1122/2048, y:screenSize.height*(1-910/1536)).zPosition = 1
+            createAndAddSKNode("state1", x:screenSize.width*1024/2048, y:screenSize.height*(1-768/1536)).zPosition = 1
             break;
         case 24:
-            createAndAddSKNode("24-water1", x:screenSize.width*1460.5/2048, y:screenSize.height*(1-1034.5/1536))
-            createAndAddSKNode("24-tree1", x:screenSize.width*557.5/2048, y:screenSize.height*(1-786/1536))
+            createAndAddSKNode("reborn1", x:screenSize.width*1024/2048, y:screenSize.height*(1-768/1536))
+//            createAndAddSKNode("24-tree1", x:screenSize.width*557.5/2048, y:screenSize.height*(1-786/1536))
             break
         case 25:
             createAndAddSKNode("25-lady1", x:screenSize.width*1105/2048, y:screenSize.height*(1-508/1536))
@@ -1607,11 +1634,11 @@ class GameScene: SKScene {
         case 23:
             self.removeSKNode("20-moutain")
             self.removeSKNode("20-ground")
-            self.removeSKNode("23-state1")
+            self.removeSKNode("state1")
             break
         case 24:
-            self.removeSKNode("24-water1")
-            self.removeSKNode("24-tree1")
+            self.removeSKNode("reborn1")
+//            self.removeSKNode("24-tree1")
             break
         case 25:
             self.removeSKNode("25-lady1")
