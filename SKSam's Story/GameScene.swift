@@ -89,16 +89,16 @@ class GameScene: SKScene {
         self.addChild(images["btn_next_normal"]!)
         self.addChild(images["btn_prev_normal"]!)
         
-        images["btn_info_normal"]!.zPosition = 2
-        images["btn_page_normal"]!.zPosition = 2
-        images["btn_next_normal"]!.zPosition = 2
-        images["btn_prev_normal"]!.zPosition = 2
+        images["btn_info_normal"]!.zPosition = 4
+        images["btn_page_normal"]!.zPosition = 4
+        images["btn_next_normal"]!.zPosition = 4
+        images["btn_prev_normal"]!.zPosition = 4
         
         rect = SKShapeNode(rect:CGRectMake(0, 0, screenSize.width, screenSize.height*0.175))
         rect!.fillColor = UIColor(red: 197/255.0, green: 61/255.0, blue: 25/255.0, alpha: 1.0)
         rect!.strokeColor = rect!.fillColor
         rect!.position = CGPointMake(0, screenSize.height*(1-0.175))
-        rect!.zPosition = 1
+        rect!.zPosition = 5
         
 //        let bearAnimatedAtlas = SKTextureAtlas(named: "BearImages")
 //        var walkFrames = [SKTexture]()
@@ -377,17 +377,17 @@ class GameScene: SKScene {
                 self.removeChildrenInArray([images["btn_info_normal"]!,images["btn_page_normal"]!, rect!])
                 self.addChild(rect!)
                 
-                images["bar"]!.zPosition = 2
+                images["bar"]!.zPosition = 6
                 self.addChild(images["bar"]!)
-                images["btn_close"]!.zPosition = 2
+                images["btn_close"]!.zPosition = 6
                 self.addChild(images["btn_close"]!)
-                images["btn_music_normal"]!.zPosition = 2
+                images["btn_music_normal"]!.zPosition = 6
                 self.addChild(images["btn_music_normal"]!)
-                images["btn_sound_normal"]!.zPosition = 2
+                images["btn_sound_normal"]!.zPosition = 6
                 self.addChild(images["btn_sound_normal"]!)
-                images["btn_chn"]!.zPosition = 2
+                images["btn_chn"]!.zPosition = 6
                 self.addChild(images["btn_chn"]!)
-                images["btn_eng"]!.zPosition = 2
+                images["btn_eng"]!.zPosition = 6
                 self.addChild(images["btn_eng"]!)
             }
             
@@ -399,10 +399,10 @@ class GameScene: SKScene {
                 
                 self.addChild(rect!)
                 
-                images["btn_close"]!.zPosition = 2
+                images["btn_close"]!.zPosition = 6
                 self.addChild(images["btn_close"]!)
                 for i in 0...MAX_SMALL_PAGES-1{
-                    images["s"+String(i)]!.zPosition = 2
+                    images["s"+String(i)]!.zPosition = 6
                     
                     images["s"+String(i)]!.position = CGPointMake(x! + images["s"+String(i)]!.size.width/2 + (images["s"+String(i)]!.size.width+screenSize.width/40)*CGFloat(i), y!-images["s"+String(i)]!.size.height/2)
                     self.addChild(images["s"+String(i)]!)
@@ -445,7 +445,7 @@ class GameScene: SKScene {
                     self.gameModel.information = 0
                     self.removeChildrenInArray([rect!,images["bar"]!,images["btn_close"]!])
                     for i in 0...MAX_SMALL_PAGES-1{
-                        images["s"+String(i)]!.zPosition = 2
+                        images["s"+String(i)]!.zPosition = 6
                         self.removeChildrenInArray([images["s"+String(i)]!])
                     }
                 }
@@ -809,6 +809,7 @@ class GameScene: SKScene {
                     
                         let action0 = SKAction.rotateByAngle(CGFloat(-M_PI*26/180), duration: 0.5)
                         self.childNodeWithName("14-hand")!.runAction(action0)
+                        self.childNodeWithName("14-dia")!.alpha = 1
                         self.gameModel!.temp2 = 1
                     }
                 }
@@ -1234,9 +1235,12 @@ class GameScene: SKScene {
         
         if self.stageHasMusic(stage) && self.gameModel!.music == 1{
             musicPlayer.stop()
-            if stage==0 {
-                musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music0", ofType: "mp3")!)
+            if stage==0 || stage == 25 || stage == 26{
+                var s = stage == 26 ? 0:stage
+                
+                musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music"+String(s), ofType: "mp3")!)
                 musicPlayer = AVAudioPlayer(contentsOfURL: musicSound, error: nil)
+                
             }
             
             musicPlayer.play()
@@ -1405,6 +1409,7 @@ class GameScene: SKScene {
             createAndAddSKNode("12-head", x:screenSize.width*877.5/2048, y:screenSize.height*(1-315/1536))
 //            createAndAddSKNode("14-hand", x:screenSize.width*910/2048, y:screenSize.height*(1-1154.5/1536))
             createAndAddSKNodeWithAnchorPoint("14-hand", imageName:"14-hand", x:screenSize.width*910/2048, y:screenSize.height*(1-1154.5/1536), anchorXOffset:228/2, anchorYOffset:27.5/2).zPosition = 2
+            createAddHiddenSKNode("14-dia", x:screenSize.width*902/2048, y:screenSize.height*(1-337.5/1536))
             break
         case 15:
             createAndAddSKNode("15-line", x:screenSize.width*947/2048, y:screenSize.height*(1-910.5/1536)).zPosition = 2
@@ -1658,6 +1663,7 @@ class GameScene: SKScene {
             self.removeSKNode("14-body")
             self.removeSKNode("12-head")
             self.removeSKNode("14-hand")
+            self.removeSKNode("14-dia")
             break
         case 15:
             self.removeSKNode("15-line")
@@ -1754,7 +1760,7 @@ class GameScene: SKScene {
     }
     
     func stageHasMusic(stage:Int) -> Bool{
-        if stage == 0{
+        if stage == 0 || stage == 25 || stage == 26{
             return true;
         }
         return false;

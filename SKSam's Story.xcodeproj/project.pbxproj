@@ -34,6 +34,7 @@
 		A8AF8D381B1D76F800881F76 /* 19-reunion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8AF8D371B1D76F800881F76 /* 19-reunion.atlas */; };
 		A8AF8D3C1B1DC3E400881F76 /* 26-end.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8AF8D3B1B1DC3E400881F76 /* 26-end.atlas */; };
 		A8AF8D3E1B1DCA9F00881F76 /* 26-cat.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A8AF8D3D1B1DCA9F00881F76 /* 26-cat.atlas */; };
+		A8AF8D401B1DCD3800881F76 /* music25.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8AF8D3F1B1DCD3800881F76 /* music25.mp3 */; };
 		A8C268CE1B17139800A77A55 /* meow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A8C268C81B17139800A77A55 /* meow.wav */; };
 		A8C268CF1B17139800A77A55 /* tapBell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268C91B17139800A77A55 /* tapBell.mp3 */; };
 		A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A8C268CA1B17139800A77A55 /* childrenPlay.mp3 */; };
@@ -90,6 +91,7 @@
 		A8AF8D371B1D76F800881F76 /* 19-reunion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "19-reunion.atlas"; sourceTree = "<group>"; };
 		A8AF8D3B1B1DC3E400881F76 /* 26-end.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "26-end.atlas"; sourceTree = "<group>"; };
 		A8AF8D3D1B1DCA9F00881F76 /* 26-cat.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "26-cat.atlas"; sourceTree = "<group>"; };
+		A8AF8D3F1B1DCD3800881F76 /* music25.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music25.mp3; sourceTree = "<group>"; };
 		A8C268C81B17139800A77A55 /* meow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = meow.wav; sourceTree = "<group>"; };
 		A8C268C91B17139800A77A55 /* tapBell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tapBell.mp3; sourceTree = "<group>"; };
 		A8C268CA1B17139800A77A55 /* childrenPlay.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = childrenPlay.mp3; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		A8E407411B1347BF005DA379 /* SKSam's Story */ = {
 			isa = PBXGroup;
 			children = (
+				A8AF8D3F1B1DCD3800881F76 /* music25.mp3 */,
 				A818A5CE1B1C771D0058C62A /* re.mp3 */,
 				A818A5CF1B1C771D0058C62A /* so.mp3 */,
 				A818A5D01B1C771D0058C62A /* si.mp3 */,
@@ -334,6 +337,7 @@
 				A8C268D01B17139800A77A55 /* childrenPlay.mp3 in Resources */,
 				A8E407471B1347BF005DA379 /* GameScene.sks in Resources */,
 				A818A5BE1B1C45060058C62A /* 7-lily.atlas in Resources */,
+				A8AF8D401B1DCD3800881F76 /* music25.mp3 in Resources */,
 				A818A6871B1C806C0058C62A /* 11-step.atlas in Resources */,
 				A8C268CF1B17139800A77A55 /* tapBell.mp3 in Resources */,
 				A818A5C51B1C5C9F0058C62A /* 8-lily.atlas in Resources */,
