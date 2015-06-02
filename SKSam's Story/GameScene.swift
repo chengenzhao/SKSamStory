@@ -515,6 +515,10 @@ class GameScene: SKScene {
                 {
                     self.playSound("tapBell")
                 }
+                if self.childNodeWithName("light1")!.containsPoint(location)
+                {
+                    self.playSound("window")
+                }
                 break
             case 2:
 //                self.wave("2-lily-1", radians: CGFloat(M_PI*25/180), location: location)
@@ -1251,7 +1255,7 @@ class GameScene: SKScene {
         
         if self.stageHasMusic(stage) && self.gameModel!.music == 1{
             musicPlayer.stop()
-            if stage==0 || stage == 25 || stage == 26{
+            if stage==0 || stage == 25 || stage == 26 || stage == 8{
                 var s = stage == 26 ? 0:stage
                 
                 musicSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music"+String(s), ofType: "mp3")!)
@@ -1306,6 +1310,7 @@ class GameScene: SKScene {
             createAddHiddenSKNode("hello", x:screenSize.width*627.5/2048, y:screenSize.height*(1-455.5/1536))
             createAddHiddenSKNode("imlily", x:screenSize.width*639/2048, y:screenSize.height*(1-773.5/1536))
             createAddHiddenSKNode("dialog", x:screenSize.width*1310/2048, y:screenSize.height*(1-279.5/1536))
+            self.playSound("childrenPlay")
             break
         case 3:
             createAndAddSKNode("3-sam", x:screenSize.width*1193.5/2048, y:screenSize.height*(1-850.5/1536))
@@ -1316,7 +1321,7 @@ class GameScene: SKScene {
             createAddHiddenSKNode("l5", x:screenSize.width*656.5/2048, y:screenSize.height*(1-1244.5/1536))
             createAddHiddenSKNode("l6", x:screenSize.width*1581.5/2048, y:screenSize.height*(1-1392/1536))
             createAddHiddenSKNode("l7", x:screenSize.width*1396.5/2048, y:screenSize.height*(1-1048/1536))
-            createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(764/1536))
+            createAndAddSKNode("touch1", x:screenSize.width*905/2048, y:screenSize.height*(700/1536))
             break
         case 4:
             createAddHiddenSKNode("4-door", x:screenSize.width*708.5/2048, y:screenSize.height*(1-598/1536))
@@ -1339,6 +1344,7 @@ class GameScene: SKScene {
             createAndAddSKNode("4-lily_body", x:screenSize.width*1441.5/2048, y:screenSize.height*(1-1328.5/1536))
             createAndAddSKNode("4-box", x:screenSize.width*233.5/2048, y:screenSize.height*(1-1380.5/1536))
             createAndAddSKNode("4-plane", x:screenSize.width*398.5/2048, y:screenSize.height*(1-1345/1536))
+            self.playSound("childrenLaughing")
             break
         case 5:
             createAndAddSKNode("5-TV", x:screenSize.width*833/2048, y:screenSize.height*(1-1153.5/1536))
@@ -1781,7 +1787,7 @@ class GameScene: SKScene {
     }
     
     func stageHasMusic(stage:Int) -> Bool{
-        if stage == 0 || stage == 25 || stage == 26{
+        if stage == 0 || stage == 25 || stage == 26 || stage == 8{
             return true;
         }
         return false;
@@ -1794,16 +1800,16 @@ class GameScene: SKScene {
         return false;
     }
 
-    func playSound(name:String){
-        
-        var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!)
-        soundPlayer = AVAudioPlayer(contentsOfURL: sound, error: nil)
-        
-        soundPlayer.prepareToPlay()
-        soundPlayer.play()
-    }
+//    func playSound(name:String){
+//        
+//        var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: "mp3")!)
+//        soundPlayer = AVAudioPlayer(contentsOfURL: sound, error: nil)
+//        
+//        soundPlayer.prepareToPlay()
+//        soundPlayer.play()
+//    }
     
-    func playSound(name:String, type:String){
+    func playSound(name:String, type:String = "mp3"){
         
         var sound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(name, ofType: type)!)
         soundPlayer = AVAudioPlayer(contentsOfURL: sound, error: nil)
