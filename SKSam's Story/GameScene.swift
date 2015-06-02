@@ -821,6 +821,20 @@ class GameScene: SKScene {
                     }
                 }
                 break
+            case 19:
+                if let node = self.childNodeWithName("19-reunion"){
+                    if node.containsPoint(location) && self.gameModel.temp3 == 0{
+                        var action = SKAction.animateWithTextures(self.animation.1,
+                            timePerFrame: (0.5),
+                            resize: true,
+                            restore: false)
+//                        let action1 = SKAction.moveByX(0, y: -200, duration: 0.9)
+                        animation.0.runAction(action)//,action1
+                        self.gameModel.temp3 = 1
+                    }
+                }
+                self.display("19-reunion",name:"19-dia", location: location)
+                break
             default:
                 break
             }
@@ -1256,8 +1270,12 @@ class GameScene: SKScene {
             
             break
         case 19:
-            createAndAddSKNode("19-mom1", x:screenSize.width*756/2048, y:screenSize.height*(1-710.5/1536))
-            createAndAddSKNode("19-sam1", x:screenSize.width*1882/2048, y:screenSize.height*(1-1449.5/1536))
+//            createAndAddSKNode("19-mom1", x:screenSize.width*756/2048, y:screenSize.height*(1-710.5/1536))
+//            createAndAddSKNode("19-sam1", x:screenSize.width*1882/2048, y:screenSize.height*(1-1449.5/1536))
+            animation=createAnimationNode("19-reunion",texture:"reunion", location:CGPointMake(screenSize.width*1024/2048, screenSize.height*768/1536))
+            animation.0.xScale = 1
+            animation.0.yScale = 1
+            createAddHiddenSKNode("19-dia", x:screenSize.width*885/2048, y:screenSize.height*(1-334/1536))
             break
         case 20:
             createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-669.5/1536))
@@ -1486,8 +1504,9 @@ class GameScene: SKScene {
             self.removeSKNode("swipe")
             break
         case 19:
-            self.removeSKNode("19-mom1")
-            self.removeSKNode("19-sam1")
+//            self.removeSKNode("19-mom1")
+            self.removeSKNode("19-dia")
+            self.removeSKNode("19-reunion")
             break
         case 20:
             self.removeSKNode("20-moutain")
