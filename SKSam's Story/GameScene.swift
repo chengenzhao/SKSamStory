@@ -868,6 +868,19 @@ class GameScene: SKScene {
                 
                 break
                 
+            case 21:
+                if let node = self.childNodeWithName("bye1") as? SKSpriteNode{
+                    if self.gameModel.temp2 == 0{
+                        self.gameModel.temp2 = 1
+                    }else if node.containsPoint(location){
+                        self.gameModel.temp2 += 1
+                        if self.gameModel.temp2 > 3{
+                            self.gameModel.temp2 = 1
+                        }
+                    }
+                    node.texture = SKTexture(imageNamed: "bye"+String(self.gameModel.temp2))
+                }
+                break
             case 22:
                 if let node = self.childNodeWithName("20-ground"){
                     let action = SKAction.moveByX(10, y: 0, duration: 0.1)
@@ -1350,8 +1363,8 @@ class GameScene: SKScene {
             createAndAddSKNode("20-rock", x:screenSize.width*(1161+120)/2048, y:screenSize.height*(1-(1038-120)/1536)).zPosition = 2
             break
         case 21:
-            createAndAddSKNode("21-state1", x:screenSize.width*1030/2048, y:screenSize.height*(1-759.5/1536))
-            createAndAddSKNode("21-mask", x:screenSize.width*1024/2048, y:screenSize.height*(768/1536))
+//            createAndAddSKNode("21-state1", x:screenSize.width*1030/2048, y:screenSize.height*(1-759.5/1536))
+            createAndAddSKNode("bye1", x:screenSize.width*1024/2048, y:screenSize.height*(768/1536))
             break
         case 22:
             createAndAddSKNode("20-moutain", x:screenSize.width*1257/2048, y:screenSize.height*(1-700/1536))
@@ -1581,8 +1594,8 @@ class GameScene: SKScene {
             self.removeSKNode("20-rock")
             break
         case 21:
-            self.removeSKNode("21-mask")
-            self.removeSKNode("21-state1")
+            self.removeSKNode("bye1")
+//            self.removeSKNode("21-state1")
             break
         case 22:
             self.removeSKNode("20-moutain")
