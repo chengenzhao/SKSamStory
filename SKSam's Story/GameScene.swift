@@ -234,6 +234,11 @@ class GameScene: SKScene {
             break
         case Corner.RIGHT_MIDDLE:
             anchorYOffset=0
+            break
+        case Corner.BOTTOM_MIDDLE:
+            anchorXOffset=0
+            anchorYOffset = -1 * anchorYOffset
+            break
         default:
             break
         }
@@ -491,14 +496,25 @@ class GameScene: SKScene {
                 }
                 break
             case 1:
-                self.alternateNode("cat-1", location:location, alterTexture:"cat-2")
+                self.alternateNode("cat-1", location:location, alterTexture:"cat-2",sound:"meow",type:"wav")
                 self.alternateNode("light1", location:location, alterTexture:"light2")
                 self.alternateNode("toy", location:location, alterTexture:"toy2")
 
-                self.wave("1-lily-r", radians: CGFloat(-M_PI*25/180), location: location)
-                self.wave("1-lily-l", radians: CGFloat(M_PI*25/180), location: location)
+                self.wave("lily_body",name:"1-lily-r", radians: CGFloat(-M_PI*25/180), location: location)
+                self.wave("lily_body",name:"1-lily-l", radians: CGFloat(M_PI*25/180), location: location)
+                
+                self.wave("boy",name:"boy_arm_r", radians: CGFloat(M_PI*15/180), location: location)
+                self.wave("boy",name:"boy_arm_l", radians: CGFloat(-M_PI*15/180), location: location)
                 
                 self.display("teacher",name:"note", location: location)
+                
+                if self.childNodeWithName("teacher")!.containsPoint(location){
+                    self.playSound("guitar")
+                }
+                if self.childNodeWithName("boy")!.containsPoint(location)
+                {
+                    self.playSound("tapBell")
+                }
                 break
             case 2:
 //                self.wave("2-lily-1", radians: CGFloat(M_PI*25/180), location: location)
@@ -1029,8 +1045,8 @@ class GameScene: SKScene {
         }
     }
     
-    func wave(name:String, radians:CGFloat, duration:NSTimeInterval = 1, location: CGPoint){
-        if self.childNodeWithName(name)!.containsPoint(location){
+    func wave(touches:String,name:String, radians:CGFloat, duration:NSTimeInterval = 1, location: CGPoint){
+        if self.childNodeWithName(touches)!.containsPoint(location){
             if let node = self.childNodeWithName(name) as? SKSpriteNode{
                 if !node.hasActions(){
                     let action0 = SKAction.rotateByAngle(radians, duration:duration)
@@ -1269,13 +1285,16 @@ class GameScene: SKScene {
             createAndAddSKNode("cat-1", x:screenSize.width*1658.5/2048, y:screenSize.height*(1-988.5/1536))
             createAndAddSKNode("teacher", x:screenSize.width*885/2048, y:screenSize.height*(1-915.5/1536))
             createAndAddSKNode("boy", x:screenSize.width*1187/2048, y:screenSize.height*(1-1032.5/1536))
-            createAndAddSKNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536))
-            createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
+//            createAndAddSKNode("boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536))
+            createAndAddSKNodeWithAnchorPoint("boy_arm_r", imageName:"boy_arm_r", x:screenSize.width*1143.5/2048, y:screenSize.height*(1-846.5/1536), corner:Corner.BOTTOM_MIDDLE)
+//            createAndAddSKNode("boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536))
+            createAndAddSKNodeWithAnchorPoint("boy_arm_l", imageName:"boy_arm_l", x:screenSize.width*1266/2048, y:screenSize.height*(1-847/1536), corner:Corner.LEFT_BOTTOM)
             createAddHiddenSKNode("note", x:screenSize.width*611.5/2048, y:screenSize.height*(1-444.5/1536))
             createAndAddSKNode("lily_body", x:screenSize.width*590/2048, y:screenSize.height*(1-1032/1536))
             createAndAddSKNodeWithAnchorPoint("1-lily-r", imageName:"1-lily-r", x:screenSize.width*515/2048, y:screenSize.height*(1-928/1536), corner: Corner.RIGHT_BOTTOM)
             createAndAddSKNodeWithAnchorPoint("1-lily-l", imageName:"1-lily-l", x:screenSize.width*674/2048, y:screenSize.height*(1-1084/1536), corner: Corner.LEFT_TOP)
             createAndAddSKNode("shake1", x: screenSize.width*874/2048, y:screenSize.height*(1-269/1536))
+            self.playSound("childrenPlay")
             break
         case 2:
             createAndAddSKNode("2-fire", x:screenSize.width*1138.5/2048, y:screenSize.height*540/1536)
@@ -1488,6 +1507,7 @@ class GameScene: SKScene {
             createAndAddSKNode("25-lady1", x:screenSize.width*2048/2048, y:screenSize.height*(1-508/1536))
             createAndAddSKNode("25-river", x:screenSize.width*1024/2048, y:screenSize.height*(1-933/1536))
             createAndAddSKNode("25-lady2", x:screenSize.width*562.5/2048, y:screenSize.height*(1-754.5/1536))
+            createAndAddSKNode("25-text", x:screenSize.width*1481/2048, y:screenSize.height*(1-1381/1536))
             
             break
         case 26:
@@ -1729,6 +1749,7 @@ class GameScene: SKScene {
             self.removeSKNode("25-lady1")
             self.removeSKNode("25-river")
             self.removeSKNode("25-lady2")
+            self.removeSKNode("25-text")
             break
         case 26:
             self.removeSKNode("26-text")
