@@ -61,7 +61,7 @@ class GameModel{
             break
         case 1:
             toAccomplish=3
-            accomplished.insert("1-lily-r")
+            accomplished.insert("lily")
             accomplished.insert("note")
             accomplished.insert("boy")
             break

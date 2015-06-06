@@ -502,11 +502,30 @@ class GameScene: SKScene {
 
                 self.wave("lily_body",name:"1-lily-r", radians: CGFloat(-M_PI*25/180), location: location)
                 self.wave("lily_body",name:"1-lily-l", radians: CGFloat(M_PI*25/180), location: location)
+                if let node = self.childNodeWithName("lily_body"){
+                    if node.containsPoint(location){
+                        self.gameModel.removeAccomplished("lily")
+                        self.updateAccomplish()
+                    }
+                }
                 
                 self.wave("boy",name:"boy_arm_r", radians: CGFloat(M_PI*15/180), location: location)
                 self.wave("boy",name:"boy_arm_l", radians: CGFloat(-M_PI*15/180), location: location)
                 
+                if let node = self.childNodeWithName("boy"){
+                    if node.containsPoint(location){
+                        self.gameModel.removeAccomplished("boy")
+                        self.updateAccomplish()
+                    }
+                }
+                
                 self.display("teacher",name:"note", location: location)
+                if let node = self.childNodeWithName("teacher"){
+                    if node.containsPoint(location){
+                        self.gameModel.removeAccomplished("note")
+                        self.updateAccomplish()
+                    }
+                }
                 
                 if self.childNodeWithName("teacher")!.containsPoint(location){
                     self.playSound("guitar")
@@ -1346,6 +1365,7 @@ class GameScene: SKScene {
             createAndAddSKNode("4-lily_body", x:screenSize.width*1441.5/2048, y:screenSize.height*(1-1328.5/1536))
             createAndAddSKNode("4-box", x:screenSize.width*233.5/2048, y:screenSize.height*(1-1380.5/1536))
             createAndAddSKNode("4-plane", x:screenSize.width*398.5/2048, y:screenSize.height*(1-1345/1536))
+            animation=createAnimationNode("4-movesign",texture:"movesign",location:CGPointMake(screenSize.width*450/2048, screenSize.height*(1-1200/1536)))
             self.playSound("childrenLaughing")
             break
         case 5:
@@ -1625,6 +1645,7 @@ class GameScene: SKScene {
             self.removeSKNode("4-lily_body")
             self.removeSKNode("4-box")
             self.removeSKNode("4-plane")
+            self.removeSKNode("4-movesign")
             break
         case 5:
             self.removeSKNode("5-TV")
