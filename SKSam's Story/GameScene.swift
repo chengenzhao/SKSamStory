@@ -648,6 +648,13 @@ class GameScene: SKScene {
                     self.gameModel.accomplished.remove("door")
                     self.updateAccomplish()
                 }
+                
+                animation.0.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(self.animation.1,
+                    timePerFrame: (0.5),
+                    resize: false,
+                    restore: true)))
+                self.gameModel.temp2 = 1
+            
                 moveBoat = false
                 break
             case 5:
