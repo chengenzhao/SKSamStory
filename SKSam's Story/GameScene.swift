@@ -1817,7 +1817,7 @@ class GameScene: SKScene {
     }
     
     func stageHasMusic(stage:Int) -> Bool{
-        if stage == 0 || stage == 25 || stage == 26 || stage == 8 || stage == 9 || stage == 10 || stage == 11 || stage == 5 || stage == 16 || stage == 17 || stage == 20 || stage == 22 || stage == 23 || stage == 24{
+        if stage == 0 || stage == 25 || stage == 26 || stage == 8 || stage == 9 || stage == 10 || stage == 11 || stage == 5 || stage == 16 || stage == 17 || stage == 18 || stage == 20 || stage == 22 || stage == 23 || stage == 24{
             return true;
         }
         return false;
