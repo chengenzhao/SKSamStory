@@ -82,6 +82,9 @@ class GameModel{
         case 6:
             toAccomplish=1
             accomplished.insert("lily")
+        case 7:
+            toAccomplish=1
+            accomplished.insert("lily")
             break
         default:
             toAccomplish=0

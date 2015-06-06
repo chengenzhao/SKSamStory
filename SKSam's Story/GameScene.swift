@@ -737,6 +737,8 @@ class GameScene: SKScene {
                         restore: false)
                     var action5 = SKAction.moveByX(CGFloat(100), y: -CGFloat(100), duration: 3)
                     self.animation2.0.runAction(SKAction.group([action4,action5]))
+                    self.gameModel!.removeAccomplished("lily")
+                    self.updateAccomplish()
                 }
                 
                 self.display("7-lily",name:"7-diag", location: location)
