@@ -635,6 +635,8 @@ class GameScene: SKScene {
                             let action2 = SKAction.moveByX(100,y:0, duration: 0.5)
                             self.childNodeWithName("4-car")!.runAction(SKAction.repeatActionForever(action2))
                         }
+                        self.gameModel!.removeAccomplished("boy")
+                        self.updateAccomplish()
                     }
                 }
                 if self.childNodeWithName("4-door")!.containsPoint(location){
@@ -649,11 +651,17 @@ class GameScene: SKScene {
                     self.updateAccomplish()
                 }
                 
-                animation.0.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(self.animation.1,
-                    timePerFrame: (0.5),
-                    resize: false,
-                    restore: true)))
-                self.gameModel.temp2 = 1
+                if self.childNodeWithName("4-toy_inbox2")!.containsPoint(location){
+                    self.removeSKNode("4-movesign")
+                }
+                if let node = self.childNodeWithName("4-movesign") as? SKSpriteNode {
+                    if !node.hasActions(){
+                        node.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(self.animation.1,
+                            timePerFrame: (0.5),
+                            resize: false,
+                            restore: true)))
+                    }
+                }
             
                 moveBoat = false
                 break
@@ -670,6 +678,8 @@ class GameScene: SKScene {
                                     restore: false))})
                             self.gameModel.temp2 = 1
                         }
+                        self.gameModel.removeAccomplished("door")
+                        self.updateAccomplish()
                 }
                 
                 break
@@ -1027,6 +1037,18 @@ class GameScene: SKScene {
                         self.gameModel.temp2 = 1
                     }
                 }
+                if self.childNodeWithName("25-lady2")!.containsPoint(location){
+                    self.removeSKNode("4-movesign")
+                }
+                if let node = self.childNodeWithName("4-movesign") as? SKSpriteNode {
+                    if !node.hasActions(){
+                    node.runAction(SKAction.repeatActionForever(SKAction.animateWithTextures(self.animation.1,
+                        timePerFrame: (0.5),
+                        resize: false,
+                        restore: true)))
+                    }
+                }
+                
                 moveBoat = false
                 break
             case 26:
@@ -1543,7 +1565,7 @@ class GameScene: SKScene {
             createAndAddSKNode("25-river", x:screenSize.width*1024/2048, y:screenSize.height*(1-933/1536))
             createAndAddSKNode("25-lady2", x:screenSize.width*562.5/2048, y:screenSize.height*(1-754.5/1536))
             createAndAddSKNode("25-text", x:screenSize.width*1481/2048, y:screenSize.height*(1-1381/1536))
-            
+            animation=createAnimationNode("4-movesign",texture:"movesign",location:CGPointMake(screenSize.width*762.5/2048, screenSize.height*(1-754.5/1536)))
             break
         case 26:
             var node = createAndAddSKNode("26-text", x:screenSize.width*964/2048, y:screenSize.height*(1-602/1536))
@@ -1786,6 +1808,7 @@ class GameScene: SKScene {
             self.removeSKNode("25-river")
             self.removeSKNode("25-lady2")
             self.removeSKNode("25-text")
+            self.removeSKNode("4-movesign")
             break
         case 26:
             self.removeSKNode("26-text")
@@ -1856,6 +1879,8 @@ class GameScene: SKScene {
             break
         case 4:
             self.removeSKNode("shake1")
+            self.gameModel!.removeAccomplished("shake")
+            self.updateAccomplish()
             self.gameModel.temp1 = 1
             break
         default:
