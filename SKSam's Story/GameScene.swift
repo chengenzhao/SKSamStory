@@ -692,7 +692,8 @@ class GameScene: SKScene {
                         restore: false)
                     var action1 = SKAction.moveByX(-CGFloat(100), y: 0, duration: 3)
                     self.animation!.0.runAction(SKAction.group([action0,action1]))
-                    
+                    self.gameModel!.removeAccomplished("lily")
+                    self.updateAccomplish()
                 }
                 
                 if self.childNodeWithName("wcat")!.containsPoint(location){
