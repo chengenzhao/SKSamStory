@@ -333,6 +333,7 @@ class GameScene: SKScene {
                     self.childNodeWithName("10-la")!.position.x +=  dis
                     self.childNodeWithName("10-dragon1")!.position.x +=  dis
                     self.childNodeWithName("10-cloud")!.position.x +=  dis
+                    self.childNodeWithName("10-musicsign")!.position.x +=  dis
                 }else if self.gameModel!.getCurrentStage() == 18{
                     self.childNodeWithName("18-smoke")!.position.x +=  dis
                     self.childNodeWithName("18-sam")!.position.x +=  dis
@@ -722,8 +723,10 @@ class GameScene: SKScene {
                     
                 }
                 
-                if self.childNodeWithName("7-lily")!.containsPoint(location){
-                    
+//                if self.childNodeWithName("7-lily")!.containsPoint(location){
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                
                     var action2 = SKAction.animateWithTextures(self.animation1.1,
                         timePerFrame: (0.3),
                         resize: false,
@@ -744,8 +747,10 @@ class GameScene: SKScene {
                 self.display("7-lily",name:"7-diag", location: location)
                 break
             case 8:
-                if self.childNodeWithName("8-lily")!.containsPoint(location){
-                    
+//                if self.childNodeWithName("8-lily")!.containsPoint(location){
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
+                
                     var action2 = SKAction.animateWithTextures(self.animation.1,
                         timePerFrame: (0.3),
                         resize: false,
@@ -759,6 +764,8 @@ class GameScene: SKScene {
                         restore: false)
                     var action5 = SKAction.moveByX(CGFloat(-50), y: -CGFloat(100), duration: 3)
                     self.animation1.0.runAction(SKAction.group([action4,action5]))
+                        self.gameModel!.removeAccomplished("lily")
+                        self.updateAccomplish()
                 }
                 self.display("8-lily",name:"8-diag", location: location)
                 
@@ -766,7 +773,9 @@ class GameScene: SKScene {
                     sound:"vulture",type:"wav")
                 break
             case 9:
-                if self.childNodeWithName("9-lily")!.containsPoint(location){
+//                if self.childNodeWithName("9-lily")!.containsPoint(location){
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
                     var action1 = SKAction.scaleBy(1.1, duration: 1.2)
                     var action2 = SKAction.animateWithTextures(self.animation.1,
                         timePerFrame: (0.3),
@@ -775,7 +784,8 @@ class GameScene: SKScene {
                     var action3 = SKAction.moveByX(-CGFloat(50), y: -CGFloat(100), duration: 1.2)
                     
                     self.animation!.0.runAction(SKAction.group([action1, action2,action3]))
-                    
+                        self.gameModel!.removeAccomplished("lily")
+                        self.updateAccomplish()
                 }
                 break
             case 10:
@@ -1455,6 +1465,7 @@ class GameScene: SKScene {
             
             createAndAddSKNode("swipeline", x:screenSize.width*300/2048, y:screenSize.height*(1-650.0/1536))
             createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
+            createAndAddSKNode("10-musicsign", x:screenSize.width*(2746.5/2048 - 1), y:screenSize.height*(1-738.5/1536))
             self.playSound("breathe", type: "wav")
             break
         case 11:
@@ -1719,6 +1730,7 @@ class GameScene: SKScene {
             self.removeSKNode("10-cloud")
             self.removeSKNode("swipeline")
             self.removeSKNode("swipe")
+            self.removeSKNode("10-musicsign")
             break
         case 11:
             self.removeSKNode("11-step")
