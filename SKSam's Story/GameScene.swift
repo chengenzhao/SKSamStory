@@ -288,6 +288,8 @@ class GameScene: SKScene {
                 if let node = self.childNodeWithName("25-lady2"){
                     if node.containsPoint(location){
                         self.moveBoat = true
+                        self.gameModel!.removeAccomplished("boat")
+                        self.updateAccomplish()
                     }
                 }
             }
@@ -343,6 +345,9 @@ class GameScene: SKScene {
                 
                 self.removeSKNode("swipeline")
                 self.removeSKNode("swipe")
+                
+                self.gameModel!.removeAccomplished("swipe")
+                self.updateAccomplish()
             }
             if stage == 4 && moveBoat == true{
                 if let node = self.childNodeWithName("4-toy_inbox2"){
@@ -628,7 +633,7 @@ class GameScene: SKScene {
                     }
                 }
                 if let node = self.childNodeWithName("4-boy_arm"){
-                    if !node.hasActions() && node.containsPoint(location){
+                    if !node.hasActions() && self.childNodeWithName("4-boy_body")!.containsPoint(location){
                         let action0 = SKAction.rotateByAngle(CGFloat(M_PI*30/180), duration:1)
                         let action1 = SKAction.rotateByAngle(-CGFloat(M_PI*30/180), duration:1)
                         node.runAction(SKAction.sequence([action0,action1]))
@@ -771,6 +776,12 @@ class GameScene: SKScene {
                 
                 self.alternateNode("8-raven_1", location:location, alterTexture:"8-raven_2",
                     sound:"vulture",type:"wav")
+                if let node = self.childNodeWithName("8-raven_1"){
+                    if node.containsPoint(location){
+                        self.gameModel!.removeAccomplished("raven")
+                        self.updateAccomplish()
+                    }
+                }
                 break
             case 9:
 //                if self.childNodeWithName("9-lily")!.containsPoint(location){
@@ -791,27 +802,43 @@ class GameScene: SKScene {
             case 10:
                 if self.childNodeWithName("10-mi")!.containsPoint(location){
                     self.playSound("mi")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-do")!.containsPoint(location){
                     self.playSound("do")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-fa")!.containsPoint(location){
                     self.playSound("fa")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-si")!.containsPoint(location){
                     self.playSound("si")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-re")!.containsPoint(location){
                     self.playSound("re")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-doo")!.containsPoint(location){
                     self.playSound("doo")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-so")!.containsPoint(location){
                     self.playSound("so")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 if self.childNodeWithName("10-la")!.containsPoint(location){
                     self.playSound("la")
+                    self.gameModel!.removeAccomplished("tree")
+                    self.updateAccomplish()
                 }
                 break
             case 11:
@@ -862,6 +889,9 @@ class GameScene: SKScene {
                             SKAction.group([action0,action1,action2,action3]),completion:{fire2.position = self.childNodeWithName("12-head")!.position;fire2.alpha = 0;fire2.xScale=0.5;fire2.yScale=0.5})
                         
                         self.playSound("roar", type: "wav")
+                        
+                        self.gameModel!.removeAccomplished("dragon")
+                        self.updateAccomplish()
                     }
 
                 }
@@ -883,24 +913,36 @@ class GameScene: SKScene {
                         self.childNodeWithName("14-hand")!.runAction(action0)
                         self.childNodeWithName("14-dia")!.alpha = 1
                         self.gameModel!.temp2 = 1
+                        
+                        self.gameModel!.removeAccomplished("dragon")
+                        self.updateAccomplish()
+                        
+                        self.playSound("roar", type: "wav")
                     }
                 }
                 break
             case 15:
-                if self.childNodeWithName("15-characters")!.containsPoint(location){
+//                if self.childNodeWithName("15-characters")!.containsPoint(location){
+                if (abs(location.x.distanceTo(CGRectGetMidX(self.frame))) < screenSize.size.width/4
+                    && abs(location.y.distanceTo(CGRectGetMidY(self.frame))) < screenSize.size.height/4){
                     let action1 = SKAction.moveToY(-screenSize.height, duration: 3)
                     self.childNodeWithName("15-characters")!.runAction(action1)
                     
-                    let action0 = SKAction.moveToY(screenSize.height, duration: 2)
+                    let action0 = SKAction.moveToY(screenSize.height*2, duration: 4)
                     self.childNodeWithName("15-line")!.runAction(action0)
                     
                     self.gameModel.temp2 = 1
+                        self.gameModel!.removeAccomplished("drop")
+                        self.updateAccomplish()
+                        
                 }
                 break
             case 16:
                 if let node = self.childNodeWithName("touch1"){
                     if node.containsPoint(location){
                         self.removeSKNode("touch1")
+                        self.gameModel!.removeAccomplished("touch")
+                        self.updateAccomplish()
                     }
                 }
                 self.display("16_01",name:"16_01",location:location)
@@ -920,6 +962,9 @@ class GameScene: SKScene {
                         let action1 = SKAction.moveByX(0, y: -200, duration: 0.9)
                         animation.0.runAction(SKAction.group([action,action1]))
                         self.gameModel.temp2 = 1
+                        
+                        self.gameModel!.removeAccomplished("tear")
+                        self.updateAccomplish()
                     }
                 }
                 break
@@ -933,6 +978,9 @@ class GameScene: SKScene {
 //                        let action1 = SKAction.moveByX(0, y: -200, duration: 0.9)
                         animation.0.runAction(action)//,action1
                         self.gameModel.temp3 = 1
+                        
+                        self.gameModel!.removeAccomplished("reunion")
+                        self.updateAccomplish()
                     }
                 }
                 self.display("19-reunion",name:"19-dia", location: location)
@@ -965,6 +1013,8 @@ class GameScene: SKScene {
                     if let f = self.childNodeWithName("20-rock"){
                         f.runAction(action5)
                     }
+                    self.gameModel!.removeAccomplished("stone")
+                    self.updateAccomplish()
                 }
                 
                 
@@ -975,6 +1025,8 @@ class GameScene: SKScene {
                     if self.gameModel.temp2 == 0{
                         self.gameModel.temp2 = 1
                     }else if node.containsPoint(location){
+                        self.gameModel!.removeAccomplished(String(self.gameModel.temp2))
+                        self.updateAccomplish()
                         self.gameModel.temp2 += 1
                         if self.gameModel.temp2 > 3{
                             self.gameModel.temp2 = 1
@@ -1024,6 +1076,8 @@ class GameScene: SKScene {
 //                        }
                     }
                     if self.gameModel.temp2 <= 3{
+                        self.gameModel!.removeAccomplished(String(self.gameModel.temp2))
+                        self.updateAccomplish()
                         node.texture = SKTexture(imageNamed: "state"+String(self.gameModel.temp2))
                     }
                 }
@@ -1038,15 +1092,19 @@ class GameScene: SKScene {
                         
                     }
                     if self.gameModel.temp2 <= 5{
+                        self.gameModel!.removeAccomplished(String(self.gameModel.temp2))
+                        self.updateAccomplish()
                         node.texture = SKTexture(imageNamed: "reborn"+String(self.gameModel.temp2))
                     }
                 }
                 break
             case 25:
                 if let node = self.childNodeWithName("25-lady1") as? SKSpriteNode{
-                    var action = SKAction.moveByX(-1054, y: 0, duration: 12)
+                    var action = SKAction.moveByX(-15, y: 0, duration: 0.5)
+                    var stop = SKAction.moveByX(0, y: 0, duration: 0.1)
                     if self.gameModel.temp2 == 0{
-                        node.runAction(action)
+//                        node.runAction(action)
+                        node.runAction(SKAction.repeatActionForever(SKAction.sequence([action, stop])))
                         self.gameModel.temp2 = 1
                     }
                 }
@@ -1082,6 +1140,9 @@ class GameScene: SKScene {
                                 animation1.0.runAction(SKAction.group([SKAction.repeatActionForever(action),action1]))
                             }
                         }
+                        
+                        self.gameModel!.removeAccomplished("end")
+                        self.updateAccomplish()
                 }
                 if let node = self.childNodeWithName("26-cat"){
                     if !node.hasActions(){
@@ -1331,6 +1392,8 @@ class GameScene: SKScene {
             musicPlayer.stop()
         }
         
+        musicPlayer.volume = 1
+        
         self.clean()
         
         var s = stage < 0 ? 0 : stage
@@ -1467,6 +1530,7 @@ class GameScene: SKScene {
             createAndAddSKNode("swipe", x:screenSize.width*252/2048, y:screenSize.height*(1-708.5/1536))
             createAndAddSKNode("10-musicsign", x:screenSize.width*(2746.5/2048 - 1), y:screenSize.height*(1-738.5/1536))
             self.playSound("breathe", type: "wav")
+            musicPlayer.volume = 60
             break
         case 11:
             createAndAddSKNode("11-tree", x:screenSize.width*551/2048, y:screenSize.height*(1-1269.5/1536))

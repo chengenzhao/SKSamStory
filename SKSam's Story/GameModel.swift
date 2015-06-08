@@ -89,12 +89,76 @@ class GameModel{
             accomplished.insert("lily")
             break
         case 8:
-            toAccomplish=1
+            toAccomplish=2
             accomplished.insert("lily")
+            accomplished.insert("raven")
             break
         case 9:
             toAccomplish=1
             accomplished.insert("lily")
+            break
+        case 10:
+            toAccomplish=2
+            accomplished.insert("swipe")
+            accomplished.insert("tree")
+            break
+        case 12:
+            toAccomplish=1
+            accomplished.insert("dragon")
+            break
+        case 14:
+            toAccomplish=1
+            accomplished.insert("dragon")
+            break
+        case 15:
+            toAccomplish=1
+            accomplished.insert("drop")
+            break
+        case 16:
+            toAccomplish=1
+            accomplished.insert("touch")
+            break
+        case 18:
+            toAccomplish=2
+            accomplished.insert("swipe")
+            accomplished.insert("tear")
+            break
+        case 19:
+            toAccomplish=1
+            accomplished.insert("reunion")
+            break
+        case 20:
+            toAccomplish=1
+            accomplished.insert("stone")
+            break
+        case 21:
+            toAccomplish=3
+            accomplished.insert("1")
+            accomplished.insert("2")
+            accomplished.insert("3")
+            break
+        case 23:
+            toAccomplish=3
+            accomplished.insert("1")
+            accomplished.insert("2")
+            accomplished.insert("3")
+            break
+        case 24:
+            toAccomplish=5
+            accomplished.insert("1")
+            accomplished.insert("2")
+            accomplished.insert("3")
+            accomplished.insert("4")
+            accomplished.insert("5")
+            break
+        case 25:
+            toAccomplish=1
+            accomplished.insert("boat")
+            break
+        case 26:
+            toAccomplish=1
+            accomplished.insert("end")
+            break
         default:
             toAccomplish=0
             break
