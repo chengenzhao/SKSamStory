@@ -605,6 +605,11 @@ class GameScene: SKScene {
                 break
             case 4:
                 self.alternateNode("cat-1", location: location, alterTexture: "cat-2")
+                if let node = self.childNodeWithName("cat-1"){
+                    if node.containsPoint(location){
+                        self.playSound("meow", type: "wav")
+                    }
+                }
                 if let node = self.childNodeWithName("4-toy_inbox"){
                     if !node.hasActions() && node.containsPoint(location){
                         let action0 = SKAction.rotateByAngle(CGFloat(M_PI*15/180), duration:1)
@@ -655,6 +660,7 @@ class GameScene: SKScene {
                     }
                     self.gameModel.accomplished.remove("door")
                     self.updateAccomplish()
+                    self.playSound("window", type: "mp3")
                 }
                 
                 if self.childNodeWithName("4-toy_inbox2")!.containsPoint(location){
